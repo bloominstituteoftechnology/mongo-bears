@@ -30,7 +30,7 @@ server.post('/bears', (req, res) => {
 server.get('/bears', (req, res) => {
   Bears.find({}, (err, data) => {
     if (err) throw err;
-    return;
+    res.json(data);
   });
 });
 
