@@ -89,7 +89,7 @@ If there's an error in retrieving the documents, send that error to the client
 in a JSON response. Set the status code to `STATUS_SERVER_ERROR` (Internal
 Server Error), as the server couldn't fetch the documents for some reason.
 
-### `GET /bears/:id`
+### `GET /bears/:id` - DONE √
 When the client makes a `GET` request to `/bears/:id` (remember, `:id` is a
 parameter embedded in the URL, not in the query-string):
 
