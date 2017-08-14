@@ -1,18 +1,20 @@
 # Mongo Mini
 Topics:
-  * Databases
-  * MongoDB
-  * ORMs
-  * Mongoose
-  * Create/Read/Update/Delete operations
+  * Databases - OKAY √
+  * MongoDB - OKAY √
+  * ORMs - OKAY √
+  * Mongoose - OKAY √
+  * Create/Read/Update/Delete operations - OKAY √
 
 ## Description
 You'll write a server that lets you create and read Bears through MongoDB. Much
 of the knowledge from Node and Express will carry over to this mini project,
-where you'll interface with a database in your route handlers.
+where you'll interface with a database in your route handlers. - OKAY √
 
 ## Running the Project
-- Install [MongoDB](https://www.mongodb.com/download-center).
+- Install [MongoDB](https://www.mongodb.com/download-center). - OKAY √
+  - mongodb-osx-x86_64-3.4.7 ...hmm, gonna use homebrew instead
+
 - `cd` into your project directory.
 - Run `npm install` to download the dependencies.
 - Run `mongod --dbpath data` and keep it running in a separate terminal.
