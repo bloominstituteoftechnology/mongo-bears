@@ -34,6 +34,14 @@ server.get('/bears', (req, res) => {
   });
 });
 
+server.get('/bears/:id', (req, res) => {
+  const { id } = req.params;
+  Bears.findById(id, (err, bears) => {
+    if (err) throw err;
+    res.json(bears);
+  });
+});
+
 
 mongoose.Promise = global.Promise;
 const connect = mongoose.connect(
