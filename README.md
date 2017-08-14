@@ -50,7 +50,7 @@ where you'll interface with a database in your route handlers. - OKAY √
   correct requests to test your implementation! - OKAY √
 
 ## Instructions
-### Schema
+### Schema - DONE √
 Create a schema for the Bears collection. A schema is a description of the
 format of documents within a collection. In this case, each Bear is a document
 of the form:
