@@ -12,16 +12,7 @@ const mongoose = require('mongoose');
  * Make createdAt default to the current date.
  */
 const BearSchema = new mongoose.Schema({
-  species: {
-    type: String,
-  },
-  latinName: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  // TODO: write your schema here
 });
 
 module.exports = mongoose.model('Bears', BearSchema);
