@@ -45,6 +45,7 @@ where you'll interface with a database in your route handlers. - OKAY √
 - To test your application at any point, run `npm start` to start the server.
   - using `nodemon server,js`
   - npm start asks for src.app.js per line 7 of package.json: `"start": "eslint src/*.js && nodemon src/app.js"`
+  - FIXED per Ryan, `git pull upstream master`
 - Then, you can make requests to `http://localhost:3000` in Postman or in your
   browser! To make POST requests, you'll need to use Postman. Craft the
   correct requests to test your implementation! - OKAY √
