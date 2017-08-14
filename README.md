@@ -14,15 +14,38 @@ where you'll interface with a database in your route handlers. - OKAY √
 ## Running the Project
 - Install [MongoDB](https://www.mongodb.com/download-center). - OKAY √
   - mongodb-osx-x86_64-3.4.7 ...hmm, gonna use homebrew instead
+  ```console
+  $  brew install mongodb --with-openssl
+      Warning: mongodb: this formula has no --with-openssl option so it will be ignored!
+      ==> Downloading https://homebrew.bintray.com/bottles/mongodb-3.4.7.sierra.bottle.tar.gz
+      ######################################################################## 100.0%
+      ==> Pouring mongodb-3.4.7.sierra.bottle.tar.gz
+      ==> Caveats
+      To have launchd start mongodb now and restart at login:
+        brew services start mongodb
+      Or, if you don't want/need a background service you can just run:
+        mongod --config /usr/local/etc/mongod.conf
+      ==> Summary
+      🍺  /usr/local/Cellar/mongodb/3.4.7: 18 files, 266.9MB
+  ```
 
-- `cd` into your project directory.
-- Run `npm install` to download the dependencies.
-- Run `mongod --dbpath data` and keep it running in a separate terminal.
-- Write your implementation, as per the instructions below.
+- `cd` into your project directory. - DONE √
+- Run `npm install` to download the dependencies.  - DONE √
+  ```console
+  $  npm i
+      npm WARN eslint-config-airbnb@14.1.0 requires a peer of eslint-plugin-jsx-a11y@^3.0.2 || ^4.0.0 but none was installed.
+      npm WARN eslint-config-airbnb@14.1.0 requires a peer of eslint-plugin-react@^6.9.0 but none was installed.
+      npm WARN ls-mongodb-mini@1.0.0 No repository field.
+
+      added 296 packages in 24.409s
+  ```
+
+- Run `mongod --dbpath data` and keep it running in a separate terminal. - DONE √
+- Write your implementation, as per the instructions below. - OKAY √
 - To test your application at any point, run `npm start` to start the server.
   Then, you can make requests to `http://localhost:3000` in Postman or in your
   browser! To make POST requests, you'll need to use Postman. Craft the
-  correct requests to test your implementation!
+  correct requests to test your implementation! - OKAY √
 
 ## Instructions
 ### Schema
