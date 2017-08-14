@@ -10,15 +10,7 @@ const server = express();
 server.use(bodyParser.json());
 
 
-
-
-
-
 // TODO: write your server code here
-
-
-
-
 
 
 mongoose.Promise = global.Promise;
