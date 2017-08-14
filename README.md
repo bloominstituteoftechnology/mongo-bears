@@ -67,7 +67,7 @@ of the form:
 In `models.js`, write the schema for the Bears collection. Make the field
 `createdAt` default to the current date.
 
-### `POST /bears`
+### `POST /bears` - DONE √
 When the client makes a `POST` request to `/bears`:
 
 - Ensure the client passes `species` and `latinName` parameters in the request

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const Schema = mongoose.Schema;
+
 /* A schema is a description of the format of documents within a
  * collection. In this case, each Bear is a document of the form:
  *
