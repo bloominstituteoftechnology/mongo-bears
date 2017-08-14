@@ -81,7 +81,7 @@ When the client makes a `POST` request to `/bears`:
 - Otherwise, if everything is successful, send the Bear document as a JSON
   response.
 
-### `GET /bears`
+### `GET /bears` - DONE √
 When the client makes a `GET` request to `/bears`, read all the Bear documents
 from MongoDB as an array. Send that array as a JSON response to the client.
 
