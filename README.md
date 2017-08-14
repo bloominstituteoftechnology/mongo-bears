@@ -1,85 +1,73 @@
 # Mongo Mini
 Topics:
-  * Client and server
-  * Node.js and Express
-  * HTTP requests and responses
-  * HTTP headers and status codes
-  * Request parameters
-  * API design and development
+  * Databases
+  * MongoDB
+  * ORMs
+  * Mongoose
+  * Create/Read/Update/Delete operations
 
 ## Description
+You'll write a server that lets you create and read Bears through MongoDB. Much
+of the knowledge from Node and Express will carry over to this mini project,
+where you'll interface with a database in your route handlers.
 
 ## Running the Project
+- Install [MongoDB](https://www.mongodb.com/download-center).
+- `cd` into your project directory.
 - Run `npm install` to download the dependencies.
-- Install `nodemon` via `npm install -g nodemon`. `nodemon` will keep your
-  server running and automatically restart it if you change anything.
-- Install [Postman](https://www.getpostman.com/) so you can make requests and
-  examine responses.
-- Run `npm start` to start the server.
-- Implement hangman in `src/app.js` as per the instructions below.
+- Run `mongod --dbpath data` and keep it running in a separate terminal.
+- Write your implementation, as per the instructions below.
 - To test your application at any point, run `npm start` to start the server.
   Then, you can make requests to `http://localhost:3000` in Postman or in your
   browser! To make POST requests, you'll need to use Postman. Craft the
-  corrrect requests to play hangman and test your implementation!
+  correct requests to test your implementation!
 
 ## Instructions
-You'll develop a version of Hangman that can be played by making HTTP requests!
-First, some terminology:
+### Schema
+Create a schema for the Bears collection. A schema is a description of the
+format of documents within a collection. In this case, each Bear is a document
+of the form:
 
-- Final word: the final, correct word that the user is aiming to guess.
-- Word so far: the word that the user currently sees based off his/her guesses.
-  This is the final word with all non-guessed characters replaced by a dash
-  `'-'`. For instance, if the final word is `'hello'` and the user has guessed
-  `'a'`, `'e'`, and `'i'`, the word so far would be `'-e---'`.
+```js
+{
+  species: "American Black Bear",
+  latinName: "Ursus americanus",
+  createdAt: Mon Aug 14 2017 12:50:16 GMT-0700 (PDT)
+}
+```
 
-We've given you a function `readWords()` that reads an array of dictionary words
-from the `words.txt` file. First, use this function to select a random word from
-the dictionary to be the final word. Note that whenver your server is restarted
-(i.e. when you change files or re-run `npm start`), a new word will be selected
-and the game will restart.
+In `models.js`, write the schema for the Bears collection. Make the field
+`createdAt` default to the current date.
 
-Now, you'll need to implement two routes:
+### `POST /bears`
+When the client makes a `POST` request to `/bears`:
 
-### `POST /guess`
-When the client makes a `POST` request to `/guess`:
+- Ensure the client passes `species` and `latinName` parameters in the request
+  body. If there's an error, respond with an appropriate status code, and send
+  a JSON response of the form `{ error: "Some useful error message" }`.
 
-- Ensure that the client provides `letter` in the request body. `letter` should
-  be the key and the value should be a string containing only a single
-  character. If there's an error, send an object of the form
-  `{ error: "Error message" }` as a JSON response. Make sure to respond with
-  an appropriate status code.
+- Create and save a new Bear document. If there's an error while saving, send
+  that error as a JSON response, and set the status code to
+  `STATUS_SERVER_ERROR` (Internal Server Error).
 
-- If the client has already guessed this letter, respond with an error in the
-  same format as mentioned above.
+- Otherwise, if everything is successful, send the Bear document as a JSON
+  response.
 
-- Keep track of the guess in some data structure. In the `GET /` route
-  implementation (see below), you'll need to use this data structure to compute
-  the word so far. Think carefully about what data structure you'd like to use
-  here to make the computation easy.
+### `GET /bears`
+When the client makes a `GET` request to `/bears`, read all the Bear documents
+from MongoDB as an array. Send that array as a JSON response to the client.
 
-### `GET /`
-When the client makes a `GET` request to `/guess`:
+If there's an error in retrieving the documents, send that error to the client
+in a JSON response. Set the status code to `STATUS_SERVER_ERROR` (Internal
+Server Error), as the server couldn't fetch the documents for some reason.
 
-- Compute the word so far by replacing each letter in the final word that hasn't
-  been guessed by `-`. Don't actually modify the final word in any way.
+### `GET /bears/:id`
+When the client makes a `GET` request to `/bears/:id` (remember, `:id` is a
+parameter embedded in the URL, not in the query-string):
 
-- Send back a JSON response containing an object with two properties,
-  `wordSoFar` and `guesses`, to the client. `wordSoFar` should be the word so
-  far (as per our definition underneath "Instructions"), and `guesses` should be
-  the data structure you use to represent all guesses the user has made. This
-  gives the user information about the current state of the game so he/she can
-  formulate his/her next guess.
+- Find the Bear document associated with the given `id`. If there's an error,
+  send that error as a JSON response, and set the status code to
+  `STATUS_SERVER_ERROR` (Internal Server Error).
 
-### Play!
-Now, you can play hangman by cycling through the requests above. Make a `POST
-/guess` request in Postman, passing in a `letter` in the request body. You can
-then see whether you guessed correctly, what the word so far is, and the list
-of guessed letters by requesting `GET /`. Keep guessing until you can figure out
-the word!
-
-## Extras
-If you'd like an extra challenge (albeit not related to node/express), think
-about how you'd write a program to guess the word for you. Given the dictionary
-of words, how would you go about correctly guessing the final word? It's easy to
-simply guess every letter, but how could you do this efficiently? Is there a way
-to eliminate a large number of possible words with each guess?
+- Otherwise, if everything is successful, send the Bear document as a JSON
+  response.

@@ -1,50 +1,73 @@
-const express = require('express');
-const server = express();
-const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
+const express = require('express');
 const mongoose = require('mongoose');
+
 const Bear = require('./models');
 
-// mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/bears', { useMongoClient: true });
+const STATUS_USER_ERROR = 422;
+const STATUS_SERVER_ERROR = 500;
+const server = express();
 
+// allow server to parse JSON bodies from POST/PUT/DELETE requests
 server.use(bodyParser.json());
 
-server.get('/bears/', (req, res) => {
-  // .find() is a method you can use to just simply pull in all the data from the collection.
+server.get('/bears', (req, res) => {
+  // .find() is a method you can use to read all the documents from the
+  // collection.
   Bear.find({}, (err, bears) => {
     if (err) {
-      throw err;
-      return;
+      res.status(STATUS_SERVER_ERROR);
+      res.json(err);
+    } else {
+      res.json(bears);
     }
-    res.json(bears);
   });
 });
 
-server.post('/bears/', (req, res) => {
-  const { species, latinName } = req.body;
-  if (!species || !latinName) { // request validation
-    res.status(STATUS_USER_ERROR);
-    res.json({ error: 'Species and Latin Name required to create a bear'});
-    return;
-  }
-  // here is where we actually create the new bear object. 
-  const newBear = new Bear({ species, latinName });
-  newBear.save((err) => {
-    if (err) throw err;
-    res.json(newBear);
-  });
-});
-
-server.get('bears/:id', (req, res) => {
+server.get('/bears/:id', (req, res) => {
   const { id } = req.params;
   Bear.findById(id, (err, bear) => {
-    if (err) throw err;
-    res.json(bear);
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json(err);
+    } else {
+      res.json(bear);
+    }
   });
 });
 
+server.post('/bears', (req, res) => {
+  const { species, latinName } = req.body;
+  if (!species || !latinName) {
+    res.status(STATUS_USER_ERROR);
+    res.json({ error: 'Must provide species and latinName' });
+    return;
+  }
 
-server.listen(port);
+  const bear = new Bear({ species, latinName });
+  bear.save((err) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR);
+      res.json(err);
+    } else {
+      res.json(bear);
+    }
+  });
+});
 
-console.log(`App Listening on ${port}`);
+mongoose.Promise = global.Promise;
+const connect = mongoose.connect(
+  'mongodb://localhost/bears',
+  { useMongoClient: true }
+);
+
+/* eslint no-console: 0 */
+connect.then(() => {
+  const port = 3000;
+  server.listen(port);
+  console.log(`Server Listening on ${port}`);
+}, (err) => {
+  console.log('\n************************');
+  console.log("ERROR: Couldn't connect to MongoDB. Do you have it running?");
+  console.log('************************\n');
+});
