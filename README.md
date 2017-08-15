@@ -43,7 +43,7 @@ where you'll interface with a database in your route handlers. - OKAY √
 - Run `mongod --dbpath data` and keep it running in a separate terminal. - DONE √
 - Write your implementation, as per the instructions below. - OKAY √
 - To test your application at any point, run `npm start` to start the server.
-  - using `nodemon server,js`
+  - using `nodemon server.js`
   - npm start asks for src.app.js per line 7 of package.json: `"start": "eslint src/*.js && nodemon src/app.js"`
   - FIXED per Ryan, `git pull upstream master`
 - Then, you can make requests to `http://localhost:3000` in Postman or in your
