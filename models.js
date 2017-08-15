@@ -27,4 +27,4 @@ const BearSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Bears', BearSchema);
+module.exports = mongoose.model('Bear', BearSchema);
