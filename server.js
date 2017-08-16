@@ -1,8 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-
-const Bear = require('./models');
+const Bears = require('./models.js');
 
 const STATUS_USER_ERROR = 422;
 const STATUS_SERVER_ERROR = 500;
@@ -12,9 +11,7 @@ const server = express();
 server.use(bodyParser.json());
 
 server.get('/bears', (req, res) => {
-  // .find() is a method you can use to read all the documents from the
-  // collection.
-  Bear.find({}, (err, bears) => {
+  Bears.find({}, (err, bears) => {
     if (err) {
       res.status(STATUS_SERVER_ERROR);
       res.json(err);
@@ -25,13 +22,12 @@ server.get('/bears', (req, res) => {
 });
 
 server.get('/bears/:id', (req, res) => {
-  const { id } = req.params;
-  Bear.findById(id, (err, bear) => {
-    if (err) {
+  Bears.findById(id, (err, bears) => {
+    if(err) {
       res.status(STATUS_SERVER_ERROR);
       res.json(err);
     } else {
-      res.json(bear);
+      res.json(bears);
     }
   });
 });
@@ -40,20 +36,23 @@ server.post('/bears', (req, res) => {
   const { species, latinName } = req.body;
   if (!species || !latinName) {
     res.status(STATUS_USER_ERROR);
-    res.json({ error: 'Must provide species and latinName' });
+    res.json({ error: "species or latinName is missing" });
     return;
   }
-
-  const bear = new Bear({ species, latinName });
-  bear.save((err) => {
-    if (err) {
+  const bears = new Bears ({ species, latinNames });
+  bears.save((err) => {
+    if(err) {
       res.status(STATUS_SERVER_ERROR);
       res.json(err);
     } else {
-      res.json(bear);
+    res.json(bears);
     }
   });
 });
+
+
+// TODO: write your server code here
+
 
 mongoose.Promise = global.Promise;
 const connect = mongoose.connect(
