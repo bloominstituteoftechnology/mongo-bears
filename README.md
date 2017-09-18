@@ -13,7 +13,7 @@ where you'll interface with a database in your route handlers.
 
 ## Running the Project
 * Fork and Clone this project.
-* Please head over to the Mongo Docs and [Install MongoDB](https://docs.mongodb.com/manual/installation/#tutorials). You'll want to install the "Community Edition".
+* Please head over to the Mongo Docs and [Install MongoDB](https://docs.mongodb.com/manual/installation/#mongodb-community-edition). You'll want to install the "Community Edition".
   * To ensure you have Mongo installed properly, run `mongod` (to launch your mongo Daemon server) in your console. You should be able to connect at that point.
   * With your `mongod` server up and running, open a new terminal window and run mongo to see if you can connect with the mongo CLI repl and run the command > `show dbs`. You should get some sort of output here that looks like 
 ```
