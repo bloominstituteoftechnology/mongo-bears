@@ -12,14 +12,22 @@ of the knowledge from Node and Express will carry over to this mini project,
 where you'll interface with a database in your route handlers.
 
 ## Running the Project
-- Fork and Clone this project.
-- Please head over to the Mongo Docs and [Install MongoDB](https://docs.mongodb.com/manual/installation/#tutorials).
- - This will probably difficult so please ask for help at this point if you need it.
-- `cd` into your project directory.
-- Run `npm install` to download the dependencies.
-- Run `mongod --dbpath data` and keep it running in a separate terminal.
-- Write your implementation, as per the instructions below.
-- To test your application at any point, run `npm start` to start the server.
+* Fork and Clone this project.
+* Please head over to the Mongo Docs and [Install MongoDB](https://docs.mongodb.com/manual/installation/#tutorials). You'll want to install the "Community Edition".
+  * To ensure you have Mongo installed properly, run `mongod` (to launch your mongo Daemon server) in your console. You should be able to connect at that point.
+  * With your `mongod` server up and running, open a new terminal window and run mongo to see if you can connect with the mongo CLI repl and run the command > `show dbs`. You should get some sort of output here that looks like 
+```
+ > show dbs
+ admin  0.000GB
+ auth   0.000GB
+ local  0.000GB
+```
+  * This will probably difficult so please ask for help at this point if you need it.
+* `cd` into your project directory.
+* Run `npm install` to download the dependencies.
+* Run `mongod --dbpath data` and keep it running in a separate terminal.
+* Write your implementation, as per the instructions below.
+* To test your application at any point, run `npm start` to start the server.
   Then, you can make requests to `http://localhost:3000` in Postman or in your
   browser! To make POST requests, you'll need to use Postman. Craft the
   correct requests to test your implementation!
