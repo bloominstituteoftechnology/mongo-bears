@@ -12,7 +12,9 @@ of the knowledge from Node and Express will carry over to this mini project,
 where you'll interface with a database in your route handlers.
 
 ## Running the Project
-- Install [MongoDB](https://www.mongodb.com/download-center).
+- Fork and Clone this project.
+- Please head over to the Mongo Docs and Install [MongoDB](https://www.mongodb.com/download-center).
+ - This will probably difficult so please ask for help at this point if you need it.
 - `cd` into your project directory.
 - Run `npm install` to download the dependencies.
 - Run `mongod --dbpath data` and keep it running in a separate terminal.
