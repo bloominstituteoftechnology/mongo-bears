@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const Bear = require('./models');
 
 const STATUS_USER_ERROR = 422;
 const STATUS_SERVER_ERROR = 500;
@@ -10,16 +11,43 @@ const server = express();
 server.use(bodyParser.json());
 
 
-
-
-
-
 // TODO: write your server code here
 
+server.post('/bears', (req, res) => {
+  const { species, latinName } = req.body;
+  if (!species || !latinName) {
+    res.status(STATUS_USER_ERROR)
+    .json({ error: 'Must include species and latinName in request body.' });
+  }
+  const newBear = new Bear({ species: species, latinName: latinName });
+  newBear.save((err) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR)
+      .json({ error: 'An internal server error occurred while saving.' });
+    }
+    res.json(newBear);
+  });
+});
 
-
-
-
+server.get('/bears', (req, res) => {
+  if (req.query.id) {
+    Bear.findById(req.query.id, (err, aBear) => {
+      if (err) {
+        res.status(STATUS_SERVER_ERROR)
+        .json({error: err});
+      }
+      res.json({ success: aBear });
+    });
+    return;
+  }
+  Bear.find((err, bears) => {
+    if (err) {
+      res.status(STATUS_SERVER_ERROR)
+      .json({ error: 'Internal server error occurred while searching for bears' });
+    }
+    res.json({ success: bears })
+  });
+});
 
 mongoose.Promise = global.Promise;
 const connect = mongoose.connect(
