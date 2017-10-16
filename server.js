@@ -18,14 +18,17 @@ server.post('/bears', (req, res) => {
   if (!species || !latinName) {
     res.status(STATUS_USER_ERROR)
     .json({ error: 'Must include species and latinName in request body.' });
+    return;
   }
   const newBear = new Bear({ species: species, latinName: latinName });
   newBear.save((err) => {
     if (err) {
       res.status(STATUS_SERVER_ERROR)
       .json({ error: 'An internal server error occurred while saving.' });
+      return;
     }
     res.json(newBear);
+    return;
   });
 });
 
@@ -35,6 +38,7 @@ server.get('/bears', (req, res) => {
       if (err) {
         res.status(STATUS_SERVER_ERROR)
         .json({error: err});
+        return;
       }
       res.json({ success: aBear });
     });
@@ -45,7 +49,8 @@ server.get('/bears', (req, res) => {
       res.status(STATUS_SERVER_ERROR)
       .json({ error: 'Internal server error occurred while searching for bears' });
     }
-    res.json({ success: bears })
+    res.json({ success: bears });
+    return;
   });
 });
 
