@@ -22,6 +22,8 @@
       "no-useless-constructor": 0,
       "no-extend-native": 0,
       "import/no-unresolved": 0,
-      "no-restricted-properties": 0
+      "no-restricted-properties": 0,
+      "no-console": 0,
+      "import/no-duplicates": 0
     }
 }
