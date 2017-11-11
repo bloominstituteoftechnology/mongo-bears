@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 /* A schema is a description of the format of documents within a
@@ -13,6 +14,19 @@ const mongoose = require('mongoose');
  */
 const BearSchema = new mongoose.Schema({
   // TODO: write your schema here
+  species: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  latinName: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  }
 });
 
-module.exports = mongoose.model('Bears', BearSchema);
+module.exports = mongoose.model('Bear', BearSchema);
