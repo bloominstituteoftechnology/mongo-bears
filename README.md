@@ -26,9 +26,7 @@ where you'll interface with a database in your route handlers.
 * Fork and Clone this project.
 * `cd` into your project folder.
 * Run `npm install` or `yarn` to download the dependencies.
-* Make a folder named `data` to hold your Database files.
 * Run `mongod --dbpath data` and keep it running in a separate terminal.
-* Add a `server.js` file inside the project folder.
 * Write your implementation inside `server.js`, as per the instructions below.
 * To start the API server, run `npm start` or `yarn start`.
 * Use _Postman_ to test your API.
