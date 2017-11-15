@@ -2,41 +2,41 @@
 Topics:
   * Databases
   * MongoDB
-  * ORMs
+  * ODMs
   * Mongoose
   * Create/Read/Update/Delete operations
 
 ## Description
-You'll write a server that lets you create and read Bears through MongoDB. Much
+You'll write a server that lets you create and read Bears stored in a MongoDB Database. Much
 of the knowledge from Node and Express will carry over to this mini project,
 where you'll interface with a database in your route handlers.
 
-## Running the Project
-* Fork and Clone this project.
-* Please head over to the Mongo Docs and [Install MongoDB](https://docs.mongodb.com/manual/installation/#mongodb-community-edition). You'll want to install the "Community Edition".
-  * To ensure you have Mongo installed properly, run `mongod` (to launch your mongo Daemon server) in your console. You should be able to connect at that point.
-  * With your `mongod` server up and running, open a new terminal window and run mongo to see if you can connect with the mongo CLI repl and run the command > `show dbs`. You should get some sort of output here that looks like 
+## Install MongoDB
+* Please head over to the [MongoDB Manual Website](https://docs.mongodb.com/manual/administration/install-community/)  and Install the "Community Edition".
+  * To ensure you have Mongo installed properly, run `mongod` (to launch your MongoDB server) in your console. You should be able to connect at that point.
+  * With your `mongod` server up and running, open a new terminal window and run `mongo` to see if you can connect with the mongo CLI repl and run the command > `show dbs`. You should get some sort of output here that looks like 
 ```
  > show dbs
  admin  0.000GB
- auth   0.000GB
  local  0.000GB
 ```
-  * This will probably difficult so please ask for help at this point if you need it.
-* `cd` into your project directory.
-* Run `npm install` to download the dependencies.
+  * This may be difficult to do, please ask for help at this point if you need it.
+
+## Running the Project
+* Fork and Clone this project.
+* `cd` into your project folder.
+* Run `npm install` or `yarn` to download the dependencies.
+* Make a folder named `data` to hold your Database files.
 * Run `mongod --dbpath data` and keep it running in a separate terminal.
-* Write your implementation, as per the instructions below.
-* To test your application at any point, run `npm start` to start the server.
-  Then, you can make requests to `http://localhost:3000` in Postman or in your
-  browser! To make POST requests, you'll need to use Postman. Craft the
-  correct requests to test your implementation!
+* Add a `server.js` file inside the project folder.
+* Write your implementation inside `server.js`, as per the instructions below.
+* To start the API server, run `npm start` or `yarn start`.
+* Use _Postman_ to test your API.
 
 ## Instructions
-### Schema
-Create a schema for the Bears collection. A schema is a description of the
-format of documents within a collection. In this case, each Bear is a document
-of the form:
+
+### Schema and Model
+Create a _Schema_ and a _Model_ for the Bears collection. Each _Bear_ Model should conform to the form:
 
 ```js
 {
@@ -46,11 +46,11 @@ of the form:
 }
 ```
 
-In `models.js`, write the schema for the Bears collection. Make the field
+Write the schema for the Bears collection. Make the field
 `createdAt` default to the current date.
 
 ### `POST /bears`
-When the client makes a `POST` request to `/bears`:
+When the client makes a `POST` request to `/api/bears`:
 
 - Ensure the client passes `species` and `latinName` parameters in the request
   body. If there's an error, respond with an appropriate status code, and send
@@ -61,10 +61,10 @@ When the client makes a `POST` request to `/bears`:
   `STATUS_SERVER_ERROR` (Internal Server Error).
 
 - Otherwise, if everything is successful, send the Bear document as a JSON
-  response.
+  response. Remember to set the HTTP status code to `201` on the response.
 
 ### `GET /bears`
-When the client makes a `GET` request to `/bears`, read all the Bear documents
+When the client makes a `GET` request to `/api/bears`, read all the Bear documents
 from MongoDB as an array. Send that array as a JSON response to the client.
 
 If there's an error in retrieving the documents, send that error to the client
@@ -72,7 +72,7 @@ in a JSON response. Set the status code to `STATUS_SERVER_ERROR` (Internal
 Server Error), as the server couldn't fetch the documents for some reason.
 
 ### `GET /bears/:id`
-When the client makes a `GET` request to `/bears/:id` (remember, `:id` is a
+When the client makes a `GET` request to `/api/bears/:id` (remember, `:id` is a
 parameter embedded in the URL, not in the query-string):
 
 - Find the Bear document associated with the given `id`. If there's an error,
