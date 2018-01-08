@@ -1,81 +1,99 @@
-# Mongo Mini
+# Mongo I Mini Project
+
 Topics:
-  * Databases
-  * MongoDB
-  * ODMs
-  * Mongoose
-  * Create/Read/Update/Delete operations
+
+* Databases
+* MongoDB
+* ODMs
+* Mongoose
+* Creating documents.
+* Performing basic queries.
 
 ## Description
-You'll write a server that lets you create and read Bears stored in a MongoDB Database. Much
-of the knowledge from Node and Express will carry over to this mini project,
-where you'll interface with a database in your route handlers.
 
-## Install MongoDB
-* Please head over to the [MongoDB Manual Website](https://docs.mongodb.com/manual/administration/install-community/)  and Install the "Community Edition".
-  * To ensure you have Mongo installed properly, run `mongod` (to launch your MongoDB server) in your console. You should be able to connect at that point.
-  * With your `mongod` server up and running, open a new terminal window and run `mongo` to see if you can connect with the mongo CLI repl and run the command > `show dbs`. You should get some sort of output here that looks like 
+Use Node.js and Express to write an API that can create and read Bears stored in a MongoDB Database.
+
+## Instructions
+
+### Start MongoDB
+
+For this project you need to have _MongoDB Community Edition_ installed and running or an account with a _Database As A Service_ provider like [Mongo Atlas](https://www.mongodb.com/cloud/atlas) or [mlab](https://mlab.com/). Both DBAAS providers offer a free tier with 500MB size limit that can be used for development and testing.
+
+#### Using a Local Server
+
+If you don't have MongoDB installed, please click on [this link](https://docs.mongodb.com/manual/administration/install-community/) for instructions on how to **install** and **run** the server and the _mongo shell_. Follow the instructions for your _Operating System_.
+
+After MongoDB is installed, follow the instructions on the documentation to start the server. Then run the _mongo shell_ from a separate terminal and execute the `show dbs` command. If all goes well you should see a list of available databases, similar to the sample below.
+
 ```
  > show dbs
  admin  0.000GB
  local  0.000GB
 ```
-  * This may be difficult to do, please ask for help at this point if you need it.
 
-## Running the Project
-* Fork and Clone this project.
-* `cd` into your project folder.
-* Run `npm install` or `yarn` to download the dependencies.
-* Run `mongod --dbpath data` and keep it running in a separate terminal.
-* Write your implementation inside `server.js`, as per the instructions below.
-* To start the API server, run `npm start` or `yarn start`.
-* Use _Postman_ to test your API.
+### Create API Server
 
-## Instructions
+Create an _Express_ application and add a route for `/` that returns HTTP status code `200` and the following JSON object:
 
-### Schema and Model
-Create a _Schema_ and a _Model_ for the Bears collection. Each _Bear_ Model should conform to the form:
-
-```js
+```json
 {
-  species: "American Black Bear",
-  latinName: "Ursus americanus",
-  createdAt: Mon Aug 14 2017 12:50:16 GMT-0700 (PDT)
+  "message": "API running"
 }
 ```
 
-Write the schema for the Bears collection. Make the field
-`createdAt` default to the current date.
+**Use _Postman_ to test your API.**
 
-### `POST /bears`
+### Connect API Server to MongoDB
+
+Add _mongoose_ to the project and use it to connect your API to the `bears` database in MongoDB. The `bears` database will be created automatically by MongoDB if it doesn't exist. If there is an error connecting to the database, do **NOT** start the API and display the following message to the console: _"Database connection failed"_.
+
+If the connection to MongoDB succeeds, start the API and show the following message to the console: _"All your databases are belong to us!"_.
+
+### Create Bear Schema and Model
+
+Create a _Schema_ and a _Model_ for the _Bears_ collection. Each _Bear_ Model should conform to the following schema:
+
+```js
+{
+  species: "American Black Bear", // required string
+  latinName: "Ursus americanus", // required string
+  createdOn: Mon Aug 14 2017 12:50:16 GMT-0700 (PDT) // required Date, should default to current date and time
+}
+```
+
+### Create API Endpoints
+
+Configure the API to respond to the following routes:
+
+| Method | Endpoint       | Description                                                          |
+| ------ | -------------- | -------------------------------------------------------------------- |
+| POST   | /api/bears     | Creates a bear using the information sent inside the `request body`. |
+| GET    | /api/bears     | Returns an array of all the bear objects contained in the database.  |
+| GET    | /api/bears/:id | Returns the bear object with the specified id.                       |
+
+#### Endpoint Specifications
+
 When the client makes a `POST` request to `/api/bears`:
 
-- Ensure the client passes `species` and `latinName` parameters in the request
-  body. If there's an error, respond with an appropriate status code, and send
-  a JSON response of the form `{ error: "Some useful error message" }`.
+* If the request body is missing the `species` or `latinName` property, cancel the request, respond with HTTP status code `400`, and return the following JSON response: `{ errorMessage: "Please provide both species and latinName for the Bear." }`.
 
-- Create and save a new Bear document. If there's an error while saving, send
-  that error as a JSON response, and set the status code to
-  `STATUS_SERVER_ERROR` (Internal Server Error).
+* If the information about the _Bear_ is valid, save the new _Bear_ the the database, return HTTP status code `201` and return the newly created _Bear Document_.
 
-- Otherwise, if everything is successful, send the Bear document as a JSON
-  response. Remember to set the HTTP status code to `201` on the response.
+* If there's an error while saving the _Bear_, cancel the request, respond with HTTP status code `500` and return the following JSON object: `{ error: "There was an error while saving the Bear to the Database" }`.
 
-### `GET /bears`
-When the client makes a `GET` request to `/api/bears`, read all the Bear documents
-from MongoDB as an array. Send that array as a JSON response to the client.
+When the client makes a `GET` request to `/api/bears`:
 
-If there's an error in retrieving the documents, send that error to the client
-in a JSON response. Set the status code to `STATUS_SERVER_ERROR` (Internal
-Server Error), as the server couldn't fetch the documents for some reason.
+* If there's an error in retrieving the _Bears_ from the database, cancel the request, respond with HTTP status code `500` and return the following JSON object: `{ error: "The information could not be retrieved." }`.
 
-### `GET /bears/:id`
 When the client makes a `GET` request to `/api/bears/:id` (remember, `:id` is a
 parameter embedded in the URL, not in the query-string):
 
-- Find the Bear document associated with the given `id`. If there's an error,
-  send that error as a JSON response, and set the status code to
-  `STATUS_SERVER_ERROR` (Internal Server Error).
+* If the _Bear_ with the specified `id` is not found, return HTTP status code `404` and the following JSON object: { message: "The Bear with the specified ID does not exist." }.
 
-- Otherwise, if everything is successful, send the Bear document as a JSON
-  response.
+* If there's an error in retrieving the _Bear_ from the database, cancel the request, respond with HTTP status code `500` and return the following JSON object: `{ error: "The information could not be retrieved." }`.
+
+### Additional Notes
+
+Remember to use `body-parser` to read information from the request body.
+
+**Stop the MongoDB database server when not in use to save computer resources**.
