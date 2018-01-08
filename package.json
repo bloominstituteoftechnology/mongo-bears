@@ -1,0 +1,16 @@
+{
+  "name": "mongo-I-mini",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/wildpow/mongo-I-mini.git",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Aaron Wilder <element1028@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.9"
+  }
+}
