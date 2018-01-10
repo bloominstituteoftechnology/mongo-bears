@@ -1,0 +1,26 @@
+{
+  "name": "mongo-i-mini",
+  "version": "1.0.0",
+  "description": "Topics:",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austie702/mongo-I-mini.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austie702/mongo-I-mini/issues"
+  },
+  "homepage": "https://github.com/austie702/mongo-I-mini#readme"
+}
