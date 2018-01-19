@@ -1,0 +1,19 @@
+{
+  "name": "mongo-i-mini",
+  "version": "1.0.0",
+  "description": "Topics:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nphillips78/mongo-I-mini.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nphillips78/mongo-I-mini/issues"
+  },
+  "homepage": "https://github.com/nphillips78/mongo-I-mini#readme"
+}
