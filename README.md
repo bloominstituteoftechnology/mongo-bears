@@ -6,8 +6,7 @@ Topics:
 * MongoDB
 * ODMs
 * Mongoose
-* Creating documents.
-* Performing basic queries.
+* Performing CRUD operations.
 
 ## Description
 
