@@ -50,11 +50,13 @@ After MongoDB is installed, follow the instructions on the documentation to star
 
 ### Connect API Server to MongoDB
 
-Add _mongoose_ to the project and use it to connect your API to the `bears` database in your MongoDB Server (local or remote). If the `bears` database does not exist, it will be created automatically by MongoDB. Modify the code inside `server.js` so that the API starts only after a successful connection to _MongoDB_ is stablished.
+Use _yarn_ or _npm_ to add _mongoose_ to to the project. 
 
-When the connection to MongoDB succeeds, start the API and show the following message to the console: _"Successfully Connected to MongoDB"_.
+Inside `server.js`, require _mongoose_  and use it to connect your API to the `bears` database in your MongoDB Server (local or remote). If the `bears` database does not exist, it will be created automatically by MongoDB.
 
-If there is an error connecting to the database, do **NOT** start the API and display the following message to the console: _"Database connection failed"_.
+When the connection to MongoDB succeeds, log the following message to the console: _"Successfully Connected to MongoDB"_.
+
+If there is an error connecting to the database, log the following message to the console: _"Database connection failed"_.
 
 ### Create Bear Schema and Model
 
