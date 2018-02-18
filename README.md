@@ -57,9 +57,9 @@ When the connection to MongoDB succeeds, log the following message to the consol
 
 If there is an error connecting to the database, log the following message to the console: _"Database connection failed"_.
 
-### Create Bear Schema and Model
+### Create Bear Schema
 
-Create a _Schema_ and a _Model_ for the _Bears_ collection. Each _Bear_ Model should conform to the following object structure:
+In a separate file, create a _Schema_ for the _Bears_ collection. Each _Bear_ document should conform to the following object structure:
 
 ```js
 {
@@ -68,6 +68,10 @@ Create a _Schema_ and a _Model_ for the _Bears_ collection. Each _Bear_ Model sh
   createdOn: Mon Aug 14 2017 12:50:16 GMT-0700 (PDT) // Date, required, defaults to current date
 }
 ```
+
+### Generate Bear Model
+
+Use _mongoose_ to generate a _Bear_ model that can be used to perform operations on _Bear Documents_. Remember to export the model to make it available for importing into other parts of the application.
 
 ### Create API Endpoints
 
