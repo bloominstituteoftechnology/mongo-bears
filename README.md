@@ -17,7 +17,7 @@ We will use Node.js and Express to write an API that can create and read Bears s
 
 For this project you need to have _MongoDB Community Edition_ installed and running. Having a local instance of _MongoDB_ running on your system is the preferred option.
 
-Alternatively, you can sign up for and use an account from a _Database As A Service_ provider like [Mongo Atlas](https://www.mongodb.com/cloud/atlas) or [mlab](https://mlab.com/). Both DBAAS providers offer a free tier with 500MB size limit that can be used for development and testing.
+Alternatively, you can sign up for an account from a _Database As A Service_ provider like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) or [mlab](https://mlab.com/). Both _DBAAS_ providers offer a free tier with 500MB size limit that can be used for development and testing.
 
 #### Using a Local MongoDB Server
 
@@ -31,12 +31,12 @@ After MongoDB is installed, follow the instructions on the documentation to star
  local  0.000GB
 ```
 
-## Getting the Starting Files
+## Getting the Starter Files
 
 1. **Fork** and **Clone** this repository.
 1. **CD into the folder** where you cloned the repository.
-1. Type `npm install` or `yarn` to download all dependencies listed inside `package.json`.
-1. After all dependencies finish downloading without errors, type `npm start` or `yarn start` to start the server.
+1. Type `yarn` or `npm install` to download all dependencies listed inside `package.json`.
+1. After all dependencies finish downloading without errors, type `yarn start` or `npm start` to start the server. 
 
 ## Use _Postman_ to Test the API.
 
