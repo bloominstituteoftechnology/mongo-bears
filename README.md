@@ -52,7 +52,7 @@ After MongoDB is installed, follow the instructions on the documentation to star
 
 Use _yarn_ or _npm_ to add _mongoose_ to to the project. 
 
-Inside `server.js`, require _mongoose_  and use it to connect your API to the `bears` database in your MongoDB Server (local or remote). If the `bears` database does not exist, it will be created automatically by MongoDB.
+Inside `server.js`, require _mongoose_  and use it to connect your API to the `bearkeeper` database in your MongoDB Server (local or remote). If the `bearkeeper` database does not exist, it will be created automatically by MongoDB.
 
 When the connection to MongoDB succeeds, log the following message to the console: _"Successfully Connected to MongoDB"_.
 
