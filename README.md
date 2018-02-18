@@ -36,7 +36,7 @@ After MongoDB is installed, follow the instructions on the documentation to star
 1. **Fork** and **Clone** this repository.
 1. **CD into the folder** where you cloned the repository.
 1. Type `yarn` or `npm install` to download all dependencies listed inside `package.json`.
-1. After all dependencies finish downloading without errors, type `yarn start` or `npm start` to start the server. 
+1. After all dependencies finish downloading without errors, type `yarn start` or `npm start` to start the server.
 
 ## Use _Postman_ to Test the API.
 
@@ -50,9 +50,9 @@ After MongoDB is installed, follow the instructions on the documentation to star
 
 ### Connect API Server to MongoDB
 
-Use _yarn_ or _npm_ to add _mongoose_ to to the project. 
+Use _yarn_ or _npm_ to add _mongoose_ to to the project.
 
-Inside `server.js`, require _mongoose_  and use it to connect your API to the `BearKeeper` database in your MongoDB Server (local or remote). If the `BearKeeper` database does not exist, it will be created automatically by MongoDB.
+Inside `server.js`, require _mongoose_ and use it to connect your API to the `BearKeeper` database in your MongoDB Server (local or remote). If the `BearKeeper` database does not exist, it will be created automatically by MongoDB.
 
 When the connection to MongoDB succeeds, log the following message to the console: _"Successfully Connected to MongoDB"_.
 
@@ -74,22 +74,26 @@ Create a _Schema_ and a _Model_ for the _Bears_ collection. Each _Bear_ Model sh
 
 Configure the API to respond to the following routes:
 
-| Method | Endpoint       | Description                                                          |
-| ------ | -------------- | -------------------------------------------------------------------- |
-| POST   | /api/bears     | Creates a bear using the information sent inside the `request body`. |
-| GET    | /api/bears     | Returns an array of all the bear objects contained in the database.  |
-| GET    | /api/bears/:id | Returns the bear object with the specified id.                       |
+| Method | Endpoint       | Description                                                                |
+| ------ | -------------- | -------------------------------------------------------------------------- |
+| POST   | /api/bears     | Creates a bear using the information sent inside the `request body`.       |
+| GET    | /api/bears     | Returns an array of all the bear objects contained in the database.        |
+| GET    | /api/bears/:id | Returns the bear object with the specified id.                             |
+| DELETE | /api/bears/:id | Removes the bear object with the specified id.                             |
+| PUT    | /api/bears/:id | Updates the bear with the specified id using data from the `request body`. |
 
 #### Endpoint Specifications
 
 When the client makes a `POST` request to `/api/bears`:
 
 * If the request body is missing the `species` or `latinName` property:
+
   * cancel the request.
   * respond with HTTP status code `400` (Bad Request).
   * return the following JSON response: `{ errorMessage: "Please provide both species and latinName for the Bear." }`.
 
 * If the information about the _Bear_ is valid:
+
   * save the new _Bear_ the the database.
   * return HTTP status code `201` (Created).
   * return the newly created _Bear Document_.
@@ -109,6 +113,7 @@ When the client makes a `GET` request to `/api/bears`:
 When the client makes a `GET` request to `/api/bears/:id`:
 
 * If the _Bear_ with the specified `id` is not found:
+
   * return HTTP status code `404` (Not Found).
   * return the following JSON object: `{ message: "The Bear with the specified ID does not exist." }`.
 
@@ -116,6 +121,30 @@ When the client makes a `GET` request to `/api/bears/:id`:
   * cancel the request.
   * respond with HTTP status code `500`.
   * return the following JSON object: `{ error: "The information could not be retrieved." }`.
+
+When the client makes a `DELETE` request to `/api/bears/:id`:
+
+* If the _Bear_ with the specified `id` is not found:
+
+  * return HTTP status code `404` (Not Found).
+  * return the following JSON object: `{ message: "The Bear with the specified ID does not exist." }`.
+
+* If there's an error in removing the _Bear_ from the database:
+  * cancel the request.
+  * respond with HTTP status code `500`.
+  * return the following JSON object: `{ error: "The Bear could not be removed" }`.
+
+When the client makes a `PUT` request to `/api/bears/:id`:
+
+* If the _Bear_ with the specified `id` is not found:
+
+  * return HTTP status code `404` (Not Found).
+  * return the following JSON object: `{ message: "The Bear with the specified ID does not exist." }`.
+
+* If there's an error when updating the _Bear_:
+  * cancel the request.
+  * respond with HTTP status code `500`.
+  * return the following JSON object: `{ error: "The Bear information could not be modified." }`.
 
 ### Additional Notes
 
