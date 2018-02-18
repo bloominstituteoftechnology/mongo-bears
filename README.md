@@ -1,6 +1,6 @@
 # Mongo I Mini Project
 
-Topics:
+## Topics:
 
 * Databases
 * MongoDB
