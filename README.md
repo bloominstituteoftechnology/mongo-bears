@@ -10,7 +10,7 @@ Topics:
 
 ## Description
 
-We will use Node.js and Express to write an API that can create and read Bears stored in a MongoDB Database.
+We will use Node.js and Express to write an API that can perform CRUD (Create, Read, Update and Destroy) operations on Bears stored in a MongoDB Database.
 
 ### Software Requirements
 
