@@ -73,13 +73,13 @@ Create a _Schema_ and a _Model_ for the _Bears_ collection. Each _Bear_ Model sh
 
 Configure the API to respond to the following routes:
 
-| Method | Endpoint       | Description                                                                |
-| ------ | -------------- | -------------------------------------------------------------------------- |
-| POST   | /api/bears     | Creates a bear using the information sent inside the `request body`.       |
-| GET    | /api/bears     | Returns an array of all the bear objects contained in the database.        |
-| GET    | /api/bears/:id | Returns the bear object with the specified id.                             |
-| DELETE | /api/bears/:id | Removes the bear object with the specified id.                             |
-| PUT    | /api/bears/:id | Updates the bear with the specified id using data from the `request body`. |
+| Method | Endpoint       | Description                                                                                                                |
+| ------ | -------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| POST   | /api/bears     | Creates a bear using the information sent inside the `request body`.                                                       |
+| GET    | /api/bears     | Returns an array of all the bear objects contained in the database.                                                        |
+| GET    | /api/bears/:id | Returns the bear object with the specified id.                                                                             |
+| DELETE | /api/bears/:id | Removes the bear with the specified id and returns the deleted bear.                                                       |
+| PUT    | /api/bears/:id | Updates the bear with the specified id using data from the `request body`. Returns the modified document, not the original |
 
 #### Endpoint Specifications
 
