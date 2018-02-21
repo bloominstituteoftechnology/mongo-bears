@@ -63,23 +63,19 @@ server.get('/api/bears/:id', (req, res) => {
 server.delete('/api/bears/:id', (req, res) => {
   const { id } = req.params;
 
-  Bear.findById(id)
-    .then(bear => {
-      Bear.findByIdAndRemove(bear._id)
-        .then(deletedBear => {
-          res.status(200).send(deletedBear);
-          return;
-        })
-        .catch(err => {
-          res.status(500).send({
-            error: 'The Bear could not be removed',
-          });
-          return;
+  Bear.findByIdAndRemove(id)
+    .then(deletedBear => {
+      if (deletedBear === null) {
+        res.status(404).json({
+          message: 'The Bear with the specified ID does not exist.',
         });
+      }
+      res.status(200).send(deletedBear);
+      return;
     })
     .catch(err => {
-      res.status(404).json({
-        message: 'The Bear with the specified ID does not exist.',
+      res.status(500).send({
+        error: 'The Bear could not be removed',
       });
       return;
     });
@@ -89,25 +85,21 @@ server.put('/api/bears/:id', (req, res) => {
   const { id } = req.params;
   const updatedBear = req.body;
 
-  Bear.findById(id)
-    .then(bear => {
-      Bear.findByIdAndUpdate(bear._id, updatedBear, { new: true })
-        .then(updatedBear => {
-          res.status(200).send(updatedBear);
-          return;
-        })
-        .catch(err => {
-          res.status(500).send({
-            error: 'The Bear information could not be modified.',
-          });
-          return;
+  Bear.findByIdAndUpdate(bear._id, updatedBear, { new: true })
+    .then(updatedBear => {
+      if (updatedBear === null) {
+        res.status(404).json({
+          message: 'The Bear with the specified ID does not exist.',
         });
+      }
+
+      res.status(200).send(updatedBear);
+      return;
     })
     .catch(err => {
-      res.status(404).json({
-        message: 'The Bear with the specified ID does not exist.',
+      res.status(500).send({
+        error: 'The Bear information could not be modified.',
       });
-      return;
     });
 });
 
