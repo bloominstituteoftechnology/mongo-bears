@@ -17,7 +17,7 @@ bearsRouter.post('/', (req, res) => {
             res.status(201).json(savedBear);
         })
         .catch(err => {
-            res.status(500).json({ message: `error creating bear ${err}`});
+            res.status(500).json({ message: `error creating bear: ${err}`});
         })
 });
 
@@ -27,14 +27,14 @@ bearsRouter.post('/', (req, res) => {
              res.status(200).json(bears);
          })
          .catch(err => {
-             res.status(500).json({ message: `error getting the bears ${err}`});
+             res.status(500).json({ message: `error getting the bears: ${err}`});
          });
  });
 
  bearsRouter.get('/:id', (req, res) => {
      const { id } = req.params;
 
-     BearKeeper.find(id)
+     BearKeeper.findById(id)
          .then(newBear => { 
              if (!newBear) {
                  res.status(400).json({ message: `bear with the specified id does not exist.`})
