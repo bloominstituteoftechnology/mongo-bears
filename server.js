@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const server = express();
 
@@ -12,6 +13,15 @@ server.use(bodyParser.json());
 server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
+
+mongoose
+  .connect('mongodb://localhost/daBears')
+  .then(pass => {
+    console.log('Connected to MONGO')
+  })
+  .catch(fail => {
+    console.log(fail)
+  });
 
 const port = process.env.PORT || 5005;
 server.listen(port, () => {
