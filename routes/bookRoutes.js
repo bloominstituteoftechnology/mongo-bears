@@ -31,6 +31,19 @@ const routes = (Bear) => {
         .catch(err => {
           res.status(500).json('Error finding bear');
         });
+    })
+    .put((req, res) => {
+      Bear.findById(req.params.id)
+        .then(bear => {
+          bear.species = req.body.species;
+          bear.latinName = req.body.latinName
+          bear.save(savedBear => {
+            res.status(201).json(savedBear);
+          });
+        })
+        .catch(err => {
+          res.status(500).json('Error finding bear');
+        })
     });
     return bearRouter;
 };
