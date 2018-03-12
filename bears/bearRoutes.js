@@ -21,9 +21,30 @@ bearsRouter.post("/", (req, res) => {
       res.send(savedBear);
     })
     .catch(err => {
-      // console.log('save error is', err);
+      if (err.name === "ValidationError") {
+        res.status(STATUS_BAD_REQUEST);
+        res.send({
+          errorMessage:
+            "Please provide both species and latinName for the Bear."
+        });
+      } else {
+        res.status(STATUS_USER_ERROR);
+        res.send({
+          error: "There was an error while saving the Bear to the Database."
+        });
+      }
+    });
+});
+
+bearsRouter.get("/", (req, res) => {
+  Bear.find({})
+    .then(bears => {
+      res.status(STATUS_SUCCESS);
+      res.send(bears);
+    })
+    .catch(err => {
       res.status(STATUS_USER_ERROR);
-      res.send({ error: "There was an error while saving the Bear to the Database" });
+      res.send({ error: "The information could not be retrieved." });
     });
 });
 

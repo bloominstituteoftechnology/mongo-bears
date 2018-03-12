@@ -4,7 +4,7 @@ const cors = require("cors"); // https://www.npmjs.com/package/cors
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 
-const bearsRouter = require('./bears/BearModel.js');
+const bearsRouter = require('./bears/bearRoutes.js');
 
 const server = express();
 
