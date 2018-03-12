@@ -21,7 +21,7 @@ mongoose
   })
   .catch(err => {
     console.log('error connect to mongo');
-	});
+});
 
 server.use('/api/bears', bearRoutes);
 
