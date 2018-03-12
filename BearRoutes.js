@@ -20,21 +20,34 @@ bearsRouter.post('/', (req, res) => {
   const bearInfo = req.body;
   const bear = new Bear(bearInfo);
 
-  bear.save()
+  bear
+    .save()
     .then(savedBear => {
       res.status(201).json(savedBear);
     })
     .catch(err => {
-      res.status(500).json({ msg: 'error creating bear', error: err });
+      res.status(500).json({msg: 'error creating bear', error: err});
     });
-})
+});
 
 bearsRouter.get('/:id', (req, res) => {
-  const { id } = req.params;
+  const {id} = req.params;
   Bear.findById(id, (err, bear) => {
-    if (err) res.status(500).json({msg: 'error getting bear', error: err });
+    if (err) res.status(500).json({msg: 'error getting bear', error: err});
     res.status(201).json(bear);
-  })
-})
+  });
+});
+
+bearsRouter.put('/:id', (req, res) => {
+  const {id} = req.params;
+  const bear = req.body;
+  Bear.findByIdAndUpdate(id, bear, {new: true}, (err, updatedBear) => {
+    if (!updatedBear)
+      res
+        .status(404)
+        .json({message: 'The bear with the specified ID does not exist'});
+    res.status(201).json(updatedBear);
+  });
+});
 
 module.exports = bearsRouter;
