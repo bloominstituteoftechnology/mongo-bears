@@ -5,11 +5,8 @@ const helmet = require('helmet');
 const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-<<<<<<< HEAD
-=======
 
 const bearRouter = require('./BearKeeper/bearRoutes');
->>>>>>> 17da6ba2e7569e1252a77600b35595a90200df57
 
 const server = express();
 
