@@ -5,15 +5,18 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const server = express();
+const bearRouter = require('./bears/BearRoutes');
 
 server.use(helmet()); // https://helmetjs.github.io/
 server.use(cors());   // https://medium.com/trisfera/using-cors-in-express-cac7e29b005b
 server.use(bodyParser.json());
 
 
-server.get('/', function(req, res) {
-  res.status(200).json({ status: 'API Running' });
-});
+// server.get('/', function(req, res) {
+//   res.status(200).json({ status: 'API Running' });
+// });
+
+server.use('/', bearRouter);
 
 
 mongoose
