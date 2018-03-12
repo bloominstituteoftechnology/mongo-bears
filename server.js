@@ -3,6 +3,7 @@ const helmet = require('helmet');
 const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bearRouter = require('./Bears/BearRoutes');
 
 const server = express();
 
@@ -13,6 +14,8 @@ server.use(bodyParser.json());
 server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
+
+server.use('/api/bears', bearRouter);
 
 mongoose
   .connect('mongodb://localhost/BearKeeper')
