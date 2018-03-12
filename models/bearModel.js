@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const BearSchema = new mongoose.Schema({
-  species: String,
-  latinName: String,
+  species: { type: String, required: true },
+  latinName: { type: String, required: true },
   createdOn: { type: Date, default: Date.now }
 });
 
