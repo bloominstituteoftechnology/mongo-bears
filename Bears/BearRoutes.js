@@ -6,4 +6,21 @@ bearRouter.get('/', function(req, res) {
   res.status(200).json({ status: 'your shit is not fucked up' });
 });
 
+bearRouter.post('/', function(req, res) {
+  const bearInfo = req.body;
+  const { species, latinName } = bearInfo;
+  if (!species  || !latinName) {
+    res.status(400).json({ errorMessage: 'Please provide both species and latinName for the Bear.' });
+  }
+  const bear = new Bear(bearInfo);
+  console.log(bear);
+  bear.save()
+    .then(savedBear => {
+      res.status(201).json(savedBear);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'There was an error while saving the Bear to the Database' });
+    });
+});
+
 module.exports = bearRouter;
