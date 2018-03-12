@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 
 const server = express();
 
+const bearsRouter = require("./bears/bearRoutes");
+
 server.use(helmet()); // https://helmetjs.github.io/
 server.use(cors()); // https://medium.com/trisfera/using-cors-in-express-cac7e29b005b
 server.use(bodyParser.json());
@@ -13,6 +15,8 @@ server.use(bodyParser.json());
 server.get("/", function(req, res) {
   res.status(200).json({ status: "API Running" });
 });
+
+server.use("/api/bears", bearsRouter);
 
 mongoose
   .connect("mongodb://localhost/BearKeeper")
