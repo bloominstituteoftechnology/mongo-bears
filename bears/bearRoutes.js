@@ -10,7 +10,6 @@ bearsRouter.post('/', function(req, res) {
 	const bear = new Bear(bearInfo);
 	bear.save()
 	.then(savedBear => {
-		console.log(savedBear);
 		res.status(201).json(savedBear);
 	}).catch(err => {
 		res.status(500).json({ error: "There was an error while saving the Bear to the Database" });
@@ -55,7 +54,6 @@ bearsRouter.put('/:id', function(req, res) {
 	const id = req.params.id;
 	const bear = req.body;
 	Bear.findByIdAndUpdate(id, bear, {new: true}).then(bear => {
-		console.log(bear);
 		res.json(bear);
 	}).catch(err => {
 		if(err.reason === undefined){
