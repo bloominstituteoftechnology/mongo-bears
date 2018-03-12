@@ -31,7 +31,6 @@ bearsRouter.get('/api/bears', function(req, res) {
 
 bearsRouter.get('/api/bears/:id', function(req, res) {
   const bearId = req.query.params;
-  // console.log("Nope..params isn't it", bearId);
   Bear.findOne(bearId)
     .then(bear => {
       res.status(200).json(bear)
@@ -40,6 +39,23 @@ bearsRouter.get('/api/bears/:id', function(req, res) {
       res.status(500).json({ msg: 'Error getting bears', error: err })
     });
 });
+
+bearsRouter.put('/api/bears/:id', function(req, res) {
+  const bearId = req.query.params.id;
+  console.log("bearId is:", bearId)
+  const updateBear = req.body;
+  console.log("before update:", updateBear);
+  Bear.findOneAndUpdate(bearId, updateBear, {upsert: true, returnNewDocument:true} )
+    .then(abc => {
+      console.log(abc)
+      // res.status(200).json(abc)
+    })
+    .catch(err => {
+      res.status(500).json({ msg: 'Error getting bears', error: err })
+    });
+});
+
+
 
 module.exports = bearsRouter;
 
