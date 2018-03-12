@@ -17,7 +17,7 @@ bearRouter.get('/:id', function(req, res) {
   Bear.findById({ _id: id })
     .then(bear => {
       if (!bear) {
-        res.status(404).json({ message: 'The Bear with the specified ID does not exist' });
+        res.status(404).json({ message: 'The Bear with the specified ID does not exist in the database' });
       }
       res.status(200).json(bear);
     })
@@ -47,7 +47,7 @@ bearRouter.delete('/:id', function(req, res) {
   Bear.findByIdAndRemove(id)
     .then(bear => {
       if (!bear) {
-        res.status(404).json({ message: 'The Bear with the specified ID does not exist.' });
+        res.status(404).json({ message: 'The Bear with the specified ID does not exist in the database.' });
       }
       res.status(200).json(bear);  
     })
@@ -61,7 +61,7 @@ bearRouter.put('/:id', function(req, res) {
   Bear.findByIdAndUpdate(id, req.body, {new: true})
     .then(bear => {
       if (!bear) {
-        res.status(404).json({ message: 'The Bear with the specified ID does not exist.' });
+        res.status(404).json({ message: 'The Bear with the specified ID does not exist in the database.' });
       }
       res.status(200).json(bear);
     })
