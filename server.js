@@ -13,6 +13,7 @@ const bearRouter = express.Router();
 
 app.use(helmet()); // https://helmetjs.github.io/
 app.use(cors());   // https://medium.com/trisfera/using-cors-in-express-cac7e29b005b
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 bearRouter.route('/bears')
@@ -24,6 +25,11 @@ bearRouter.route('/bears')
         res.json(bears);
       }
     })
+  })
+  .post((req, res) => {
+    const bear = new Bear();
+    console.log(bear);
+    res.send(bear);
   });
 
 bearRouter.route('/bears/:id')
