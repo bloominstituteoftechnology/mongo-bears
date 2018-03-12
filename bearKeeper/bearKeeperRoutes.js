@@ -32,17 +32,28 @@ bearKeeperRouter.get('/', function(req, res) {
 
 bearKeeperRouter.get('/:id', function(req, res) {
   bearKeeper
-    .findById(req.params.id/*, function(err) {
+    .findById(req.params.id, (err, bear) => {
       if (err) {
-        res.status(404).json({message: "The Bear with the specified ID does not exist."});
+        return res.status(404).json({message: "The Bear with the specified ID does not exist."});
       }
-    }*/)
-    .then(bear => {
-      res.status(200).json(bear);
+      return res.status(200).json(bear);
     })
     .catch(err => {
       res.status(500).json({error: 'The information could not be retrieved.'});
     });
+});
+
+bearKeeperRouter.delete('/:id', function(req, res) {
+  bearKeeper
+    .findByIdAndRemove(req.params.id, (err, bear) => {
+      if (err) {
+        return res.status(404).json({message: "The Bear with the specified ID does not exist."});
+      }
+      return res.status(200).json(bear);
+    })
+    .catch(err => {
+      res.status(500).json({error: 'The Bear could not be removed.'});
+    })
 });
 
 module.exports = bearKeeperRouter;
