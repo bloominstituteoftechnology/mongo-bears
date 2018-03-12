@@ -12,16 +12,16 @@ server.use(helmet()); // https://helmetjs.github.io/
 server.use(cors());   // https://medium.com/trisfera/using-cors-in-express-cac7e29b005b
 server.use(bodyParser.json());
 
+server.get('/', function(req,res){
+  res.status(200).json({status: 'API running now'});
+})
 
-
-
-
-
+server.use('/api/bears', bearRouter);
 
 
   mongoose
     .connect('mongodb://localhost/BearKeeper')
-    .then(db => {
+    .then(connect => {
       console.log('connected to mongo')
     })
     .catch(err => {
