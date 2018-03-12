@@ -26,6 +26,17 @@ bearRouter.route('/bears')
     })
   });
 
+bearRouter.route('/bears/:id')
+  .get((req, res) => {
+    Bear.findById(req.params.id, (err, bear) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(bear);
+      }
+    });
+  });
+
 app.use('/api', bearRouter);
 
 app.get('/', function(req, res) {
