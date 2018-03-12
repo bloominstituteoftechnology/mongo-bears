@@ -1,5 +1,5 @@
 const express = require('express');
-
+const mongoose = require('mongoose');
 const Bear = require('./bearmodels.js');
 
 const bearsRouter = express.Router();
@@ -29,4 +29,17 @@ bearsRouter.get('/api/bears', function(req, res) {
     });
 });
 
+bearsRouter.get('/api/bears/:id', function(req, res) {
+  const bearId = req.query.params;
+  // console.log("Nope..params isn't it", bearId);
+  Bear.findOne(bearId)
+    .then(bear => {
+      res.status(200).json(bear)
+    })
+    .catch(err => {
+      res.status(500).json({ msg: 'Error getting bears', error: err })
+    });
+});
+
 module.exports = bearsRouter;
+
