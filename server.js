@@ -18,29 +18,32 @@ app.use(bodyParser.json());
 
 bearRouter.route('/bears')
   .get((req, res) => {
-    Bear.find((err, bears) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.json(bears);
-      }
+    Bear.find({})
+    .then(bears => {
+      res.status(200).json(bears);
+    })
+    .catch(err => {
+      res.status(500).json({ err: 'Error creating bear' });
     })
   })
   .post((req, res) => {
-    const bear = new Bear();
-    console.log(bear);
-    res.send(bear);
+    const bear = new Bear(req.body);
+    bear.save().then(savedBear => {
+      res.status(201).json(savedBear);
+    }).catch(err => {
+      res.status(500).json({ err: 'Error creating bear' });
+    });
   });
 
 bearRouter.route('/bears/:id')
   .get((req, res) => {
-    Bear.findById(req.params.id, (err, bear) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.json(bear);
-      }
-    });
+    Bear.findById(req.params.id)
+      .then(id => {
+        res.status(200).json(id);
+      })
+      .catch(err => {
+        res.status(500).json('Error finding bear');
+      });
   });
 
 app.use('/api', bearRouter);
