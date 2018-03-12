@@ -1,8 +1,8 @@
 const express = require('express');
-const Bears = require('./bearSchema.js');
+const Bears = require('./BearModel.js');
 
 //Bears
-
+const bearRoutes = express.Router();
 bearRoutes.get('/api/bears', function (req, res) {
   Bear.find({})
     .then(bears => {
