@@ -32,11 +32,13 @@ bearKeeperRouter.get('/', function(req, res) {
 
 bearKeeperRouter.get('/:id', function(req, res) {
   bearKeeper
-    .findById(req.params.id, (err, bear) => {
-      if (err) {
-        return res.status(404).json({message: "The Bear with the specified ID does not exist."});
+    .findById(req.params.id)
+    .then(bear => {
+      if (!bear) {
+        res.status(404).json({message: "The Bear with the specified ID does not exist."});
+      } else{
+        res.status(200).json(bear);
       }
-      return res.status(200).json(bear);
     })
     .catch(err => {
       res.status(500).json({error: 'The information could not be retrieved.'});
@@ -45,11 +47,13 @@ bearKeeperRouter.get('/:id', function(req, res) {
 
 bearKeeperRouter.delete('/:id', function(req, res) {
   bearKeeper
-    .findByIdAndRemove(req.params.id, (err, bear) => {
-      if (err) {
-        return res.status(404).json({message: "The Bear with the specified ID does not exist."});
+    .findByIdAndRemove(req.params.id)
+    .then(bear => {
+      if(!bear) {
+        res.status(404).json({message: "The Bear with the specified ID does not exist."});
+      } else {
+        res.status(200).json(bear);
       }
-      return res.status(200).json(bear);
     })
     .catch(err => {
       res.status(500).json({error: 'The Bear could not be removed.'});
@@ -58,11 +62,12 @@ bearKeeperRouter.delete('/:id', function(req, res) {
 
 bearKeeperRouter.put('/:id', function(req, res) {
   bearKeeper
-    .findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, bear) => {
-      if (err) {
-        return res.status(404).json({message: "The Bear with the specified ID does not exist."});
-      }
-      return res.status(200).json(bear);
+    .findByIdAndUpdate(req.params.id, req.body, {new: true})
+    .then(bear => {
+      if (!bear) {
+       res.status(404).json({message: "The Bear with the specified ID does not exist."});
+      } else
+      res.status(200).json(bear);
     })
     .catch(err => {
       res.status(500).json({error: 'The Bear information could not be modified.'});
