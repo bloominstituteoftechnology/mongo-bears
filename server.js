@@ -4,7 +4,7 @@ const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Bear = require('./BearModel.js'); 
+const bearRouter = require('./BearRoutes.js');
 
 const server = express();
 
@@ -16,77 +16,7 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
-
-server.post('/api/bears', (req, res) => {
-  const { species, latinName, createdOn } = req.body;
-  if (!species || !latinName) {
-    res.status(400).json({ errorMessage: "Please provide both species and latinName for the Bear."});
-    return;
-  }
-  const bear = new Bear({ species, latinName, createdOn });
-  bear.save()
-  .then(savedBear => {
-    res.status(201).json(savedBear);
-  })
-  .catch(err => {
-    res.status(500).json({ errorMessage: "There was an error while saving the Bear to the Database"})
-  })
-})
-
-server.get('/api/bears', (req, res) => {
-  Bear.find({})
-    .then(bears => {
-      res.status(200).json(bears);
-    })
-    .catch(err => {
-      res.statu(500).json({ error: "The information could not be retrieved."})
-    })
-})
-
-server.get('/api/bears/:id', (req, res) => {
-  const { id } = req.params;
-  Bear.count({_id: id}, (err, count)=> {
-    if (!count > 0){
-      res.status(404).json({ message: "The Bear with the specified ID does not exist." })
-    }
-  })
-  Bear.findById(id, (err, bear) => {
-    if (err) {
-      res.status(500).json({ message: "The information could not be retreived."})
-    }
-    res.json(bear);
-  })
-})
-
-server.delete('/api/bears/:id', (req, res) => {
-  const { id } = req.params;
-  Bear.count({_id: id}, (err, count)=> {
-    if (!count > 0){
-      res.status(404).json({ message: "The Bear with the specified ID does not exist." })
-    }
-  })
-  Bear.findByIdAndRemove(id, (err) => {
-    if (err) {
-      res.status(500).json({ error: "The Bear could not be removed" })
-    }
-    res.json({ success: "Successfully removed bear"});
-  })
-})
-
-server.put('/api/bears/:id', (req, res) => {
-  const { id } = req.params;
-  Bear.count({_id: id}, (err, count)=> {
-    if (!count > 0){
-      res.status(404).json({ message: "The Bear with the specified ID does not exist." })
-    }
-  })
-  Bear.findByIdAndUpdate(id, {$set: req.body}, (err, bear) => {
-    if (err) {
-      res.status(500).json({ error: "The Bear information could not be modified" })
-    }
-    res.json({ success: "The Bear information was successfully modified"});
-  })
-})
+server.use('/api/bears', bearRouter);
 
   mongoose.connect('mongodb://localhost/store')
     .then(conn => {
