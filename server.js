@@ -41,7 +41,20 @@ server.post('/api/bears', (req, res) => {
       });
   }
 });
-
+// return all bears
+server.get('/api/bears', (req, res) => {
+  Bear.find()
+    .then(bears => {
+      res
+        .status(200)
+        .json(bears);
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({ error: 'Couldnt get em'});
+    });
+});
 
 mongoose
   .connect('mongodb://localhost/BearKeeper')
