@@ -12,6 +12,22 @@ bearRouter.get('/', function(req, res) {
     });
 });
 
+bearRouter.get('/:id', function(req, res) {
+  const id = req.params.id;
+  console.log(typeof id);
+  Bear.findOne({ _id: id })
+    .then(bear => {
+      if (bear) {
+        res.status(200).json({ bear });
+      } else {
+        res.status(500).json({ error: 'The information could not be retrieved' });
+      }      
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'The information could not be retrieved' });
+    });
+});
+
 bearRouter.post('/', function(req, res) {
   const bearInfo = req.body;
   const { species, latinName } = bearInfo;
