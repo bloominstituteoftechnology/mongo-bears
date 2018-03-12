@@ -33,4 +33,21 @@ BearRouter.get('/api/bears', function(req, res) {
 			});
    });
 })
+
+BearRouter.get('/api/bears/:id', function(req, res) {
+    const { id } = req.query;
+		  console.log(Bear);
+	/*	if (!Bear.find({ id: id})
+		  res.status(404).json({ message: "The Bear with the specified ID does not exist." 
+		});*/
+
+		Bear.find({})
+	  .then(bears => {
+				res.status(200).json(bears);
+		})
+     .catch(err => {
+				 res.status(500).json({  error: "The information could not be retrieved." 
+  	});
+});
+})
 module.exports = BearRouter;		 
