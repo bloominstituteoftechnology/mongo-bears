@@ -19,7 +19,7 @@ server.get('/', function(req, res) {
 server.use('/api/bears', bearRouter);
 
 mongoose
-  .connect('mongodb://localhost/BearkKeeper')
+  .connect('mongodb://localhost/BearKeeper')
   .then(conn => {
     console.log('connected to mongo');
   })
