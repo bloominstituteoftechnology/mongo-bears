@@ -14,6 +14,15 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
+mongoose
+  .connect('mongodb://localhost/')
+  .then(conn => {
+    console.log('Connected to Mongo');
+  })
+  .catch(err => { 
+    console.log('Error connect to Mongo');
+  })
+
 const port = process.env.PORT || 5005;
 server.listen(port, () => {
   console.log(`API running on http://localhost:${port}.`);

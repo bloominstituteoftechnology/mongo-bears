@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BearKeeper = new mongoose.Schema({
+const BearKeeperSchema = new mongoose.Schema({
     species: {
         type: String,
         required: true,
@@ -13,4 +13,8 @@ const BearKeeper = new mongoose.Schema({
         type: Date,
         required: true,
     }
-})
+});
+
+const BearKeeperModel = mongoose.model('BearKeeper', BearKeeperSchema);
+
+module.exports = BearKeeperModel;
