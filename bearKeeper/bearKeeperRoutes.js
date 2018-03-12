@@ -30,15 +30,19 @@ bearKeeperRouter.get('/', function(req, res) {
     });
 });
 
-// bearKeeperRouter.get('/:id', function(req, res) {
-//   bearKeeper
-//     .find({})
-//     .then(bears => {
-//       res.status(200).json(bears);
-//     })
-//     .catch(err => {
-//       res.status(404).json({error: 'The Bear with the specified id does not exist.'});
-//     });
-// });
+bearKeeperRouter.get('/:id', function(req, res) {
+  bearKeeper
+    .findById(req.params.id/*, function(err) {
+      if (err) {
+        res.status(404).json({message: "The Bear with the specified ID does not exist."});
+      }
+    }*/)
+    .then(bear => {
+      res.status(200).json(bear);
+    })
+    .catch(err => {
+      res.status(500).json({error: 'The information could not be retrieved.'});
+    });
+});
 
 module.exports = bearKeeperRouter;
