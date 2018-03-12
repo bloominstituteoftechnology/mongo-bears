@@ -80,6 +80,54 @@ server.get('/api/bears/:id', (req, res) => {
       }
     });
 });
+// find by id and remove
+server.delete('/api/bears/:id', (req, res) => {
+  const id = req.params.id;
+  Bear.findByIdAndRemove(id)
+    .then(bear => {
+      if (bear) {
+        res.status(200).json(bear);
+      } else {
+        res.status(404).json({ message: 'couldnt find bear' });
+      }
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({ error: 'could not get bear'});
+    });
+});
+// replace data with supplied id
+server.put('/api/bears/:id', (req, res) => {
+  const id = req.params.id;
+  const { species, latinName } = req.body;
+
+  if (species && latinName) {
+    Bear.findByIdAndUpdate(id, req.body)
+      .then(updatedBear => {
+        if (updatedBear) {
+          res.status(201).json(updatedBear);
+        } else {
+          res
+            .status(404)
+            .json({ error: `bear with id: ${id} doesnt exist` });
+        }
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .json({
+            error: 'error updating bear'
+          });
+      });
+  } else {
+    res
+      .status(500)
+      .json({
+        errorMessage: 'did not provide both species and latin name'
+      });
+  }
+});
 
 mongoose
   .connect('mongodb://localhost/BearKeeper')
