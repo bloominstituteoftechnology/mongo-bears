@@ -11,8 +11,7 @@ const BearSchema = new mongoose.Schema({
   },
   createdOn: {
     type: Date,
-    required: true,
-    default: true,
+    default: Date.now,
   }
 })
 
