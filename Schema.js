@@ -12,7 +12,7 @@ const BearSchema = new mongoose.Schema({
 	createdOn: {
 	  type: Date,
 		required: true,
-		default: Date.now
+		default: Date.now(),
    },
 });
 

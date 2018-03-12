@@ -6,6 +6,9 @@ const BearRouter = express.Router();
 
 BearRouter.post('/api/bears', function(req, res) {
 		const BearInfo = req.body
+     if (!BearInfo.species || !BearInfo.latinName)
+        res.status(400).json({ errorMessage: "Please provide both species and and latinName for the Bear."
+     });
 
 		const bear = new Bear(BearInfo);
 
@@ -15,10 +18,10 @@ BearRouter.post('/api/bears', function(req, res) {
 				 res.status(201).json(savedBear);
 		})
 		 .catch(err => {
-			console.log(err);	 
-			 res.status(400).json({ errorMessage: "Please provide both species and latinName for the Bear." });
+			 res.status(500).json({ error: "There was an error while saving the Bear to the Database"
 		});
-});
+	});
+})
 
 BearRouter.get('/api/bears', function(req, res) {
 		Bear.find({})
@@ -26,8 +29,8 @@ BearRouter.get('/api/bears', function(req, res) {
 				res.status(200).json(bears);
 		 })
 			.catch(err => {
-					res.status(500).json({ error: "The information could not be retrieved." });
+					res.status(500).json({ error: "The information could not be retrieved."
 			});
-});
-
+   });
+})
 module.exports = BearRouter;		 
