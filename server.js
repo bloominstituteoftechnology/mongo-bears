@@ -16,10 +16,10 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
-server.use('./bears', bearsRouter);
+server.use('/api/bears', bearsRouter);
 
 mongoose
-  .connect('mongodb://localhost/zoo')
+  .connect('mongodb://localhost/api')
   .then(conn => {
     console.log('Connected to Mongo');
   })
