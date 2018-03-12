@@ -87,8 +87,7 @@ bearRouter.delete('/api/bears/:id', (req, res) => {
 bearRouter.put('/api/bears/:id', (req, res) => {
   const { id } = req.params;
  
-
-  BearDocuments.findByIdAndUpdate(id, req.body)
+  BearDocuments.findByIdAndUpdate(id, req.body, {new: true})
     .then(bear => {
       if (!bear) {
       res.status(404)
