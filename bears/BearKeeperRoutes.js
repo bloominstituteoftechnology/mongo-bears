@@ -62,16 +62,21 @@ bearsRouter.delete('/:id', (req, res) => {
     });
 });
 
-// bearsRouter.put('/api/bear s/:id', (req, res) => {
-//     const bearInfo = req.body;
-//     const bear = new Bear(bearInfo);
+bearsRouter.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const bearInfo = req.body;
 
-//     //Update bear
-//     .then()
-//     .catch(err => {
-//         res.status(500).json({ message: `error deleting the bear: ${err}`})
-//     })
-// });
+    BearKeeper.findByIdAndUpdate(id, bearInfo)
+    .then(bear => {
+        if (!bear) {
+            res.status(404).json({ message: `The Bear with the specified ID does not exist.` });
+        }
+        res.status(200).json(bear);
+    })
+    .catch(err => {
+        res.status(500).json({ error: "The Bear information could not be modified." })
+    });
+});
 
 
 module.exports = bearsRouter;
