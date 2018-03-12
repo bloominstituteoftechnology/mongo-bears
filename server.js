@@ -50,6 +50,41 @@ server.get("/api/bears", (req, res) => {
     });
 });
 
+server.get("/api/bears/:id", (req, res) => {
+  const bearId = req.params.id;
+  Bear.findById(bearId)
+    .then(bear => {
+      res.status(200).json(bear);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error });
+    });
+});
+
+server.delete("/api/bears/:id", (req, res) => {
+  const bearId = req.params.id;
+  console.log(bearId);
+  Bear.findByIdAndRemove(bearId)
+    .then(bear => {
+      res.status(200).json(bear);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error });
+    });
+});
+
+server.put("/api/bears/:id", (req, res) => {
+  const { id } = req.params;
+  const { species, latinName } = req.body;
+  Bear.findByIdAndUpdate(id, req.body)
+    .then(bear => {
+      res.status(201).json(bear);
+    })
+    .catch(error => {
+      res.status(500).json({ error: error });
+    });
+});
+
 const port = process.env.PORT || 5005;
 server.listen(port, () => {
   console.log(`API running on http://localhost:${port}.`);
