@@ -13,15 +13,13 @@ bearRouter.get('/', function(req, res) {
 });
 
 bearRouter.get('/:id', function(req, res) {
-  const id = req.params.id;
-  console.log(typeof id);
-  Bear.findOne({ _id: id })
+  const { id } = req.params;
+  Bear.findById({ _id: id })
     .then(bear => {
-      if (bear) {
-        res.status(200).json({ bear });
-      } else {
-        res.status(500).json({ error: 'The information could not be retrieved' });
-      }      
+      if (!bear) {
+        res.status(404).json({ message: 'The Bear with the specified ID does not exist' });
+      }
+      res.status(200).json(bear);
     })
     .catch(err => {
       res.status(500).json({ error: 'The information could not be retrieved' });
@@ -41,6 +39,34 @@ bearRouter.post('/', function(req, res) {
     })
     .catch(err => {
       res.status(500).json({ error: 'There was an error while saving the Bear to the Database' });
+    });
+});
+
+bearRouter.delete('/:id', function(req, res) {
+  const { id } = req.params;
+  Bear.findByIdAndRemove(id)
+    .then(bear => {
+      if (!bear) {
+        res.status(404).json({ message: 'The Bear with the specified ID does not exist.' });
+      }
+      res.status(200).json(bear);  
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'The Bear could not be removed' });
+    });
+});
+
+bearRouter.put('/:id', function(req, res) {
+  const { id } = req.params;
+  Bear.findByIdAndUpdate(id, req.body, {new: true})
+    .then(bear => {
+      if (!bear) {
+        res.status(404).json({ message: 'The Bear with the specified ID does not exist.' });
+      }
+      res.status(200).json(bear);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'The Bear could not be modified' });
     });
 });
 
