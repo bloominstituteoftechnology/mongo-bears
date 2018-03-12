@@ -3,15 +3,16 @@ const mongoose = require('mongoose');
 const BearSchema = new mongoose.Schema({
   species: {
     type: String,
-    require: true,
+    required: true,
   },
   latinName: {
     type: String,
-    require: true,
+    required: true,
   },
   createdOn: {
+    default: Date.now(),
     type: Date,
-    require: true,
+    required: true,
   },
 });
 
