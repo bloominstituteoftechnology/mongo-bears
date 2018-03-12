@@ -4,6 +4,8 @@ const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const bearsRouter = require('./bears/BearKeeperRoutes');
+
 const server = express();
 
 server.use(helmet()); // https://helmetjs.github.io/
@@ -14,8 +16,10 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
+server.use('./bears', bearsRouter);
+
 mongoose
-  .connect('mongodb://localhost/')
+  .connect('mongodb://localhost/zoo')
   .then(conn => {
     console.log('Connected to Mongo');
   })
