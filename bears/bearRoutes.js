@@ -1,33 +1,40 @@
 const express = require('express');
 
-const Product = require('./BearModel.js');
+const Bear = require('./BearModel.js');
 
 const bearsRouter = express.Router();
 
 // /products
 bearsRouter.post('/', function(req, res) {
-  // const productInfo = req.body;
-
-  // const product = new Product(productInfo);
-
-  // product
-  //   .save()
-  //   .then(savedProduct => {
-  //     res.status(201).json(savedProduct);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({ msg: 'error creating product', error: err });
-  //   }); // returns a promise
+	const bearInfo = req.body;
+	const bear = new Bear(bearInfo);
+	bear.save()
+	.then(savedBear => {
+		console.log(savedBear);
+		res.status(201).json(savedBear);
+	}).catch(err => {
+		res.send({msg: 'error creating bear', error: err});
+	});
 });
 
 bearsRouter.get('/', function(req, res) {
-  // Product.find({})
-  //   .then(products => {
-  //     res.status(200).json(products);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).json({ msg: 'error gettin the products', error: err });
-  //   });
+	Bear.find({})
+	.then(bears => {
+		res.json(bears);
+	})
+	.catch(err => {
+		res.json({error: err});
+	});
+});
+
+
+bearsRouter.get('/:id', function(req, res) {
+	const id = req.params.id;
+	Bear.findById(id).then(bear => {
+		res.json(bear);
+	}).catch(err => {
+		res.json({error: err});
+	});
 });
 
 module.exports = bearsRouter;

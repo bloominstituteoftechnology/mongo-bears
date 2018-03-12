@@ -24,7 +24,7 @@ mongoose
     console.log('error connect to mongo');
 	});
 
-server.use('/bears', bearRoutes);
+server.use('/api/bears', bearRoutes);
 
 
 
