@@ -44,5 +44,19 @@ bearRouter.get('/api/bears', (req, res) => {
 });
 
 
+//=========================
+//      Bear GET by ID
+//=========================
+
+bearRouter.get('/api/bears/:id', (req, res) => {
+  const { id } = req.params;
+  BearDocuments.findById(id)
+    .then(bear => {
+      res.status(200).json(bear);
+    })
+    .catch(err => {
+      res.status(500).json({ msg: 'Cant find him bro', error: err });
+    });
+});
 
 module.exports = bearRouter;
