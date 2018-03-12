@@ -7,6 +7,7 @@ const bearsRouter = express.Router();
 const STATUS_SUCCESS = 200;
 const STATUS_CREATED = 201;
 const STATUS_BAD_REQUEST = 400;
+const STATUS_NOT_FOUND = 404;
 const STATUS_USER_ERROR = 500;
 
 bearsRouter.post("/", (req, res) => {
@@ -45,6 +46,61 @@ bearsRouter.get("/", (req, res) => {
     .catch(err => {
       res.status(STATUS_USER_ERROR);
       res.send({ error: "The information could not be retrieved." });
+    });
+});
+
+bearsRouter.get("/:id", (req, res) => {
+  const { id } = req.params;
+  Bear.findById(id)
+    .then(bear => {
+      res.status(STATUS_SUCCESS);
+      res.send(bear);
+    })
+    .catch(err => {
+      console.log(err);
+      if (err.name === "CastError") {
+        res.status(STATUS_NOT_FOUND);
+        res.send({ message: "The Bear with the specified ID does not exist." });
+      } else {
+        res.status(STATUS_USER_ERROR);
+        res.send({ error: "The information could not be retrieved." });
+      }
+    });
+});
+
+bearsRouter.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Bear.findByIdAndRemove(id)
+    .then(bear => {
+      res.status(STATUS_SUCCESS);
+      res.send(bear);
+    })
+    .catch(err => {
+      if(err.name === 'CastError') {
+        res.status(STATUS_NOT_FOUND);
+        res.send({ message: "The Bear with the specified ID does not exist." });
+      } else {
+        res.status(STATUS_USER_ERROR);
+        res.send({ error: "The Bear could not be removed." });
+      }
+    });
+});
+
+bearsRouter.put('/:id', (req, res) => {
+  const { id } = req.params;
+  Bear.findByIdAndUpdate({ _id: id }, req.body, { new: true })
+    .then(bear => {
+      res.status(STATUS_SUCCESS);
+      res.send({ bearUpdated: bear });
+    })
+    .catch(err => {
+      if(err.name === 'CastError') {
+        res.status(STATUS_NOT_FOUND);
+        res.send({ message: "The Bear with the specified ID does not exist." });
+      } else {
+        res.status(STATUS_USER_ERROR);
+        res.send({ error: "The Bear information could not be modified." });
+      }
     });
 });
 
