@@ -45,6 +45,12 @@ server.get('/api/bears', (req, res) => {
 
 server.get('/api/bears/:id', (req, res) => {
   const { id } = req.params;
+//   for (i = 0; i < bear._id.length; i++) {
+
+//   if (id !== Bear._id) {
+//     res.status(404).json({ message: "The ID you are searching for does not exist."})
+//   }
+// }
   if (!Bear.find({_id: id})) {
     res.status(404).json({ message: "The Bear with the specified ID does not exist."})
   }
