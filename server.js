@@ -45,15 +45,11 @@ server.get('/api/bears', (req, res) => {
 
 server.get('/api/bears/:id', (req, res) => {
   const { id } = req.params;
-//   for (i = 0; i < bear._id.length; i++) {
-
-//   if (id !== Bear._id) {
-//     res.status(404).json({ message: "The ID you are searching for does not exist."})
-//   }
-// }
-  if (!Bear.find({_id: id})) {
-    res.status(404).json({ message: "The Bear with the specified ID does not exist."})
-  }
+  Bear.count({_id: id}, (err, count)=> {
+    if (!count > 0){
+      res.status(404).json({ message: "The Bear with the specified ID does not exist." })
+    }
+  })
   Bear.findById(id, (err, bear) => {
     if (err) {
       res.status(500).json({ message: "The information could not be retreived."})
@@ -64,6 +60,11 @@ server.get('/api/bears/:id', (req, res) => {
 
 server.delete('/api/bears/:id', (req, res) => {
   const { id } = req.params;
+  Bear.count({_id: id}, (err, count)=> {
+    if (!count > 0){
+      res.status(404).json({ message: "The Bear with the specified ID does not exist." })
+    }
+  })
   Bear.findByIdAndRemove(id, (err) => {
     if (err) {
       res.status(500).json({ error: "The Bear could not be removed" })
@@ -74,6 +75,11 @@ server.delete('/api/bears/:id', (req, res) => {
 
 server.put('/api/bears/:id', (req, res) => {
   const { id } = req.params;
+  Bear.count({_id: id}, (err, count)=> {
+    if (!count > 0){
+      res.status(404).json({ message: "The Bear with the specified ID does not exist." })
+    }
+  })
   Bear.findByIdAndUpdate(id, {$set: req.body}, (err, bear) => {
     if (err) {
       res.status(500).json({ error: "The Bear information could not be modified" })
