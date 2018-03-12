@@ -56,4 +56,17 @@ bearKeeperRouter.delete('/:id', function(req, res) {
     })
 });
 
+bearKeeperRouter.put('/:id', function(req, res) {
+  bearKeeper
+    .findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, bear) => {
+      if (err) {
+        return res.status(404).json({message: "The Bear with the specified ID does not exist."});
+      }
+      return res.status(200).json(bear);
+    })
+    .catch(err => {
+      res.status(500).json({error: 'The Bear information could not be modified.'});
+    })
+});
+
 module.exports = bearKeeperRouter;
