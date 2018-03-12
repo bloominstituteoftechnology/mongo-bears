@@ -15,7 +15,7 @@ server.get('/', function(req, res) {
 });
 
 mongoose
-  .connect('mongodb://localhost/store')
+  .connect('mongodb://localhost/daBears')
   .then(pass => {
     console.log('Connected to MONGO')
   })
