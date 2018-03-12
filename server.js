@@ -4,7 +4,6 @@ const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bearRoutes = require('./bears/bearRoutes');
-
 const server = express();
 
 server.use(helmet()); // https://helmetjs.github.io/
@@ -25,8 +24,6 @@ mongoose
 	});
 
 server.use('/api/bears', bearRoutes);
-
-
 
 const port = process.env.PORT || 5005;
 server.listen(port, () => {
