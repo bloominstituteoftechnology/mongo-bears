@@ -50,6 +50,7 @@ bearRouter.get('/api/bears', (req, res) => {
 
 bearRouter.get('/api/bears/:id', (req, res) => {
   const { id } = req.params;
+
   BearDocuments.findById(id)
     .then(bear => {
       res.status(200).json(bear);
@@ -57,6 +58,25 @@ bearRouter.get('/api/bears/:id', (req, res) => {
     .catch(err => {
       res.status(500).json({ msg: 'Cant find him bro', error: err });
     });
+});
+
+//=========================
+//      Bear Delete by ID
+//=========================
+
+bearRouter.delete('/api/bears/:id', (req, res) => {
+  const { id } = req.params;
+
+  BearDocuments.findByIdAndRemove(id)
+    .then(bear => {
+      if (!bear)
+      res.status(404)
+      .send({ message: 'The Bear with the specified ID does not exist.' });
+      res.status(200).send(bear);
+    })
+    .catch(err =>
+      res.status(500).send({ error: 'The Bear could not be removed' })
+    );
 });
 
 module.exports = bearRouter;
