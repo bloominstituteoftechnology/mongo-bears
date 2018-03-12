@@ -25,7 +25,7 @@ bearRouter.post('/api/bears', (req, res) => {
       res.status(201).json(savedBear);
     })
     .catch(err => {
-      res.status(500).json({ msg: 'error saving Bear', error: err });
+      res.status(500).json({ error: "There was an error while saving the Bear to the Database", error: err });
     });
 });
 
@@ -39,7 +39,7 @@ bearRouter.get('/api/bears', (req, res) => {
       res.status(200).json(bears);
     })
     .catch(err => {
-      res.status(500).json({ msg: 'Error getting bears', error: err });
+      res.status(500).json({ error: "The information could not be retrieved.", error: err });
     });
 });
 
@@ -56,7 +56,7 @@ bearRouter.get('/api/bears/:id', (req, res) => {
       res.status(200).json(bear);
     })
     .catch(err => {
-      res.status(500).json({ msg: 'Cant find him bro', error: err });
+      res.status(404).json({ message: "The Bear with the specified ID does not exist.", error: err });
     });
 });
 
@@ -69,14 +69,36 @@ bearRouter.delete('/api/bears/:id', (req, res) => {
 
   BearDocuments.findByIdAndRemove(id)
     .then(bear => {
-      if (!bear)
+      if (!bear) {
       res.status(404)
-      .send({ message: 'The Bear with the specified ID does not exist.' });
-      res.status(200).send(bear);
+      .json({ message: 'The Bear with the specified ID does not exist.' });
+      }
+      res.status(200).json(bear);
     })
     .catch(err =>
-      res.status(500).send({ error: 'The Bear could not be removed' })
+      res.status(500).json({ error: 'The Bear could not be removed' })
     );
 });
+
+//=========================
+//      Bear Put
+//=========================
+
+bearRouter.put('/api/bears/:id', (req, res) => {
+  const { id } = req.params;
+ 
+
+  BearDocuments.findByIdAndUpdate(id, req.body)
+    .then(bear => {
+      if (!bear) {
+      res.status(404)
+      .json({ message: "The Bear with the specified ID does not exist." });
+      }
+      res.status(201).json(bear);
+    })
+    .catch(err => 
+      res.status(500).json({ error: "The Bear information could not be modified." })
+    );
+})
 
 module.exports = bearRouter;
