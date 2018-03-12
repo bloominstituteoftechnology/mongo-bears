@@ -4,7 +4,6 @@ const Bear = require('./BearModel.js');
 
 const bearsRouter = express.Router();
 
-// /products
 bearsRouter.post('/', function(req, res) {
 	const bearInfo = req.body;
 	const bear = new Bear(bearInfo);
@@ -27,10 +26,18 @@ bearsRouter.get('/', function(req, res) {
 	});
 });
 
-
 bearsRouter.get('/:id', function(req, res) {
 	const id = req.params.id;
 	Bear.findById(id).then(bear => {
+		res.json(bear);
+	}).catch(err => {
+		res.json({error: err});
+	});
+});
+
+bearsRouter.delete('/:id', function(req, res) {
+	const id = req.params.id;
+	Bear.findByIdAndRemove(id).then(bear => {
 		res.json(bear);
 	}).catch(err => {
 		res.json({error: err});
