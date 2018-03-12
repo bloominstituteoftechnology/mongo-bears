@@ -44,4 +44,14 @@ bearsRouter.delete('/:id', function(req, res) {
 	});
 });
 
+bearsRouter.put('/:id', function(req, res) {
+	const id = req.params.id;
+	const bear = req.body;
+	Bear.findByIdAndUpdate(id, bear, {new: true}).then(bear => {
+		res.json(bear);
+	}).catch(err => {
+		res.json({error: err});
+	});
+});
+
 module.exports = bearsRouter;
