@@ -3,7 +3,13 @@ const bearRouter = express.Router();
 const Bear = require('./BearModel.js');
 
 bearRouter.get('/', function(req, res) {
-  res.status(200).json({ status: 'your shit is not fucked up' });
+  Bear.find({})
+    .then(bears => {
+      res.status(200).json({ bears });      
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'The information could not be retrieved' });
+    });
 });
 
 bearRouter.post('/', function(req, res) {
@@ -13,7 +19,6 @@ bearRouter.post('/', function(req, res) {
     res.status(400).json({ errorMessage: 'Please provide both species and latinName for the Bear.' });
   }
   const bear = new Bear(bearInfo);
-  console.log(bear);
   bear.save()
     .then(savedBear => {
       res.status(201).json(savedBear);
