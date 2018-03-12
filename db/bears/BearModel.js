@@ -9,10 +9,10 @@ const BearSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdOn: {
-    date: Date,
-    required: true,
-  },
+  createdOn: { 
+    type: Date,
+    default: Date.now
+},
 });
 
 const BearModel = mongoose.model('Bear', BearSchema);
