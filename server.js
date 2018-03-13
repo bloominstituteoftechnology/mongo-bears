@@ -106,6 +106,27 @@ server.delete('/api/bears/:id', (req, res) => {
     });
 });
 
+server.put('/api/bears/:id', (req, res) => {
+  let { id } = req.params;
+  let { body } = req;
+
+  if (!id) {
+    res.status(422);
+    res.send(`No 'ID' was given`);
+  } else {
+    daBears
+      .findByIdAndUpdate(id, body)
+      .then((bear) => {
+        res.status(201);
+        res.send(`Updated Bear: ${bear}`);
+      })
+      .catch((err) => {
+        res.status(404);
+        res.send(`No bear found for the ID given`);
+      });
+  }
+});
+
 mongoose
   .connect('mongodb://localhost/daBears')
   .then((pass) => {
