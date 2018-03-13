@@ -54,17 +54,21 @@ BearRouter.get("/api/bears/:id", function(req, res) {
 });
 
 BearRouter.put("/api/bears/:id", function(req, res) {
-	const { id } = req.params;
-	const bearInfo = req.body;
-	Bear.findByIdAndUpdate(id, bearInfo)
-		.then(updatedBear => res.status(200).send(updatedBear))
-		.catch(err => res.status(500).send("There was an error updateing the bear!", err));
-})
+  const { id } = req.params;
+  const bearInfo = req.body;
+  Bear.findByIdAndUpdate(id, bearInfo)
+    .then(updatedBear => res.status(200).send(updatedBear))
+    .catch(err =>
+      res.status(500).send("There was an error updateing the bear!", err)
+    );
+});
 
 BearRouter.delete("/api/bears/:id", function(req, res) {
-	const { id } = req.params;
-	Bear.findByIdAndRemove(id)
-		.then(removedBear => res.status(200).send(removedBear))
-		.catch(err => res.status(500).send("There was an error deleting the bear!", err));
-})
+  const { id } = req.params;
+  Bear.findByIdAndRemove(id)
+    .then(removedBear => res.status(200).send(removedBear))
+    .catch(err =>
+      res.status(500).send("There was an error deleting the bear!", err)
+    );
+});
 module.exports = BearRouter;
