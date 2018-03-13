@@ -4,14 +4,6 @@ const Bear = require('./bearmodels.js');
 
 const bearsRouter = express.Router();
 
-function validBearCheck(bear, res) {
-  if(!bear.species || !bear.latinName) {
-    res.status(400).json({ errorMessage: "Please provide both species and latinName for the Bear." })
-  } else {
-    res.status(201).json(savedBear);
-  }
-}
-
 bearsRouter.post('/api/bears', function(req, res) {
   const bearInfo = req.body;
   const bear = new Bear(bearInfo);
@@ -21,7 +13,11 @@ bearsRouter.post('/api/bears', function(req, res) {
       res.status(201).json(inputBear);
     })
     .catch(err => {
-      res.status(500).json({ error: "There was an error while saving the Bear to the Database", error: err })
+      if (err.name === 'ValidationError') {
+        res.status(400).json({ errorMessage: "Please provide both species and latinName for the Bear." });
+      } else {
+        res.status(500).json({ error: "There was an error while saving the Bear to the Database" });
+      }
     });
 });
 
