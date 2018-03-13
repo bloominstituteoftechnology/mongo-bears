@@ -10,11 +10,11 @@ const BearSchema = new mongoose.Schema({
     required: true,
   },
   createdOn: {
-    type: String,
-    required: true,
-    default: new Date(),
-    // type: Date,
-    // default: Date.now
+    // type: String,
+    // required: true,
+    // default: new Date(),
+    type: Date,
+    default: Date.now
 },
 });
 
