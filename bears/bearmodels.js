@@ -3,18 +3,22 @@ const mongoose = require('mongoose');
 const BearSchema = new mongoose.Schema({
   species: {
     type: String,
-    required: true,
+    required: "Please provide both species and latinName for the Bear.",
   },
   latinName: {
     type: String,
-    required: true,
+    required: "Please provide both species and latinName for the Bear.",
   },
   createdOn: {
     type: Date,
-    timestamps: true,
     required: true,
   },
 });
+
+BearSchema.pre('save', function (next) {
+  if (!this.createdOn) this.createdOn = new Date;
+  next();
+})
 
 const BearModel = mongoose.model('Bear', BearSchema);
 
