@@ -15,11 +15,6 @@ const BearSchema = new mongoose.Schema({
 }
 );
 
-BearSchema.pre('save', function (next) {
-  if (!this.createdOn) this.createdOn = new Date;
-  next();
-})
-
 const BearModel = mongoose.model('Bear', BearSchema);
 
 module.exports = BearModel;
