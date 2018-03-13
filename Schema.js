@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-let idCounter = 0;
 const BearSchema = new mongoose.Schema({
 	species: {
 	  type: String,
@@ -15,11 +14,6 @@ const BearSchema = new mongoose.Schema({
 		required: true,
 		default: Date.now(),
    },
-    id: {
-     type: Number,
-		 required: true,
-		 default: idCounter++,
-		},
 });
 
 const BearModel = mongoose.model('Bear', BearSchema);
