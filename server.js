@@ -24,7 +24,7 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
-server.use('/bears', BearRouter);
+server.use('/', BearRouter);
 
 const port = process.env.PORT || 5005;
 server.listen(port, () => {

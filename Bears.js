@@ -53,7 +53,7 @@ BearRouter.get("/api/bears/:id", function(req, res) {
     });
 });
 
-BearRouter.put("api/bears/:id", function(req, res) {
+BearRouter.put("/api/bears/:id", function(req, res) {
 	const { id } = req.params;
 	const bearInfo = req.body;
 	Bear.findByIdAndUpdate(id, bearInfo)
