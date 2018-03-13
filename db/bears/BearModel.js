@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const BearSchema = new mongoose.Schema({
-  speacies: {
+  species: {
     type: String,
     required: true,
   },

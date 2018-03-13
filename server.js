@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
+const bearRouter = require('./db/bears/BearRoutes');
+
 const server = express();
 
 server.use(helmet()); // https://helmetjs.github.io/
@@ -15,8 +17,10 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
+server.use('/db/bears', bearRouter);
+
 mongoose
-  .connect('mongodb://localhost/store')
+  .connect('mongodb://localhost/BearKeeper')
   .then(conn => {
     console.log('Successfully Connected to MongoDB');
   })
