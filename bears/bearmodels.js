@@ -9,12 +9,11 @@ const BearSchema = new mongoose.Schema({
     type: String,
     required: "Please provide both species and latinName for the Bear.",
   },
-  createdOn: {
-    type: Date,
-    required: true,
-    timestamps: true,
-  },
-});
+},
+{
+  timestamps: { createdAt: 'createdOn'}
+}
+);
 
 BearSchema.pre('save', function (next) {
   if (!this.createdOn) this.createdOn = new Date;

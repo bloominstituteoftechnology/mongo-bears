@@ -49,9 +49,9 @@ bearsRouter.get('/api/bears/:id', function(req, res) {
 bearsRouter.put('/api/bears/:id', function(req, res) {
   const bearId = { _id: req.params.id };
   const updateBear = req.body;
-  Bear.findByIdAndUpdate(bearId, updateBear, { upsert: true, new: true } )
-    .then(abc => {
-      res.status(200).json(abc)
+  Bear.findByIdAndUpdate(bearId, updateBear, { new: true } )
+    .then(doc => {
+      res.status(200).json(doc)
     })
     .catch(err => {
       if (err.name === 'CastError') {
