@@ -16,6 +16,7 @@ bearsRouter.post('/', function(req, res) {
 	});
 });
 
+// get all bears
 bearsRouter.get('/', function(req, res) {
 	Bear.find({})
 	.then(bears => {
@@ -23,6 +24,28 @@ bearsRouter.get('/', function(req, res) {
 	})
 	.catch(err => {
 		res.status(500).json({ error: "The information could not be retrieved." });
+	});
+});
+
+// get number or counts of all documents
+bearsRouter.get('/counts', function(req, res) {
+	Bear.count({})
+	.then(counts => {
+		res.json(counts);
+	})
+	.catch(err => {
+		res.status(500).json({ error: "The information could not be retrieved." });
+	});
+});
+
+// find bears by species and send back bears with property: latinName
+bearsRouter.get('/:species', function(req, res) {
+	const species = req.params.species;
+	Bear.find({species: species})
+	.select('latinName')
+	.exec(function (err, bears) {
+		if(err) return handleError(err);
+		res.json(bears);
 	});
 });
 
