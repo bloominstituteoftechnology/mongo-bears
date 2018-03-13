@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require('express');
 
-const Bear = require("./BearModel.js");
+const Bear = require('./BearModel.js');
 
 const bearsRouter = express.Router();
 
@@ -10,7 +10,7 @@ const STATUS_BAD_REQUEST = 400;
 const STATUS_NOT_FOUND = 404;
 const STATUS_USER_ERROR = 500;
 
-bearsRouter.post("/", (req, res) => {
+bearsRouter.post('/', (req, res) => {
   const bearInfo = req.body;
 
   const bear = new Bear(bearInfo);
@@ -22,22 +22,22 @@ bearsRouter.post("/", (req, res) => {
       res.send(savedBear);
     })
     .catch(err => {
-      if (err.name === "ValidationError") {
+      if (err.name === 'ValidationError') {
         res.status(STATUS_BAD_REQUEST);
         res.send({
           errorMessage:
-            "Please provide both species and latinName for the Bear."
+            'Please provide both species and latinName for the Bear.',
         });
       } else {
         res.status(STATUS_USER_ERROR);
         res.send({
-          error: "There was an error while saving the Bear to the Database."
+          error: 'There was an error while saving the Bear to the Database.',
         });
       }
     });
 });
 
-bearsRouter.get("/", (req, res) => {
+bearsRouter.get('/', (req, res) => {
   Bear.find({})
     .then(bears => {
       res.status(STATUS_SUCCESS);
@@ -45,11 +45,11 @@ bearsRouter.get("/", (req, res) => {
     })
     .catch(err => {
       res.status(STATUS_USER_ERROR);
-      res.send({ error: "The information could not be retrieved." });
+      res.send({ error: 'The information could not be retrieved.' });
     });
 });
 
-bearsRouter.get("/:id", (req, res) => {
+bearsRouter.get('/:id', (req, res) => {
   const { id } = req.params;
   Bear.findById(id)
     .then(bear => {
@@ -58,17 +58,17 @@ bearsRouter.get("/:id", (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      if (err.name === "CastError") {
+      if (err.name === 'CastError') {
         res.status(STATUS_NOT_FOUND);
-        res.send({ message: "The Bear with the specified ID does not exist." });
+        res.send({ message: 'The Bear with the specified ID does not exist.' });
       } else {
         res.status(STATUS_USER_ERROR);
-        res.send({ error: "The information could not be retrieved." });
+        res.send({ error: 'The information could not be retrieved.' });
       }
     });
 });
 
-bearsRouter.delete("/:id", (req, res) => {
+bearsRouter.delete('/:id', (req, res) => {
   const { id } = req.params;
   Bear.findByIdAndRemove(id)
     .then(bear => {
@@ -76,12 +76,12 @@ bearsRouter.delete("/:id", (req, res) => {
       res.send(bear);
     })
     .catch(err => {
-      if(err.name === 'CastError') {
+      if (err.name === 'CastError') {
         res.status(STATUS_NOT_FOUND);
-        res.send({ message: "The Bear with the specified ID does not exist." });
+        res.send({ message: 'The Bear with the specified ID does not exist.' });
       } else {
         res.status(STATUS_USER_ERROR);
-        res.send({ error: "The Bear could not be removed." });
+        res.send({ error: 'The Bear could not be removed.' });
       }
     });
 });
@@ -94,12 +94,12 @@ bearsRouter.put('/:id', (req, res) => {
       res.send({ bearUpdated: bear });
     })
     .catch(err => {
-      if(err.name === 'CastError') {
+      if (err.name === 'CastError') {
         res.status(STATUS_NOT_FOUND);
-        res.send({ message: "The Bear with the specified ID does not exist." });
+        res.send({ message: 'The Bear with the specified ID does not exist.' });
       } else {
         res.status(STATUS_USER_ERROR);
-        res.send({ error: "The Bear information could not be modified." });
+        res.send({ error: 'The Bear information could not be modified.' });
       }
     });
 });
