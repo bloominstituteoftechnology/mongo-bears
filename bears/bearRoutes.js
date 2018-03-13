@@ -1,4 +1,6 @@
 const express = require('express');
+const mongoose = require('mongoose');
+
 
 const Bear = require('./bearModel.js');
 
@@ -16,14 +18,10 @@ bearRouter.get('/', function(req, res) {
 
 bearRouter.post('/', function(req, res) {
     const bearInfo = req.body;
-    console.log(req.body);
-
-    const bear = new Bear(bearInfo).validate(err => {
-        res.status(400).send({ errorMessage: Object.values(err.errors)[0].message });
+    const bear = new Bear(bearInfo);
+    bear.validate(err => {
+        if(err) res.status(400).send({ errorMessage: Object.values(err.errors)[0].message });
     });
-
-    console.log(bear);
-
     bear
         .save()
         .then(bear => {
@@ -35,9 +33,12 @@ bearRouter.post('/', function(req, res) {
 });
 
 bearRouter.get('/:id', function(req, res) {
-    Bear.findById(req.params.id)
+    // const bearId = mongoose.Types.ObjectId(req.params.id);
+    const bearId = req.params.id;
+    Bear.findById(bearId)
         .then(bear => {
-            res.status(200).send(bear);
+            if(bear) res.status(200).send(bear);
+            else res.status(404).send({ message: "The Bear with the specified ID does not exist." });
         })
         .catch(err => {
             res.status(400).send({ error: 'The information could not be retrieved.' });
@@ -45,9 +46,11 @@ bearRouter.get('/:id', function(req, res) {
 });
 
 bearRouter.delete('/:id', function(req, res) {
-    Bear.findByIdAndRemove(req.params.id)
+    const bearId = req.params.id;
+    Bear.findByIdAndRemove(bearId)
         .then(bear => {
-            res.status(200).send(bear);
+            if(bear) res.status(200).send(bear);
+            else res.status(404).send({ message: "The Bear with the specified ID does not exist." });
         })
         .catch(err => {
             res.status(500).send({ error: err });
@@ -56,9 +59,11 @@ bearRouter.delete('/:id', function(req, res) {
 
 bearRouter.put('/:id', function(req, res) {
     const update = req.body;
-    Bear.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then(bears => {
-            res.status(200).send(bears);
+    const bearId = req.params.id;
+    Bear.findByIdAndUpdate(bearId)
+        .then(bear => {
+            if(bear) res.status(200).send(bear);
+            else res.status(404).send({ message: "The Bear with the specified ID does not exist." });
         })
         .catch(err => {
             res.status(200).send({ error: err });
