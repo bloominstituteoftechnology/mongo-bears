@@ -43,14 +43,29 @@ bearsRouter.get('/:id', function(req, res) {
     });
 });
 
-// bearsRouter.delete('/api/bears/:id', function(req, res) {
-//     Bear.find({})
-//       .then(bears => {
-//         res.status(200).json(bears);
-//       })
-//       .catch(err => {
-//         res.status(500).json({ error: "The information could not be retrieved." });
-//       });
-//   });
+bearsRouter.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id, (err, deletedBear) => {
+        if (!deletedBear) res.status(404).json({
+            message: 'The bear with the specified ID does not exist',
+            error: err,
+        });
+        if (err) res.status(500).json({ error: "The Bear could not be removed" });
+        res.status(201).json(deletedBear);
+    });
+});
+
+bearsRouter.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const bear = req.body;
+    Bear.findByIdAndUpdate(id, bear, {new: true}, (err, updatedBear) => {
+        if (!updatedBear) res.status(404).json({
+            message: 'The bear with the specified ID does not exist',
+            error: err,
+        });
+        if (err) res.status(500).json({ error: "The Bear information could not be modified." });
+        res.status(201).json(updatedBear);
+    });
+});
 
 module.exports = bearsRouter;
