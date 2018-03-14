@@ -70,6 +70,24 @@ server.get('/api/bears/:id', function(req, res) {
     });
 });
 
+server.delete('/api/bears/:id', function (req, res) {
+  const id = req.params.id;
+
+  Bear.findByIdAndRemove(id)
+    .then(removeBear => {
+      if (removeBear) {
+        res.status(200).json(removeBear);
+      } else {
+        console.log(error);
+        res.status(404).json({ message: "The Bear with the specified ID does not exist." });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ error: "The Bear could not be removed" });
+    });
+})
+
 mongoose
   .connect('mongodb://localhost/BearKeeper')
   .then(connected => {
