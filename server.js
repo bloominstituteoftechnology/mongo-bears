@@ -86,7 +86,30 @@ server.delete('/api/bears/:id', function (req, res) {
       console.log(error);
       res.status(500).json({ error: "The Bear could not be removed" });
     });
-})
+});
+
+server.put('/api/bears/:id', function (req, res) {
+  const id = req.params.id;
+
+  const {
+    species,
+    latinName
+  } = req.body;
+
+  Bear.findByIdAndUpdate(id, req.body, { new: true })
+    .then(updateBear => {
+      if (updateBear) {
+        res.status(200).json(updateBear);
+      } else {
+        console.log(error);
+        res.status(404).json({ message: "The Bear with the specified ID does not exist." });
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ error: "The Bear information could not be modified." });
+    });
+});
 
 mongoose
   .connect('mongodb://localhost/BearKeeper')
