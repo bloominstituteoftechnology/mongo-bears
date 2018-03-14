@@ -40,7 +40,6 @@ server.get("/api/bears", (req, res) => {
 //get request handler for a specific bear document
 server.get("/api/bears/:id", (req, res) => {
   const bearId = req.params.id;
-
   BearSchema.findById(bearId)
   .then(response => res.send(response))
   .catch(err => {
@@ -59,13 +58,23 @@ server.post("/api/bears", (req, res) => {
     species: bearSpecies,
     latinName: bearLatin,
     createdOn: timeStamp,
-  })
-
+  });
   newBear.save()
   .then(response => res.send(`This bear was added: ${response}`))
   .catch(err => {
     console.log(`There was an error: ${err}`);
     res.send(`There was an error!`)
+  })
+})
+
+//delete handler for individual bear documents
+server.delete("/api/bears/:id", (req, res) => {
+  const bearId = req.params.id;
+  BearSchema.findByIdAndRemove(bearId)
+  .then(response => res.send(`This bear was removed: ${response}`))
+  .catch(err => {
+    console.log(`There was an error deleting a document: ${err}`);
+    res.send(`There was an error deleting the document`);
   })
 })
 
