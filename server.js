@@ -17,6 +17,7 @@ server.get('/', function(req, res) {
 
 server.post('/api/bears', function(req, res) {
   const bearInfo = req.body;
+
   const {
     species,
     latinName
@@ -45,8 +46,26 @@ server.get('/api/bears', function(req, res) {
     .then(bears => {
       res.status(200).json(bears);
     })
-    .catch(err => {
-      consolelog(err);
+    .catch(error => {
+      console.log(error);
+      res.status(500).json({ error: "The information could not be retrieved." });
+    });
+});
+
+server.get('/api/bears/:id', function(req, res) {
+  const id = req.params.id;
+
+  Bear.findById(id)
+    .then(bear => {
+      if (bear) {
+        res.status(200).json(bear);
+      } else {
+        console.log(error);
+        res.status(404).json({ message: "The Bear with the specified ID does not exist." });
+      }
+    })
+    .catch(error => {
+      console.log(error);
       res.status(500).json({ error: "The information could not be retrieved." });
     });
 });
