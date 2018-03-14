@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 
 const server = express();
 
