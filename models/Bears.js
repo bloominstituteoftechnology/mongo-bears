@@ -13,6 +13,7 @@ const Bear = new Schema({
     createdOn: {
         type: Date,
         default: new Date(),
+        required: true,
     }
 })
 

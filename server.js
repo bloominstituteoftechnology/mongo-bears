@@ -2,26 +2,38 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors'); // https://www.npmjs.com/package/cors
 const bodyParser = require('body-parser');
+
+//imported mongoose and the Schema
 const mongoose = require("mongoose");
 const BearSchema = require("./models/Bears");
 
 const server = express();
 
+//added to be safe
 mongoose.Promise = global.Promise;
 
 server.use(helmet()); // https://helmetjs.github.io/
 server.use(cors());   // https://medium.com/trisfera/using-cors-in-express-cac7e29b005b
 server.use(bodyParser.json());
 
+//connection to mongoose and logging status
 mongoose.connect("mongodb://localhost:27017/BearKeeper");
 mongoose.connection
   .once("open", () => console.log(`Successfully connected to MongoDB.`))
   .on("error", (err) => console.log(`Database connection failed.`));
 
+//initial get handler to test server
 server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
+//get request for all bear documents in the bears collection
+server.get("/api/bears", (req, res) => {
+  BearSchema.find({})
+  .then(response => res.send(response));
+})
+
+//post handler for new bear documents
 server.post("/api/bears", (req, res) => {
   const bearSpecies = req.body.species;
   const bearLatin = req.body.latinName;
