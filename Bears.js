@@ -56,19 +56,48 @@ BearRouter.get("/api/bears/:id", function(req, res) {
 BearRouter.put("/api/bears/:id", function(req, res) {
   const { id } = req.params;
   const bearInfo = req.body;
-  Bear.findByIdAndUpdate(id, bearInfo)
-    .then(updatedBear => res.status(200).send(updatedBear))
-    .catch(err =>
-      res.status(500).send("There was an error updateing the bear!", err)
-    );
-});
+  if (!bearInfo.species || !bearInfo.latinName) {
+     res.status(400).send({
+        errorMessage:
+          "Please provide both species and and latinName for the Bear."
+        })
+     }
+     else {
+    Bear.findByIdAndUpdate(id, bearInfo, {new: true, runValidators: true })
+     .then(updatedBear => {
+        if (!updatedBear) {
+        res
+          .status(404)
+          .send({
+             errorMessage: "The Bear with the specified ID does not exist."
+             });
+        } else {
+           res.status(200).send(updatedBear);
+        }
+      })
+      .catch(err => 
+       res.status(500).send({errorMessage: "There was an error updateing the bear!"}) 
+      );
+    }
+ })
 
 BearRouter.delete("/api/bears/:id", function(req, res) {
   const { id } = req.params;
   Bear.findByIdAndRemove(id)
-    .then(removedBear => res.status(200).send(removedBear))
+    .then(removedBear => { 
+			if (!removedBear) {
+			 res
+			   .status(404)
+				 .send({
+          errorMessage: "The Bear with the specified ID does not exist." 
+				});
+			} else {
+				res.status(200).send(removedBear);
+		  }
+		})
     .catch(err =>
-      res.status(500).send("There was an error deleting the bear!", err)
+      res.status(500).send({errorMessage: "There was an error deleting the bear!"})
     );
 });
+
 module.exports = BearRouter;
