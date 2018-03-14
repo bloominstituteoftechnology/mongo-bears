@@ -27,11 +27,28 @@ server.get('/', function(req, res) {
   res.status(200).json({ status: 'API Running' });
 });
 
-//get request for all bear documents in the bears collection
+//get request handler for all bear documents in the bears collection
 server.get("/api/bears", (req, res) => {
   BearSchema.find({})
-  .then(response => res.send(response));
+  .then(response => res.send(response))
+  .catch(err => {
+    console.log(`There was an error getting the collection: ${err}`);
+    res.send(`There was an error getting the collection`);
+  })
 })
+
+//get request handler for a specific bear document
+server.get("/api/bears/:id", (req, res) => {
+  const bearId = req.params.id;
+
+  BearSchema.findById(bearId)
+  .then(response => res.send(response))
+  .catch(err => {
+    console.log(`There was an error geting a single document: ${err}`);
+    res.send(`There was an error getting the document`);
+  })
+})
+
 
 //post handler for new bear documents
 server.post("/api/bears", (req, res) => {
