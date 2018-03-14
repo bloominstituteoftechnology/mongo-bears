@@ -78,6 +78,20 @@ server.delete("/api/bears/:id", (req, res) => {
   })
 })
 
+//put handler for individual bear documents
+server.put("/api/bears/:id", (req, res) => {
+  const bearId = req.params.id;
+  const newBear = req.body;
+  BearSchema.findByIdAndUpdate(bearId, {
+    $set: newBear,
+  })
+  .then(response => res.json(newBear))
+  .catch(err => {
+    console.log(`There was an error updating a document: ${err}`);
+    res.send(`There was an error updating the document`);
+  })
+})
+
 const port = process.env.PORT || 5005;
 server.listen(port, () => {
   console.log(`API running on http://localhost:${port}.`);
