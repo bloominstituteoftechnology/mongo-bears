@@ -2,13 +2,13 @@
   "name": "mongomini",
   "version": "1.0.0",
   "description": "MongoDB Mini Project",
-  "main": "server.js",
+  "main": "models.js",
   "scripts": {
     "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/LambdaSchool/mongo-I-mini.git"
+    "url": "git+https://github.com/jryanp1/mongo-I-mini"
   },
   "keywords": [],
   "author": "Lambda School",
@@ -22,6 +22,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "helmet": "^3.11.0",
+    "mongoose": "^5.0.11",
     "nodemon": "^1.15.0"
   }
 }
