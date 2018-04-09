@@ -10,13 +10,13 @@
 
 ## Description
 
-We will use Node.js and Express to write an API that can perform CRUD (Create, Read, Update and Destroy) operations on Bears stored in a MongoDB Database.
+We will use Node.js and Express to write an API that can perform CRUD (Create, Read, Update and Destroy) operations on _Bears_ stored in a MongoDB Database.
 
 ### Software Requirements
 
 For this project you need to have _MongoDB Community Edition_ installed and running. Having a local instance of _MongoDB_ running on your system is the preferred option.
 
-Alternatively, you can sign up for an account from a _Database As A Service_ provider like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) or [mlab](https://mlab.com/). Both _DBAAS_ providers offer a free tier with 500MB size limit that can be used for development and testing.
+Alternatively, you can sign up for an account from a _Database As A Service_ (DBAAS) provider like [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) or [mlab](https://mlab.com/). Both _DBAAS_ providers offer a free tier with 500MB size limit that can be used for development and testing.
 
 #### Using a Local MongoDB Server
 
