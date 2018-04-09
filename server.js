@@ -1,22 +1,33 @@
 const express = require('express');
 const helmet = require('helmet');
-const cors = require('cors');
+const cors = require('cors'); // https://www.npmjs.com/package/cors
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-const bearController = require('./bears/bearController');
+const bearRouter = require('./bears/bearRoutes.js');
 
 const server = express();
 
-server.use(helmet());
-server.use(cors());
-server.use(express.json());
+server.use(helmet()); // https://helmetjs.github.io/
+server.use(cors());   // https://medium.com/trisfera/using-cors-in-express-cac7e29b005b
+server.use(bodyParser.json());
 
 server.get('/', function(req, res) {
-  res.status(200).json({ api: 'running' });
+  res.status(200).json({ status: 'API Running' });
 });
 
-server.use('/api/bears', bearController);
+server.use('/api/bears', bearRouter);
 
-const port = process.env.PORT || 5000;
+mongoose
+  .connect('mongodb://localhost/BearkKeeper')
+  .then(conn => {
+    console.log('connected to mongo');
+  })
+  .catch(err => {
+    console.log('error connect to mongo');
+  });
+
+const port = process.env.PORT || 5005;
 server.listen(port, () => {
-  console.log(`\n=== API running on http://localhost:${port} ===\n`);
+  console.log(`API running on http://localhost:${port}.`);
 });
