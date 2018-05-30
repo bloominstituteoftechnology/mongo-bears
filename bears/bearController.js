@@ -1,10 +1,9 @@
 const router = require('express').Router();
 
-router
-  .route('/')
-  .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
-  })
+const Bear = require('./bearModel');
+
+router.route('/')
+  .get()
   .post((req, res) => {
     res.status(201).json({ status: 'please implement POST functionality' });
   });
@@ -20,5 +19,9 @@ router
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
   });
+
+function get(req, res) {
+  res.status(200).json({ route: '/api/bears/' });
+}
 
 module.exports = router;
