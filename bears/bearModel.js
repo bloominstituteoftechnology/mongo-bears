@@ -19,9 +19,9 @@ const options = {
     timestamps: true
 };
 
-const bearSchema = new Mongoose.Schema(definition, options);
+const bearSchema = new mongoose.Schema(definition, options);
 
 // could've just done mongoose.model('Bear', bearSchema)
-const bearModel = mongoose.model('Bear', bearSchema, bears);
+const bearModel = mongoose.model('Bear', bearSchema, 'bears');
 
 module.exports = bearModel;
