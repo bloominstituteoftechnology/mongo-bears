@@ -39,7 +39,7 @@ After MongoDB is installed, follow the instructions on the documentation to star
 
 ## Use _Postman_ to Test the API.
 
-1.  Make a GET Request to [http://localhost:5005](http://localhost:5000) using _Postman_. The response should be the following JSON object:
+1.  Make a GET Request to [http://localhost:5000](http://localhost:5000) using _Postman_. The response should be the following JSON object:
 
 ```json
 {
