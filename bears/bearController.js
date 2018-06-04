@@ -43,7 +43,22 @@ bears
       });
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+      .then(deletedBear => {
+        if(deletedBear){
+          res.status(200).json(deletedBear);
+        } else {
+          res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        }
+      })
+      .catch(error => {
+        if (error.name === 'CastError'){
+          res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        } else {
+          res.status(500).json({ error: 'The bear could not be removed.' });
+        }
+      });
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
