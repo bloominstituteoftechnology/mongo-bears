@@ -19,7 +19,14 @@ bears
 bears
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then(bear => {
+        res.status(200).json(bear);
+      })
+      .catch(error => {
+        res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+      });
   })
   .delete((req, res) => {
     res.status(200).json({ status: 'please implement DELETE functionality' });
