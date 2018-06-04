@@ -13,7 +13,21 @@ bears
       });
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const { species, latinName } = req.body;
+    
+    if(!species || !latinName){
+      res.status(400).json('Please provide both species and latinName for the bear.');
+      return;
+    }
+
+    const newBear = new Bear({ species, latinName });
+    newBear.save()
+      .then(newBear => {
+        res.status(201).json(newBear);
+      })
+      .catch(error => {
+        res.json(500).json({ error: 'There was an error while saving the bear to the database.' });
+      });
   });
 
 bears
