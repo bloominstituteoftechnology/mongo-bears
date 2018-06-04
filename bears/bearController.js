@@ -39,7 +39,7 @@ router
 
   .delete((req, res) => {
     const { id } = req.params;
-    Bear.findByIDAndRemove(id)
+    Bear.findByIdAndRemove(id)
       .then(byeBear => {
           res.status(204).json(beyBear).end();
       })
