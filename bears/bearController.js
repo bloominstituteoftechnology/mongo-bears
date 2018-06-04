@@ -13,12 +13,16 @@ router
   .post((req, res) => {
     const { species, latinName } = req.body;
     const newBear = new Bear({ species, latinName });
+    if (!species || !latinName) {
+      res.status(400).json({ error: "Please provide both species and latinName for the bear." });
+      return;
+    };
     newBear.save() //inserts a document into the Bear collection
            .then(savedBear => {
              res.status(201).json(savedBear);
            })
            .catch(err => {
-             res.status(422).json({ error: err});
+             res.status(500).json({ error: err});
            })
   });
 
