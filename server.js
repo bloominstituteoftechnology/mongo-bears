@@ -12,7 +12,7 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/', function(req, res) {
-  res.status(200).json({ api: 'running' });
+  res.status(200).json({ api: 'Testing my vs code' });
 });
 
 server.use('/api/bears', bearController);
@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/dbBears", {}, err => {
   if(err) {
-    console.log("err");
+    console.log(err);
   } else {
     console.log("Mongoose connected us to our DB");
   }
