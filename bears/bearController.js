@@ -47,7 +47,7 @@ router
   })
   .delete((req, res) => {
     Bear
-      .remove(req.params.id)
+      .findByIdAndRemove(req.params.id)
       .then(bear => {
         if(bear === 0){
           res.status(404).json({ error: "The bear with the specified ID does not exist." })
@@ -66,7 +66,7 @@ router
       return;
     }
     Bear 
-      .update(req.params.id, { species, latinName })
+      .findByIdAndUpdate(req.params.id, { species, latinName })
       .then(bear => {
         if(bear === 0){
           res.status(404). json({ error: "The bear with the specified ID does not exist." })
