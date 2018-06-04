@@ -53,7 +53,7 @@ router
     const {
       id
     } = req.params;
-    Bears.findByIdAndRemove(id)
+    Bear.findByIdAndRemove(id)
       .then(response => {
         if (!response) {
           res.status(404).json({
@@ -78,7 +78,7 @@ router
       species,
       latinName
     } = req.body;
-    Bears.findByIdAndUpdate(id, {
+    Bear.findByIdAndUpdate(id, {
         species,
         latinName
       })
