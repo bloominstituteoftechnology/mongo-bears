@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const bearController = require('./bears/bearController');
 
@@ -15,6 +16,10 @@ server.get('/', function(req, res) {
 });
 
 server.use('/api/bears', bearController);
+
+//connect to mongo server
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/dbBears")
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => {
