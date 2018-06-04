@@ -33,8 +33,9 @@ router
   .route('/:id')
   .get((req, res) => {
     Bear
-      .find(req.params.id)
+      .findById(req.params.id)
       .then(bear => {
+        console.log(req);
         if(!bear){
           res.status(404).json({ error: "The bear with the specified ID does not exist." })
         } else{
@@ -42,14 +43,15 @@ router
         }
       })
       .catch(err => {
+        console.log(req.params.id);
         res.status(500).json({ error: "The bear information could not be retrieved." })
       })
-  })
-  .delete((req, res) => {
-    
-  })
-  .put((req, res) => {
-    
   });
+  // .delete((req, res) => {
+    
+  // })
+  // .put((req, res) => {
+    
+  // });
 
 module.exports = router;
