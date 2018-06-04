@@ -15,13 +15,13 @@ router
       });
   })
   .post((req, res) => {
-    const Oso_Anteojos = new Bear({
-      name: 'Oso de anteojos',
-      species: 'Ursus with glasses',
+    const Oso_Gafufos = new Bear({
+      name: 'Oso de Gafufos',
+      species: 'Ursus gafufos',
     });
-    Oso_Anteojos.save(function(err, Oso_Anteojos) {
+    Oso_Gafufos.save(function(err, Oso_Gafufos) {
       if (err) return next(err);
-      res.status(201).json(Oso_Anteojos);
+      res.status(201).json(Oso_Gafufos);
     });
   });
 
@@ -43,8 +43,16 @@ router
         next(e);
       });
   })
-  .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+  .delete((req, res, next) => {
+    const { id } = req.params;
+    Bear.deleteOne({ _id: id })
+      .then(response => {
+        res.status(200).json(response);
+      })
+      .catch(e => {
+        e.statusCode = 500;
+        next(e);
+      });
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
