@@ -7,27 +7,26 @@ router
     Bear
       .find()
       .then(response => {
-        return console.log(response);
+        res.status(200).json({
+          data: response
+        })
       })
       .catch(error => {
         res.status(500).json({
           error: "error"
         });
       })
-    res.status(200).json({ route: '/api/bears/' });
+    // .status(200).json({ route: '/api/bears/' });
   })
   .post((req, res) => {
-    let newBear = req.body;
-    let request = new Bear(newBear);
-    request
-      .save()
+    
+    Bear.create(req.body)
       .then(response => {
         res.status(201).json('The Post was Successful')
       })
       .catch(error => {
         res.status(500).json("There was an error");
       })
-    res.status(201).json({ status: 'please implement POST functionality' });
   });
 
 router
