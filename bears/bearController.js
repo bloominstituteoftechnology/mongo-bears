@@ -1,12 +1,28 @@
 const router = require('express').Router();
+const Bear = require('./bearmodel');
 
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+    Bear.find()
+      .then(response => {
+        res.status(200).json(response);
+      })
+      .catch(e => {
+        e.statusCode = 500;
+        e.errorMessage = 'Oh, oh.... there is a problem bargain with the dababase, try again!';
+        xt(e);
+      });
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const Oso_Anteojos = new Bear({
+      name: 'Oso de anteojos',
+      species: 'Ursus with glasses',
+    });
+    Oso_Anteojos.save(function(err, Oso_Anteojos) {
+      if (err) return next(err);
+      res.status(201).json(Oso_Anteojos);
+    });
   });
 
 router
