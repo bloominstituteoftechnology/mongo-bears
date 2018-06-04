@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const BearSchema = new monggose.Schema({
+const BearSchema = new mongoose.Schema({
     species: {
         type: String,
         required: true,
