@@ -28,13 +28,29 @@ router
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id: _id } = req.params;
+    BearModel.find({ _id }, (err, dbRes) => {
+      if (err) return res.status(500).json({ err: 'Error' });
+      if (dbRes.length === 0) return res.status(404).json({ err: 'This poor bear doesnt even exist!' });
+      res.json(dbRes);
+    })
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const { id } = req.params;
+    BearModel.findByIdAndDelete(id, (err, dbRes) => {
+      if (err) return res.status(500).json({ err: 'Error' });
+      if (!dbRes) return res.status(404).json({ err: 'This poor bear doesnt even exist!' });
+      res.json(dbRes);
+    });
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;
+    const { species, latinName } = req.body;
+    BearModel.findByIdAndUpdate(id, { species, latinName }, (err, dbRes) => {
+      if (err) return res.status(500).json({ err: 'Error' });
+      if (!dbRes) return res.status(404).json({ err: 'This poor bear doesnt even exist!' });
+      res.json(dbRes);
+    });
   });
 
 module.exports = router;
