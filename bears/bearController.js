@@ -34,7 +34,14 @@ router
       })
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+        .then(bear => {
+          res.json(bear)
+        })
+        .catch(err => {
+          res.status(404).json({ rror: `No bear with id${id} found.Can't delete it!` })
+        })
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
