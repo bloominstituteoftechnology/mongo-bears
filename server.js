@@ -16,7 +16,7 @@ server.get('/', function(req, res) {
   res.status(200).json({ api: 'running' });
 });
 
-server.use('/api/bears', bearController);
+server.use('/bears', bearController);
 
 const port = process.env.PORT || 5000;
 

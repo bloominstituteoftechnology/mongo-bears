@@ -6,7 +6,7 @@ router
   .get((req, res) => {
     Bear.find()
       .then(bears => {
-        res.status(200).json({ route: '/api/bears/' });
+        res.status(200).json( bears );
       })
   })
   .post((req, res) => {
@@ -24,7 +24,14 @@ router
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then(foundBear => {
+        res.status(200).json(foundBear)
+      })
+      .catch(err => {
+        res.status(404).json({ error: `No bear with id${id} found.`})
+      })
   })
   .delete((req, res) => {
     res.status(200).json({ status: 'please implement DELETE functionality' });
