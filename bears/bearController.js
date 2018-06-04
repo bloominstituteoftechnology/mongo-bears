@@ -106,10 +106,18 @@ router
       });
   })
   .put((req, res) => {
-    const { id } = req.params;
-    Bear.findByIdAndUpdate(id)
-      .then()
-      .catch();
+    const { id } = req.pargitams;
+    const { species, latinName } = req.body;
+    Bear.findByIdAndUpdate(id, { species, latinName })
+      .then(bear => {
+        res.json(bear);
+      })
+      .catch(err => {
+        if (err.name === "CastError") {
+          errorMessage(404, `The bear with id of ${id} does not exist`, res);
+        }
+        errorMessage(500, "The bear information can not be modify", res);
+      });
   });
 
 module.exports = router;
