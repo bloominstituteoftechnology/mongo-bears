@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const Bear = require('./bearModel');
 
 router
   .route('/')
@@ -6,6 +7,10 @@ router
     res.status(200).json({ route: '/api/bears/' });
   })
   .post((req, res) => {
+    const { species, latinName, createdOn } = req.body;
+    if (!species || !latinName) {
+      res.status(400).json("Species and Latin Name are both required.")
+    }
     res.status(201).json({ status: 'please implement POST functionality' });
   });
 
