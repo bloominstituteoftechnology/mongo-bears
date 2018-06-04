@@ -35,7 +35,6 @@ router
     Bear
       .findById(req.params.id)
       .then(bear => {
-        console.log(req);
         if(!bear){
           res.status(404).json({ error: "The bear with the specified ID does not exist." })
         } else{
@@ -43,15 +42,41 @@ router
         }
       })
       .catch(err => {
-        console.log(req.params.id);
         res.status(500).json({ error: "The bear information could not be retrieved." })
       })
+  })
+  .delete((req, res) => {
+    Bear
+      .remove(req.params.id)
+      .then(bear => {
+        if(bear === 0){
+          res.status(404).json({ error: "The bear with the specified ID does not exist." })
+        } else{
+          res.status(200).json({ success: `The bear with the id ${req.params.id} has been deleted from the database.` });
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: "The bear could not be removed." })
+      })
+  })
+  .put((req, res) => {
+    const { species, latinName } = req.body;
+    if(!species || !latinName){
+      res.status(400).json({ error: "Please provide both species and latinName for the bear." });
+      return;
+    }
+    Bear 
+      .update(req.params.id, { species, latinName })
+      .then(bear => {
+        if(bear === 0){
+          res.status(404). json({ error: "The bear with the specified ID does not exist." })
+        } else{
+          res.status(200).json({ success: `The bear with the id ${req.params.id} has been updated in the database.` })
+        }
+      })
+      .catch(err => {
+        res.status(500).json({ error: "The bear information could not be modified." })
+      })
   });
-  // .delete((req, res) => {
-    
-  // })
-  // .put((req, res) => {
-    
-  // });
 
 module.exports = router;
