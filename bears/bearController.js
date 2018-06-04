@@ -27,12 +27,21 @@ router
 
 router
   .route('/:id')
-  .get((req, res) => {
+  .get((req, res, next) => {
     const { id } = req.params;
-    Bear.findOne({ _id: id }, function(err, bear) {
-      if (err) return next(err);
-      res.status(200).json(bear);
-    });
+    // Bear.findOne({ _id: id }, function(err, bear) {
+    //   if (err) return next(err);
+    //   res.status(200).json(bear);
+    // });
+    Bear.findOne({ _id: id })
+      .then(response => {
+        res.status(200).json(response);
+      })
+      .catch(e => {
+        e.statusCode = 500;
+        e.errorMessage = 'Oh, oh.... there is a problem bargain with the dababase, try again!';
+        next(e);
+      });
   })
   .delete((req, res) => {
     res.status(200).json({ status: 'please implement DELETE functionality' });
