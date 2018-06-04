@@ -56,7 +56,7 @@ router
         res.json(updatedBear);
       })
       .catch(err => {
-        res.status(500).json({ error: "Something went terribly wrong!" });
+        res.status(404).json({ error: "Bear was not found with given ID." });
       })
   });
 
