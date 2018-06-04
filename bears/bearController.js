@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const Bear = require('./bearModel.js');
 
-console.log(Bear);
 router
 	.route('/')
 	.get((req, res) => {
@@ -41,7 +40,7 @@ router
 	  		.then(foundBear => {
 				res.status(200).json(foundBear);
 		})
-	  	.catch(err => { res.status(404).json({ error: "The information could not be retrieved."	});
+	  	.catch(err => { res.status(404).json({ error: "The bear with the specified ID could not be retrieved."	});
 		});
 	})
 
@@ -51,9 +50,8 @@ router
 			.then(removeBear => {
 				res.status(200).json(removeBear);
 			})
-			.catch(err => {res.status(404).json({ error: "There was an error deleting the bear."})
+			.catch(err => {res.status(404).json({ error: "The bear with the specified ID could not be found."});
 			})
-	})
 
 	.put((req, res) => {		
 		const { id } = req.params;
@@ -62,8 +60,8 @@ router
 			.then(updatedBear => {
 				res.status(200).json(bear);
 			})
-			.catch(err => {res.status(500).send({ errorMessage: "There was an error updating the bear."});
-		})
-});
-
+			.catch(err => {res.status(404).send({ errorMessage: "The bear with the specified ID could not be found."});
+			})
+	})
+	})
 module.exports = router;
