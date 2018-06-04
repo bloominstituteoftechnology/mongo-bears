@@ -20,14 +20,21 @@ router
         res.status(201).json(bear);
       })
       .catch( err => {
-        res.status(400).json({ error: err })
+        res.status(400).json({ error: "Could not add bear. Make sure to include a species and a latin name" })
       })
   });
 
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then( bear => {
+        res.status(200).json(bear);
+      })
+      .catch( err => {
+        res.status(404).json({ error: `There is no bear with id ${id} in the database` })
+      })
   })
   .delete((req, res) => {
     res.status(200).json({ status: 'please implement DELETE functionality' });
