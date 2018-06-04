@@ -1,4 +1,4 @@
-# Mongo I Mini Project
+# Mongo Bears
 
 ## Topics:
 
