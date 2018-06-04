@@ -18,4 +18,4 @@ const bearSchema = new mongoose.Schema({
 
 const Bear = mongoose.model("Bear", bearSchema);
 
-module.exports(Bear);
+module.exports = Bear;
