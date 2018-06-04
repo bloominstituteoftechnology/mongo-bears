@@ -8,19 +8,24 @@ router
     Bear.find()
       .then(bears => {
         res.status(200).json(bears);
+        return;
       })
       .catch(err => res.status(500).json({ error: "Something went terribly wrong!" }));
   })
   .post((req, res) => {
     const { species, latinName } = req.body;
     const newBear = new Bear({ species, latinName });
+    if (!species || !latinName) {
+      res.status(400).json({ error: "Please provide both species and latinName for the bear." });
+      return;
+    };
     newBear
       .save()
       .then(savedBear => {
         res.status(201).json(savedBear);
       })
       .catch(err => {
-        res.status(422).json({ error: err });
+        res.status(500).json({ error: "There was an error while saving the bear to the database" });
       });
   });
 
@@ -31,6 +36,7 @@ router
     Bear.findById(id)
       .then(bear => {
         res.status(200).json(bear);
+        return;
       })
       .catch(err => {
         res.status(404).json({ error: "Bear cannot be found with given ID." });
@@ -41,6 +47,7 @@ router
     Bear.findByIdAndRemove(id)
       .then(bear => {
         res.json(bear);
+        return;
       })
       .catch(err => {
         res.status(404).json({ error: "Bear was not found with given ID." });
@@ -54,6 +61,7 @@ router
     Bear.findByIdAndUpdate(id, updatedBear)
       .then(update => {
         res.json(updatedBear);
+        return;
       })
       .catch(err => {
         res.status(404).json({ error: "Bear was not found with given ID." });
