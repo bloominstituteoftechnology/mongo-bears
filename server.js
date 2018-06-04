@@ -12,7 +12,7 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/', function(req, res) {
-  res.status(200).json({ api: 'running' });
+  res.json({ api: 'running' });
 });
 
 server.use('/api/bears', bearController);
