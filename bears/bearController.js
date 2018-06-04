@@ -62,10 +62,18 @@ router
     const { id } = req.params;
     Bear.findByIdAndRemove(id)
         .then(bear => {
+          if (foundBear === null) {
+            res
+              .status(404)
+              .json({
+                error: `No bear with id${id} found. Can't retrieve it!`
+              });
+            return;
+          }
           res.json(bear)
         })
         .catch(err => {
-          res.status(404).json({ error: `No bear with id${id} found.Can't delete it!` })
+          res.status(404).json({ error: `No bear with id${id} found. Can't delete it!` })
         })
   })
   .put((req, res) => {
