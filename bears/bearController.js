@@ -36,10 +36,18 @@ bears
     const { id } = req.params;
     Bear.findById(id)
       .then(bear => {
-        res.status(200).json(bear);
+        if(bear){
+          res.status(200).json(bear);
+        } else {
+          res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        }
       })
       .catch(error => {
-        res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        if (error.name === 'CastError') {
+          res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        } else {
+          res.status(500).json({ error: 'The bear information could not be retrieved.' });
+        }
       });
   })
   .delete((req, res) => {
