@@ -86,12 +86,30 @@ router
       });
   })
   .delete((req, res) => {
-    res.status(200).json({
-      status: "please implement DELETE functionality"
-    });
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+      .then(bear => {
+        if (!bear) {
+          errorMessage(
+            400,
+            `The bear with id of ${id} has already been deleted`,
+            res
+          );
+        }
+        res.json(bear);
+      })
+      .catch(err => {
+        if (err.name === "CastError") {
+          errorMessage(404, `The bear with id of ${id} does not exist`, res);
+        }
+        errorMessage(500, "The bear can not be remove", res);
+      });
   })
   .put((req, res) => {
-    res.status(200).json({ status: "please implement PUT functionality" });
+    const { id } = req.params;
+    Bear.findByIdAndUpdate(id)
+      .then()
+      .catch();
   });
 
 module.exports = router;
