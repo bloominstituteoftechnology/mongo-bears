@@ -19,7 +19,7 @@ router
     // .status(200).json({ route: '/api/bears/' });
   })
   .post((req, res) => {
-    
+
     Bear.create(req.body)
       .then(response => {
         res.status(201).json('The Post was Successful')
@@ -32,13 +32,26 @@ router
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+   // const { id } = req.params.id;
+    Bear.findById(req.params.id)
+      .then(response => {
+        res.status(200).json({ data: response });
+      })
+      .catch(error => res.status(500).json("There was an error getting this bear."))
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    Bear.findByIdAndDelete(req.params.id)
+      .then(response => {
+        res.status(200).json({ status: "Delete"})
+      })
+      .catch(error => res.status(500).json("There was an error deleting The Bear"))
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    Bear.findByIdAndUpdate(req.params.id, req.body)
+      .then(response => {
+        res.status(200).json("You successfully updated the bear's information")
+      })
+      .catch(error => res.status(500).json("There was an error in updating the bear's information"))
   });
 
 module.exports = router;
