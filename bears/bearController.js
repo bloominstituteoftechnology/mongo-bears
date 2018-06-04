@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Bear = require('./bearModel');
 
+
 router
   .route('/')
   .get((req, res) => {
@@ -40,11 +41,25 @@ router
           res.json(bear)
         })
         .catch(err => {
-          res.status(404).json({ rror: `No bear with id${id} found.Can't delete it!` })
+          res.status(404).json({ error: `No bear with id${id} found.Can't delete it!` })
         })
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;    
+    const { species, latinName} = req.body;
+    if (!species || !latinName) {
+      sendError(400, "Must provide species and latinName", res);
+      return;
+    }
+    Bear.findByIdAndUpdate(id, req.body)
+        .then(updatedBear => {
+          res.json(req.body);
+        })
+        .catch(err => {
+          res
+            .status(404)
+            .json({ error: `No bear with id${id} found. Can't update it!` })
+        })
   });
 
 module.exports = router;
