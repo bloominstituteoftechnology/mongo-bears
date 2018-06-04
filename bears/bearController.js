@@ -1,12 +1,29 @@
 const router = require('express').Router();
+const Bear = require('./bearModel.js');
 
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+    Bear
+      .find()
+      .then(response => {
+        res.status(200).json({ data: response });
+      })
+      .catch(error => {
+        res.status(500).json({ error: "error" })
+      })
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    let newBear = req.body
+    let request = new Bear(newBear)
+    request
+      .save()
+      .then(response => {
+        res.status(201).json("Successful Post")
+      })
+      .catch(error => {
+        res.status(500).json("FAILURE")
+      })
   });
 
 router
