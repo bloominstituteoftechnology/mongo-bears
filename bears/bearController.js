@@ -5,10 +5,23 @@ const Bear = require('./bearModel');
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+    Bear.find()
+      .then(bears => {
+        res.status(200).json(bears);
+      })
+      .catch(err => res.status(500).json({ error: "Something went terribly wrong!" }));
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const { species, latinName } = req.body;
+    const newBear = new Bear({ species, latinName });
+    newBear
+      .save()
+      .then(savedBear => {
+        res.status(201).json(savedBear);
+      })
+      .catch(err => {
+        res.status(422).json({ error: err });
+      });
   });
 
 router
