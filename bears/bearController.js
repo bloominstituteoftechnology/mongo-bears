@@ -50,14 +50,51 @@ router
       });
   })
   .delete((req, res) => {
-    res.status(200).json({
-      status: 'please implement DELETE functionality'
-    });
+    const {
+      id
+    } = req.params;
+    Bears.findByIdAndRemove(id)
+      .then(response => {
+        if (!response) {
+          res.status(404).json({
+            errorMessage: "The bear with the specified ID does not exist."
+          })
+        }
+        res.json({
+          success: `Bear with ${id} found and deleted!`
+        })
+      })
+      .catch(err => {
+        res.status(500).json({
+          errorMessage: "The bear could not be removed"
+        })
+      })
   })
   .put((req, res) => {
-    res.status(200).json({
-      status: 'please implement PUT functionality'
-    });
+    const {
+      id
+    } = req.params;
+    const {
+      species,
+      latinName
+    } = req.body;
+    Bears.findByIdAndUpdate(id, {
+        species,
+        latinName
+      })
+      .then(response => {
+        if (!response) {
+          res.status(404).json({
+            errorMessage: "The bear with the specified ID does not exist."
+          })
+        }
+        res.json(response);
+      })
+      .catch(error => {
+        res.status(500).json({
+          error: `Bear with id of ${id} could not be updated`
+        })
+      })
   });
 
 
