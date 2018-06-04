@@ -27,13 +27,37 @@ router
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then(bear => {
+        res.status(200).json(bear);
+      })
+      .catch(err => {
+        res.status(404).json({ error: "Bear cannot be found with given ID." });
+      });
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+      .then(bear => {
+        res.json(bear);
+      })
+      .catch(err => {
+        res.status(404).json({ error: "Bear was not found with given ID." });
+      })
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;
+    const { species, latinName } = req.body;
+    const updatedBear = { species, latinName };
+
+    Bear.findByIdAndUpdate(id, updatedBear)
+      .then(update => {
+        res.json(updatedBear);
+      })
+      .catch(err => {
+        res.status(500).json({ error: "Something went terribly wrong!" });
+      })
   });
 
 module.exports = router;
