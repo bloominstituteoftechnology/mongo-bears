@@ -23,3 +23,5 @@ const options = {
 const bearSchema = new mongoose.Schema(definition, options)
 
 const bearModel = mongoose.model('Bear', bearSchema)
+
+module.exports = bearModel;
