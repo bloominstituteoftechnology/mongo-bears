@@ -17,6 +17,6 @@ const BearSchema = new mongoose.Schema({
 	}
 });
 
-const bearsModel = mongoose.model('Bear', BearSchema);
+const bearModel = mongoose.model('Bear', BearSchema);
 
-module.export = bearsModel;
+module.exports = bearModel;

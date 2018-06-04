@@ -1,29 +1,31 @@
 const router = require('express').Router();
-const Bear = require('./bearModel');
+const Bear = require('./bearModel.js');
 
+console.log(Bear);
 router
 	.route('/')
 	.get((req, res) => {
+		console.log(Bear.find);
 		Bear.find()
 			.then(bears => {
 				res.status(200).json(bears);
   			})
-			.catch(err => {res.status(500).json({ error: "The information could not be retrieved."	})
-			})
+			.catch(err => res.status(500).json({ error: "The information could not be retrieved."	})
+			)
 	})
 
 	.post((req, res) => {
 		const { species, latinName } = req.body
+		const newBear = new Bear({ species, latinName });
 		if (!req.body.species || !req.body.latinName) {
 			res.status(400);
 			res.json({ errorMessage: "Please provide both species and latinName for the Bear."});
 		}
 		else {
-			const newBear = new Bear({ species, latinName });
 			newBear.save()
-				.then(savedBear => {
+				.then(Bear => {
 					res.status(201);
-					res.json({ savedBear });
+					res.json({ Bear });
 				})
 				.catch(err => {
 					res.status(500)
