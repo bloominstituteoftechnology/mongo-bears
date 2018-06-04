@@ -7,8 +7,15 @@ router
   .get((req, res) => {
     Bear.find()
       .then(bears => {
-        res.status(200).json( bears );
+        res.status(200).json(bears);
       })
+      .catch(err => {
+        res
+          .status(500)
+          .json({
+            error: "The bear information could not be retrieved."
+          });
+      });
   })
   .post((req, res) => {
     const { species, latinName } = req.body;
@@ -22,7 +29,12 @@ router
              res.status(201).json(savedBear);
            })
            .catch(err => {
-             res.status(500).json({ error: err});
+             res
+               .status(500)
+               .json({
+                 error:
+                   "There was an error while saving the bear to the database"
+               });
            })
   });
 
@@ -32,10 +44,18 @@ router
     const { id } = req.params;
     Bear.findById(id)
       .then(foundBear => {
-        res.status(200).json(foundBear)
+        if (foundBear === null) {
+          res
+              .status(404)
+              .json({
+                error: `No bear with id${id} found. Can't retrieve it!`
+              });
+              return;
+        }
+        res.json(foundBear)
       })
       .catch(err => {
-        res.status(404).json({ error: `No bear with id${id} found.`})
+        res.status(500).json({error: "The bear information could not be retrieved."});
       })
   })
   .delete((req, res) => {
