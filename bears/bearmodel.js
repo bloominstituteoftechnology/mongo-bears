@@ -14,9 +14,9 @@ const bearsSchema = new mongoose.Schema({
 });
 
 /**
- * DEFINE: Collection and Documents.
+ * DEFINE: Collection and Documents' class-constructor.
  * Collection: -> 'BearsList'
- * Docmunents: Create via the 'Bear class'
+ * Docmunents' class-constructor: Bear
  */
 Bear = mongoose.model('bears_list', bearsSchema);
 module.exports = Bear;
