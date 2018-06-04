@@ -9,7 +9,7 @@ const server = express();
 
 server.use(helmet());
 server.use(cors());
-server.use(mongoose());
+//server.use(mongoose());
 server.use(express.json());
 
 server.get("/", function(req, res) {
@@ -19,6 +19,19 @@ server.get("/", function(req, res) {
 server.use("/api/bears", bearController);
 
 const port = process.env.PORT || 5000;
+
+mongoose.Promise = global.Promise;
+mongoose.connect(
+  "mongodb://localhost/dbBears",
+  {},
+  err => {
+    // declare where we're going to connect this is the equivilent of using
+    //`use dbBears` in the mongo shell
+    if (err) console.log("Database connection failed");
+    console.log("Mongoose connected us to our DB");
+  }
+);
+
 server.listen(port, () => {
   console.log(`\n=== API running on http://localhost:${port} ===\n`);
 });
