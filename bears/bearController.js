@@ -5,7 +5,7 @@ const Bear = require('./bearModel');
 router
   .route('/')
   .get((req, res) => {
-    Bear.find() // This will find ALL resources at that model.
+    Bear.find() 
     .then(bears => {
       res.status(200).json(bears);
     })
@@ -41,7 +41,7 @@ router
   })
   .put((req, res) => {
     const {id} = req.params;
-    const {body} = req.body;
+    const {species, latinName} = req.body;
    Bear.findByIdAndUpdat(id,{
      $set: {
        species: body,
