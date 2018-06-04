@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost/dbBears', {}, err => {
   console.log('Mongoose connected us to our DB');
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 server.listen(port, () => {
   console.log(`\n=== API running on http://localhost:${port} ===\n`);
 });

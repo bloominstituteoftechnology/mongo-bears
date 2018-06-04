@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const bearModel = require('./bearModel');
 
-const errorHandle = (error, operation = "CRUD", routeString = "", errorMessage = "Server could not process request.",statusCode = 500) => {
+const errorHandle = (res, error, operation = "CRUD", routeString = "", errorMessage = "Server could not process request.",statusCode = 500) => {
   console.log(`${routeString} ${operation} ERROR:`,error);
   res.status(statusCode).json({errorMessage});
 }
@@ -13,7 +13,7 @@ router
       .then(bears => {
         res.status(200).json(bears);
       })
-      .catch(err => errorHandle(err, "GET", '/api/bears', "The bear information could not be retrieved."));
+      .catch(err => errorHandle(res, err, "GET", '/api/bears', "The bear information could not be retrieved."));
   })
   .post((req, res) => {
     const { species, latinName } = req.body;
@@ -26,7 +26,7 @@ router
       .then(bear => {
         res.status(201).json(bear);
       })
-      .catch(err => errorHandle(err, "POST", '/api/bears', "There was an error while saving the bear to the database"));
+      .catch(err => errorHandle(res, err, "POST", '/api/bears', "There was an error while saving the bear to the database"));
   });
 
 router
@@ -38,10 +38,11 @@ router
       .then(bear => {
         if (bear === null) {
           res.status(404).json({ message: "The bear with the specified ID does not exist." });
+          return;
         }
         res.status(200).json(bear);
       })
-      .catch(err => errorHandle(err, "GET", `/api/bears${id}`, "The bear information could not be retrieved."));
+      .catch(err => errorHandle(res, err, "GET", `/api/bears${id}`, "The bear information could not be retrieved."));
   })
   .delete((req, res) => {
     const { id } = req.params;
@@ -50,10 +51,11 @@ router
       .then(bear => {
         if (bear === null) {
           res.status(404).json({ message: "The bear with the specified ID does not exist." });
+          return;
         }
         res.status(200).json(bear);
       })
-      .catch(err => errorHandle(err, "DELETE", `/api/bears${id}`, "The bear could not be removed"));
+      .catch(err => errorHandle(res, err, "DELETE", `/api/bears${id}`, "The bear could not be removed"));
   })
   .put((req, res) => {
     const { id } = req.params;
@@ -62,10 +64,11 @@ router
       .then(bear => {
         if (bear === null) {
           res.status(404).json({ message: "The bear with the specified ID does not exist." });
+          return;
         }
         res.status(200).json(bear);
       })
-      .catch(err => errorHandle(err, "PUT", `/api/bears${id}`, "The bear information could not be modified."));
+      .catch(err => errorHandle(res, err, "PUT", `/api/bears${id}`, "The bear information could not be modified."));
   });
 
 module.exports = router;
