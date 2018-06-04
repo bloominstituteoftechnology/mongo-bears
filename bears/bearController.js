@@ -20,7 +20,7 @@ router
           if (err.code === 11000) return res.status(422).json({ err: 'Please choose a different latin name' });
           return res.status(500).json({err})
         }
-        res.json(dbRes);
+        res.status(201).json(dbRes);
       });
     });
   });
