@@ -45,10 +45,10 @@ router
       .catch(error => res.status(500).json({ error: 'Error deleting bear' }));
   })
   .put((req, res) => {
-    const { species, latinName, createOn } = req.body;
-    const putBear = { species, latinName, createOn };
+    const { species, latinName } = req.body;
+    const putBear = { species, latinName };
     Bear
-      .findByIdAndUpdate(req.params.id, putBear )
+      .findByIdAndUpdate(req.params.id, putBear, { new: true } )
       .then(editedBear => {
         if (editedBear) res.json({ editedBear });
         else res.status(404).json({ error: 'No such bear found' });
