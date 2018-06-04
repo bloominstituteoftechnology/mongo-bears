@@ -30,6 +30,8 @@ router
       });
     }
     const newBear = new Bear({ species, latinName });
+    //when you post a new Bear, you have to use new Bear bc it goes through schema
+    //it prop checks it and gives it id and date.
     newBear
       .save() // this will `insert` a document into the Bear collection
       .then(savedBear => {
@@ -53,7 +55,7 @@ router
         res.json(bear);
       })
       .catch(err => {
-        console.log(err);
+        //console.log(err);
         if (err.name === "CastError") {
           errorMessage(404, `The bear with id of ${id} does not exist`, res);
         }
@@ -68,6 +70,7 @@ router
           errorMessage(
             400,
             `The bear with id of ${id} has already been deleted`,
+            //extra error message when item has already been deleted
             res
           );
         }
