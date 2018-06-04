@@ -2,6 +2,11 @@ const router = require("express").Router();
 
 const Bear = require("./bearModel");
 
+let errorMessage = (statusCode, message, res) => {
+  res.status(statusCode).json({ error: message });
+  return;
+};
+
 router
   .route("/")
   .get((req, res) => {
@@ -40,10 +45,45 @@ router
       });
   });
 
+// router
+//   .route("/:id")
+//   .get((req, res) => {
+//     //res.status(200).json({ route: "/api/bears/" + req.params.id });
+//     const { id } = req.params;
+//     Bear.findById(id)
+//       .then(bearArray => {
+//         console.log("bearArray: ", bearArray);
+//       })
+//       .catch(err => console.log("err: ", err));
+//   })
+// router
+//   .route("/:id")
+//   .get((req, res) => {
+//     const { id } = req.params;
+//     Bear.findById(id)
+//       .then(foundBear => {
+//         console.log("nobear: ", foundBear);
+//         res.status(200).json(foundBear);
+//       })
+//       .catch(err => {
+//         res.status(404).json({ error: "No bear by that id in DB" });
+//       });
+//   })
 router
   .route("/:id")
   .get((req, res) => {
-    res.status(200).json({ route: "/api/bears/" + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then(bear => {
+        res.json(bear);
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.name === "CastError") {
+          errorMessage(404, `The bear with id of ${id} does not exist`, res);
+        }
+        errorMessage(500, "The bear information can not be retrieve", res);
+      });
   })
   .delete((req, res) => {
     res.status(200).json({
