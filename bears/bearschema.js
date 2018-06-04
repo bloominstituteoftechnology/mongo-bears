@@ -4,10 +4,12 @@ const definition = {
     species: {
         type: String,
         required: true,
+        unique: true,
     },
     latinName: {
         type: String,
         required: true,
+        
     },
     createdOn: {
         type: Date,
@@ -16,21 +18,14 @@ const definition = {
 };
 
 const options = {
-    timestamps: true
+    timestamps: true,
 };
 
 
 const bearSchema = new mongoose.Schema(definition, options);
 
-const bearModel = mongose.model('Bear', bearSchema, 'bears');
+const bearModel = mongoose.model('Bear', bearSchema, 'bears');
+
+module.exports = bearSchema;
 
 
-
-//Create(.Post)
-
-
-//Read(.get)
-
-//Update(.put)
-
-//Delete(destroy)(.delete)
