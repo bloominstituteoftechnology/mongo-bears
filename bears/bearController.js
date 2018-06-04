@@ -69,7 +69,29 @@ bears
       });
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;
+    const { species, latinName } = req.body;
+
+    if (!species || !latinName) {
+      res.status(400).json('Please provide both species and latinName for the bear.');
+      return;
+    }
+
+    Bear.findByIdAndUpdate(id, { species: species, latinName: latinName }, { new:true })
+      .then(updatedBear => {
+        if (updatedBear) {
+          res.status(200).json(updatedBear);
+        } else {
+          res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        }
+      })
+      .catch(error => {
+        if (error.name === 'CastError') {
+          res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
+        } else {
+          res.status(500).json({ error: 'The bear information could not be modified.' });
+        }
+      });
   });
 
 module.exports = bears;
