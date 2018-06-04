@@ -5,7 +5,6 @@ const Bear = require('./bearModel');
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json(Bear);
     Bear.find()
       .then(bears => {
         res.status(200).json(bears);
@@ -45,8 +44,7 @@ router
   .delete((req, res) => {
     const { id } = req.params;
     // findByIdAndRemove
-    Bear
-      .findByIdAndRemove(id)
+    Bear.findByIdAndRemove(id)
       .then(bearRemoved => {
         res.status(200).json(bearRemoved);
       })
@@ -59,8 +57,7 @@ router
     const { id } = req.params;
     const { species, latinName } = req.body;
     // findByIdAndUpdate
-    Bear
-      .findByIdAndUpdate(id, { species, latinName })
+    Bear.findByIdAndUpdate(id, { species, latinName })
       .then(bear => {
         res.json(bear);
       })
