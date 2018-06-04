@@ -44,6 +44,7 @@ router
     const { id } = req.params;
     Bear.findById(id)
       .then(foundBear => {
+        console.log(foundBear)
         if (foundBear === null) {
           res
               .status(404)
@@ -55,6 +56,7 @@ router
         res.json(foundBear)
       })
       .catch(err => {
+
         res.status(500).json({error: "The bear information could not be retrieved."});
       })
   })
@@ -62,7 +64,7 @@ router
     const { id } = req.params;
     Bear.findByIdAndRemove(id)
         .then(bear => {
-          if (foundBear === null) {
+          if (bear === null) {
             res
               .status(404)
               .json({
@@ -70,7 +72,7 @@ router
               });
             return;
           }
-          res.json(bear)
+          res.json({ removedBear: bear})
         })
         .catch(err => {
           res.status(404).json({ error: `No bear with id${id} found. Can't delete it!` })
@@ -85,7 +87,15 @@ router
     }
     Bear.findByIdAndUpdate(id, req.body)
         .then(updatedBear => {
-          res.json(req.body);
+          if (updatedBear === null) {
+            res
+              .status(404)
+              .json({
+                error: `No bear with id${id} found. Can't update it!`
+              });
+            return;
+          }
+          res.json({updatedBear: updatedBear});
         })
         .catch(err => {
           res
