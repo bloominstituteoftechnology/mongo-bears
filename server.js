@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const bearController = require('./bears/bearController');
 
@@ -17,6 +18,11 @@ server.get('/', function(req, res) {
 server.use('/api/bears', bearController);
 
 const port = process.env.PORT || 5000;
+
+//insert code here
+
+
+
 server.listen(port, () => {
-  console.log(`\n=== API running on http://localhost:${port} ===\n`);
+  console.log(`\n=== API successfully connected to MongoDB - running on http://localhost:${port} ===\n`);
 });
