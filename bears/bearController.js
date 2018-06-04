@@ -84,7 +84,7 @@ router
       });
   })
   .put((req, res) => {
-    const { id } = req.pargitams;
+    const { id } = req.params;
     const { species, latinName } = req.body;
     Bear.findByIdAndUpdate(id, { species, latinName })
       .then(bear => {
