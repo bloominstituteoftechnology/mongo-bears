@@ -13,7 +13,7 @@ mongoose
 const schema = new mongoose.Schema({
   species: {type: String, required: true},
   latinName: {type: String, required: true},
-  createdOn: {Date}
+  createdOn: { type: Date, required: true, default: Date.now }
 })
 
 const model = mongoose.model('Bear', schema)

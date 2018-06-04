@@ -40,7 +40,8 @@ router
   })
   .delete((req, res) => {
     Bear
-      .remove({ _id: req.params.id })
+      //.remove({ _id: req.params.id })
+      .findByIdAndDelete(req.params.id)
       .then(response => {
         res.status(200).json({ status: 'DELETED' });
       })
@@ -49,7 +50,14 @@ router
       })
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    Bear
+      .findByIdAndUpdate(req.params.id, req.body)
+      .then(response => {
+        res.status(200).json("success");
+      })
+      .catch(error => {
+        res.status(500).json("FAILURE")
+      })
   });
 
 module.exports = router;
