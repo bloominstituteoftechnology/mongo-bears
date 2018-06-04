@@ -54,8 +54,18 @@ router
         next(e);
       });
   })
-  .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+  .put((req, res, next) => {
+    const { id } = req.params;
+    const { name = 'a Bear', species = 'Urus __' } = req.body;
+    Bear.update({ _id: id }, { $set: { name, species } })
+      .then(response => {
+        res.status(200).json({ response: response });
+      })
+      .catch(e => {
+        e.statusCode = 500;
+        e.errorMessage = 'Oh, oh.... there is a problem bargain with the dababase, try again!';
+        next(e);
+      });
   });
 
 module.exports = router;
