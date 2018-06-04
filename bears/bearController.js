@@ -30,14 +30,29 @@ router
     const { id } = req.params;
     Bear.findById(id)
       .then( bear => {
-        res.status(200).json(bear);
+        if (bear === null) {
+          res.status(404).json({ error: "That bear no longer exists in the database"})
+        } else {
+          res.status(200).json(bear);
+        }
       })
       .catch( err => {
         res.status(404).json({ error: `There is no bear with id ${id} in the database` })
       })
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+    .then( bear => {
+      if (bear === null) {
+        res.status(404).json({ error: "That bear no longer exists in the database"})
+      } else {
+        res.status(200).json(bear);
+      }
+    })
+    .catch( err => {
+      res.status(404).json({ error: `There is no bear with id ${id} in the database` })
+    })
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
