@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+const Bear = require('./bearModel');
+
 router
   .route('/')
   .get((req, res) => {
