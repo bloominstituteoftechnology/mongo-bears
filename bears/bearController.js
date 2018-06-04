@@ -49,8 +49,11 @@ router
     BearModel.findByIdAndUpdate(id, { species, latinName }, (err, dbRes) => {
       if (err) return res.status(500).json({ err: 'Error' });
       if (!dbRes) return res.status(404).json({ err: 'This poor bear doesnt even exist!' });
+    })
+    .then(() => BearModel.findById(id, (err, dbRes) => {
+      if (err) return res.status(500).json({ err: 'Error' });
       res.json(dbRes);
-    });
+    }));
   });
 
 module.exports = router;
