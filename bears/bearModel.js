@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const BearSchema = new mongoose.Schema({
 	species: {
 		type: String,
@@ -16,6 +17,6 @@ const BearSchema = new mongoose.Schema({
 	}
 });
 
-const bearsModel = mongoose.model('Bear, BearSchema);
+const bearsModel = mongoose.model('Bear', BearSchema);
 
 module.export = bearsModel;

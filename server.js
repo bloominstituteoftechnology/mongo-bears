@@ -19,9 +19,11 @@ server.use('/api/bears', bearController);
 
 const port = process.env.PORT || 5000;
 
-//insert code here
-
-
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/dbBears',{}, err => {
+	if (err) console.log(err);
+	console.log('Mongoose connected us to our DB');
+});
 
 server.listen(port, () => {
   console.log(`\n=== API successfully connected to MongoDB - running on http://localhost:${port} ===\n`);
