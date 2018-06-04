@@ -19,6 +19,7 @@ server.use('/api/bears', bearController);// this is where we register our routes
 
 mongoose.Promise = global.Promise;// configure the mongoose promise to use Native JS Promises
 mongoose.connect('mongodb://localhost/dbBears', {}, err => {
+  // declare where we're going to connect this is the equivilent of using 'use dbBears' int the mongo shell
   if (err) console.log(err);
   console.log('Mongoose connected us to our DB');
 });
