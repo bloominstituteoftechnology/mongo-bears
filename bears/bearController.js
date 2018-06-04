@@ -14,16 +14,14 @@ router
       })
   })
   .post((req, res) => {
-    let newBear = req.body
-    let request = new Bear(newBear)
-    request
-      .save()
-      .then(response => {
-        res.status(201).json("Successful Post")
-      })
-      .catch(error => {
-        res.status(500).json("FAILURE")
-      })
+      Bear
+        .create(req.body)
+        .then(response => {
+          res.status(201).json("Successful Post")
+        })
+        .catch(error => {
+          res.status(500).json("FAILURE")
+        })
   });
 
 router
@@ -40,7 +38,6 @@ router
   })
   .delete((req, res) => {
     Bear
-      //.remove({ _id: req.params.id })
       .findByIdAndDelete(req.params.id)
       .then(response => {
         res.status(200).json({ status: 'DELETED' });
