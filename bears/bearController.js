@@ -1,11 +1,11 @@
-const router = require('express').Router();
+const router = require('express').Router(); // declare that all routes for this address will be found on this router
 
-const Bear = require('./bearModel');
+const Bear = require('./bearModel'); // pull in our Bear model
 
 router
   .route('/')
   .get((req, res) => {
-    Bear.find()
+    Bear.find() // This will find ALL resources at that model.
       .then(bears => {
         res.status(200).json(bears);
       })
@@ -15,7 +15,7 @@ router
     const { species, latinName } = req.body;
     const newBear = new Bear({ species, latinName });
     newBear
-      .save()
+      .save() // this will `insert` a document into the Bear collection
       .then(savedBear => {
         res.status(201).json(savedBear);
       })
@@ -28,7 +28,7 @@ router
   .route('/:id')
   .get((req, res) => {
     const { id } = req.params;
-    Bear.findById(id)
+    Bear.findById(id) // find a specific resource in a collection by ID
       .then(foundBear => {
         res.status(200).json(foundBear);
       })
