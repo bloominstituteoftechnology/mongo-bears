@@ -64,8 +64,8 @@ router
     .route('/:id')
     .put((req, res) => {
     const { id } = req.params;
-    const { species, latinName, createdOn } = req.body
-    Bear.findByIdAndUpdate(id, { species, latinName, createdOn })
+    const { species, latinName } = req.body
+    Bear.findByIdAndUpdate(id, { species, latinName }, { upsert: true, setDefaultsOnInsert: true, new: true })
       .then(updatedBear => {
         if (updatedBear) {
         res.status(200).json({ updatedBear })
