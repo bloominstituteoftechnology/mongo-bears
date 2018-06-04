@@ -29,10 +29,24 @@ router
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    Bear
+      .findById(req.params.id)
+      .then(response => {
+        res.status(200).json({ data: response });
+      })
+      .catch(error => {
+        res.status(500).json("FAILURE")
+      })
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    Bear
+      .remove({ _id: req.params.id })
+      .then(response => {
+        res.status(200).json({ status: 'DELETED' });
+      })
+      .catch(error => {
+        res.status(500).json("FAILURE")
+      })
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
