@@ -1,24 +1,63 @@
 const router = require('express').Router();
 
+const Bear = require('./bearModel');
+
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+   Bear.find()
+    .then(bears => {
+      res.status(200).json(bears);
+    })
+    .catch(error => {
+      res.status(500).json({ error: 'Error fetching da bears' })
+    })
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const { species, latinName } = req.body;
+    const newBear = new Bear({ species, latinName });
+    newBear
+      .save()
+      .then(savedBear => {
+        res.status(201).json(savedBear);
+      })
+      .catch(error => {
+        res.status(500).json({ error: 'Your attempt to create a new bear has failed, who do you think you are, God???'})
+      });
   });
 
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+    .then(foundSingleBear => {
+      res.status(200).json(foundSingleBear);
+    })
+    .catch(error => {
+      res.status(500).json({ error: 'Error fetching da bear by da ID' })
+    })
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+    .then(deleteDaBear => {
+      res.status(200).json(deleteDaBear);
+    })
+    .catch(error => {
+      res.status(500).json({ error: 'Couldnt delete the bear for ya, eh' })
+    })
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;
+    const { species, latinName } = req.body;
+    Bear.findByIdAndUpdate(id, { species, latinName })
+    .then(updateDaBear => {
+      res.status(200).json(updateDaBear);
+    })
+    .catch(error => {
+      res.status(500).json({ error: 'couldnt do that for ya, da bear is not updated, sorry eh' })
+    })
   });
 
 module.exports = router;
