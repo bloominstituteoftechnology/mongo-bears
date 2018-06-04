@@ -28,6 +28,10 @@ server.get('/', function(req, res) {
   res.status(200).json({ api: 'running' });
 });
 
+/**
+ * Spacial case: testing to connecto just to "lmongodb://localhost"
+ * If db_name no provided: The Collection-name gets created in the database "admiin" : I am not sure if this is like that be default ¿?¿? or it gets the dafault database (in my case: admin?)
+ */
 mongoose.connect(`mongodb://localhost/${db_Name}`);
 
 const port = process.env.PORT || 5000;
