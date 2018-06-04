@@ -77,18 +77,23 @@ router
   .put((req, res) => {
     const { id } = req.params;
     const { species, latinName } = req.body;
+    const updatedBear = { species, latinName };
     
-    Bear.findByIdAndUpdate(id, {species, latinName})
-      .then(updatedBear => {
-        // if (updatedBear === 0) {
-        //   res.status(404);
-        //   res.json({message: "The bear with the specified ID does not exist."});
-          
-        // }
-        res.json(updatedBear);
-        console.log(updatedBear);
-      })
+    Bear.findByIdAndUpdate(id, updatedBear)
+      .then(response => {
+        console.log(response)
+        
+        Bear.findById(id)
+          .then(bear => {
+            res.json(bear)
+          })}
+      )
       .catch(error => {
+        console.log(error.name);
+        if (error.name === 'CastError'){
+          res.status(404)
+          res.json({message: 'ID does not exist'});
+        }
         res.status(500);
         res.json({ errorMessage: "The bear information could not be modified."})
       })
