@@ -2,9 +2,8 @@ const router = require('express').Router();
 
 const Bear = require('./bearSchema');
 
-router
-  .route('/')
-  .get((req, res) => {
+
+router.get('/',(req, res) => {
     Bear.find()
       .then(bears => {
         res.status(202).json({ route: '/api/bears/' + req.params });
@@ -12,7 +11,8 @@ router
       .catch(error => {
         res.status(500).json({ error: 'No Bears at this Location' });
       })
-      .post((req, res) => {
+      
+  router.post('/',(req, res) => {
         const { species, latinName } = req.body;
         const newBear = new Bear({ species, latinName });
         newBear
@@ -27,48 +27,35 @@ router
 
   });
 
-router
-  .route('/:id')
-  .get((req, res) => {
+
+  
+router.get('/:id',(req, res) => {
     res.status(200).json({ route: '/api/bears/' + req.params.id });
   })
-  .delete((req, res) => {
-    Bear.findById(id).then(bears => {
-      remove(id).then(response =>
-        res.status(404).json({ status: 'The bear with the specified ID does not exist.' }));
-    });
+
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Bear.findByIdAndRemove(id)
+    .then(bear => {
+        res.status(404).json({ status: 'The bear with the specified ID does not exist.' });
+    })
+    .catch(err => res.status(500).json(err));
   });
 
-  .put((req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const { species, latinName } = req.body;
-  if (!species || !latinName) {
-    sendUserError(404, 'The bear information could not be modified.', res);
-    return;
-  }
-  Bear
-    .update(id, { species, latinName })
-    .then(response => {
-      if (response === 0) {
-        sendUserError(500, 'The bear with the specified ID does not exist.', res);
-        return;
-      }
-      Bear
-        .findById(id)
-        .then(foundBear => {
-          bear = { ...foundBear[0] };
-
-          db.remove(id).then(response => {
-            res.status(200).json(bear);
-          });
-        });
-    })
-    .catch(error => {
-      sendUserError(500, 'The bear information could not be modified.', res);
-      return;
-    });
+  
+  Bear.findbyIdAndUpdate(id, req.body).then(bear => {
+    if (bear) {
+      res.status(200).json(bear);
+    } else {
+      res.status(404).json({ status: '"The bear with the specified ID does not exist' });
+    }
+  })
+    .catch(err => res.status(500).json(err));
 });
-
+    
 
 
 function get(req, res) {
