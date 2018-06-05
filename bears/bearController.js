@@ -1,24 +1,65 @@
 const router = require('express').Router();
 
+const Bear = require('./bearModel.js');
+
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+    Bear.find()
+      .then(bears => {
+        res.status(200).json(bears);
+      })
+      .catch(err => {
+        return res.status(500).json({ error: `Error fetching bears`});
+      })
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const { species, latinName } = req.body;
+    const newBear = new Bear({ species, latinName });
+    newBear
+      .save()
+      .then(response => {
+        res.status(201).json(response);
+      })
+      .catch(err => {
+        return res.status(422).json({ error: err });
+      });
   });
 
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then(response => {
+        res.json(response);
+      })
+      .catch(err => {
+        return res.status(404).json({ error: err });
+      })
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    const{ id } = req.params;
+    Bear
+      .findByIdAndDelete(id)
+      .then(response => {
+        res.json({ message: `The bear was deleted.`});
+      })
+      .catch(err => {
+        return res.status(500).json({ error: err });
+      })
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;
+    const { species, latinName } = req.body;
+    Bear
+      .findByIdAndUpdate(id, { species, latinName})
+      .then(response => {
+        res.json({ message: `The Bear was deleted`});
+      })
+      .catch(err => {
+        return res.status(500).json({ error: err });
+      });
   });
 
 module.exports = router;
