@@ -37,11 +37,12 @@ router
     }
     Bear.findById(id)
       .then(bear => {
+        console.log(bear);
         if (bear === null) {
           res.status(404).json({ error: "Bear cannot be found with given ID." });
           return;
         }
-        // console.log(bear.id.length);
+        console.log(bear.id.length);
         res.status(200).json(bear);
       })
       .catch(err => {
