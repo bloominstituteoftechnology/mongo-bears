@@ -55,9 +55,9 @@ router
   })
   .put((req, res) => {
     const { id } = req.params;
-    const { species, latinName } = req.body;
+    const updates = ({ species, latinName } = req.body);
     // findByIdAndUpdate
-    Bear.findByIdAndUpdate(id, { species, latinName })
+    Bear.findByIdAndUpdate(id, updates, { new: true })
       .then(bear => {
         res.json(bear);
       })
