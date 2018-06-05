@@ -32,7 +32,9 @@ server.get('/', function(req, res) {
  * Spacial case: testing to connecto just to "lmongodb://localhost"
  * If db_name no provided: The Collection-name gets created in the database "admiin" : I am not sure if this is like that be default ¿?¿? or it gets the dafault database (in my case: admin?)
  */
-mongoose.connect(`mongodb://localhost/${db_Name}`);
+mongoose.connect(`mongodb://localhost/${db_Name}`, function(err, response) {
+  err ? console.error(err) : console.log('We are connected to MongoDB!');
+});
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => {
