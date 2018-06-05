@@ -16,6 +16,9 @@ server.get('/', function(req, res) {
 });
 
 server.use('/api/bears', bearController);
+server.use(function(req, res) {
+  res.status(404).json({ error: 'Terribly sorry, the requested resource is nowhere to be found.' })
+})
 
 const port = process.env.PORT || 5000;
 mongoose.Promise = global.Promise;

@@ -32,11 +32,7 @@ router
     const { id } = req.params;
     Bear.findById(id)
       .then(foundBear => {
-      if (foundBear) {
         res.status(200).json({ foundBear })
-      } else {
-        res.status(404).json({ message: "The bear with the specified ID does not exist." })
-      }
     })
       .catch(err => {
       res.status(500).json({ errorMessage: "The bear information could not be retrieved." });
@@ -49,11 +45,7 @@ router
     const { id } = req.params;
     Bear.findByIdAndRemove(id)
       .then(deletedBear => {
-        if (deletedBear) {
         res.status(200).json({ deletedBear });
-        } else {
-          res.status(404).json({ errorMessage: "The bear with the specified ID does not exist." })
-        }
       })
       .catch(err => {
         res.status(500).json({ errorMessage: "This bear could not be removed." })
@@ -67,11 +59,7 @@ router
     const { species, latinName } = req.body
     Bear.findByIdAndUpdate(id, { species, latinName }, { upsert: true, setDefaultsOnInsert: true, new: true })
       .then(updatedBear => {
-        if (updatedBear) {
         res.status(200).json({ updatedBear })
-        } else {
-          res.status(404).json({ message: "The bear with the specified ID does not exist." })
-        }
       })
       .catch(error => {
       res.status(500).json({ errorMessage: "The bear information could not be modified." })
