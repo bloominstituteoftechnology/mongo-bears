@@ -9,23 +9,23 @@ router
       .then(bears => {
         res.status(200).json(bears);
       })
-      .catch(err => res.status(500).json({ error: 'The bear information could not be retrieved.' }));
+      .catch(err => res.status(500).json({ error: 'The bear cannnot be found.' }));
   })
   .post((req, res) => {
     const { species, latinName } = req.body;
     const newBear = new Bear ({ species, latinName });
     if (!species || !latinName) {
-      res.status(400).json({ error: 'Please provide both species and latinName for the bear.' });
+      res.status(400).json({ error: 'Please provide species and latinName.' });
       return;
     }
     newBear
       .save()
       .then(response => {
         console.log(response);
-          res.status(201).json({ status: 'please implement POST functionality' });    
+          res.status(201).json({ status: 'Successfully added!' });    
       })
       .catch(err => {
-        res.status(500).json({ error: 'There was an error while saving the bear to the database.' });
+        res.status(500).json({ error: 'Error while saving the bear to database.' });
       });
 });
 
@@ -49,7 +49,7 @@ router
           res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
           return;
         }
-        res.json({ success: 'Bear removed from DB.' });
+        res.json({ success: 'Bear removed from database.' });
       })
       .catch(err => 
         res.status(500).json({ error: 'The bear could not be removed.' })
