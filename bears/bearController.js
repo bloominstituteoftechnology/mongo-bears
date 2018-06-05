@@ -23,7 +23,7 @@ router
     const { species, latinName, } = req.body;
     const newBear = Bear({ species, latinName });
     if (!species || !latinName) {
-      errorMessage(400, "Species and Latin Name are required.", res);
+      errorMessage(400, "Please provide both species and latinName for the bear.", res);
     }
     newBear
           .save()
