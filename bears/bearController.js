@@ -5,7 +5,8 @@ const Bear = require('./bearModel');
 router
   .route('/')
   .get((req, res) => {
-    Bear.find()
+    Bear
+      .find()
       .then(bears => {
         res.status(200).json(bears);
       })
@@ -22,7 +23,7 @@ router
       .save()
       .then(response => {
         console.log(response);
-        res.status(201).json({ success: 'New bear created.' });
+        res.status(201).json({response});
       })
       .catch(err => {
         res.status(500).json({ error: 'There was an error while saving the bear to the database.' });
@@ -33,9 +34,15 @@ router
   .route('/:id')
   .get((req, res) => {
     const { id } = req.params;
-    Bear.findById(id)
+    Bear
+      .findById(id)
       .then(response => {
-        res.status(200).json({ success: 'Bear found.' });
+        console.log(response);
+        if (response === null) {
+          res.status(404).json({ error: 'No bear by that ID in database.' });
+          return;
+        }
+        res.status(200).json(response);
       })
       .catch(err => {
         res.status(404).json({ error: 'The bear with the specified ID does not exist.'});
@@ -43,13 +50,15 @@ router
   })
   .delete((req, res) => {
     const { id } = req.params;
-    Bear.findByIdAndRemove(id)
+    Bear
+      .findByIdAndRemove(id)
       .then(response => {
-        if (response == 0) {
+        console.log(response);
+        if (response == null) {
           res.status(404).json({ error: 'The bear with the specified ID does not exist.' });
           return;
         }
-        res.json({ success: 'Bear removed from DB.' });
+        res.json({ success: `Bear removed from DB.`, resource: response });
       })
       .catch(err => 
         res.status(500).json({ error: 'The bear could not be removed.' })
@@ -57,19 +66,19 @@ router
   })
   .put((req, res) => {
     const { id } = req.params;
-    const { species, latinName } = req.body;
-    const updatedBear = { species, latinName };
-    if (!species || !latinName) {
-      res.status(404).json({ error: 'The bear with the specified ID does not exist.' })
-      return;
-    }
-    Bear.findByIdAndUpdate(id, updatedBear)
+    const updatedBear = ({ species, latinName } = req.body);
+    Bear
+      .findByIdAndUpdate(id, updatedBear, { new: true })
       .then(response => {
-        res.json(response);
+        if (response === null) {
+          res.status(404).json({ error: 'No bear by that ID in the database.'});
+          return;
+        }
+        res.json({ success: 'Bear updated.', resource: response });
       })
-      .catch(err => 
+      .catch(err => {
         res.status(500).json({ error: 'The bear information could not be modified.'})
-      );
+      });
 });
 
 module.exports = router;
