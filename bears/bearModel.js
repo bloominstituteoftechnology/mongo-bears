@@ -14,7 +14,7 @@ const BearSchema = new mongoose.Schema({
     },
     latinName: {
         type: String,
-        require: true
+        required: true
     },
     createOn: {
         type: Date,
