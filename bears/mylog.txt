@@ -1,0 +1,503 @@
+yarn run v1.6.0
+$ nodemon server.js
+[33m[nodemon] 1.17.3[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node server.js`[39m
+{ [Function: model]
+  hooks: 
+   Kareem {
+     _pres: { save: [Array], remove: [Array] },
+     _posts: { init: [Array], save: [Array] } },
+  base: 
+   Mongoose {
+     connections: [ [Object] ],
+     models: { Bear: [Circular] },
+     modelSchemas: { Bear: [Object] },
+     options: { pluralization: true },
+     _pluralize: [Function: pluralize],
+     plugins: [ [Array], [Array], [Array], [Array] ] },
+  modelName: 'Bear',
+  model: [Function: model],
+  db: 
+   NativeConnection {
+     base: 
+      Mongoose {
+        connections: [Array],
+        models: [Object],
+        modelSchemas: [Object],
+        options: [Object],
+        _pluralize: [Function: pluralize],
+        plugins: [Array] },
+     collections: { bears: [Object] },
+     models: { Bear: [Circular] },
+     config: { autoIndex: true },
+     replica: false,
+     options: null,
+     otherDbs: [],
+     relatedDbs: {},
+     states: 
+      { '0': 'disconnected',
+        '1': 'connected',
+        '2': 'connecting',
+        '3': 'disconnecting',
+        '99': 'uninitialized',
+        disconnected: 0,
+        connected: 1,
+        connecting: 2,
+        disconnecting: 3,
+        uninitialized: 99 },
+     _readyState: 0,
+     _closeCalled: false,
+     _hasOpened: false,
+     _listening: false },
+  discriminators: undefined,
+  '$appliedMethods': true,
+  '$appliedHooks': true,
+  schema: 
+   Schema {
+     obj: { species: [Object], latinName: [Object], createdOn: [Object] },
+     paths: 
+      { species: [Object],
+        latinName: [Object],
+        createdOn: [Object],
+        _id: [Object],
+        __v: [Object] },
+     aliases: {},
+     subpaths: {},
+     virtuals: { id: [Object] },
+     singleNestedPaths: {},
+     nested: {},
+     inherits: {},
+     callQueue: [],
+     _indexes: [],
+     methods: {},
+     methodOptions: {},
+     statics: {},
+     tree: 
+      { species: [Object],
+        latinName: [Object],
+        createdOn: [Object],
+        _id: [Object],
+        __v: [Function: Number],
+        id: [Object] },
+     query: {},
+     childSchemas: [],
+     plugins: [ [Object], [Object], [Object], [Object], [Object] ],
+     s: { hooks: [Object] },
+     _userProvidedOptions: {},
+     options: 
+      { typeKey: 'type',
+        id: true,
+        noVirtualId: false,
+        _id: true,
+        noId: false,
+        validateBeforeSave: true,
+        read: null,
+        shardKey: null,
+        autoIndex: null,
+        minimize: true,
+        discriminatorKey: '__t',
+        versionKey: '__v',
+        capped: false,
+        bufferCommands: true,
+        strict: true,
+        pluralization: true },
+     '$globalPluginsApplied': true },
+  collection: 
+   NativeCollection {
+     collection: null,
+     opts: 
+      { bufferCommands: true,
+        capped: false,
+        '$wasForceClosed': undefined },
+     name: 'bears',
+     collectionName: 'bears',
+     conn: 
+      NativeConnection {
+        base: [Object],
+        collections: [Object],
+        models: [Object],
+        config: [Object],
+        replica: false,
+        options: null,
+        otherDbs: [],
+        relatedDbs: {},
+        states: [Object],
+        _readyState: 0,
+        _closeCalled: false,
+        _hasOpened: false,
+        _listening: false },
+     queue: [],
+     buffer: true,
+     emitter: 
+      EventEmitter {
+        domain: null,
+        _events: {},
+        _eventsCount: 0,
+        _maxListeners: undefined } },
+  Query: 
+   { [Function]
+     base: 
+      Query {
+        toConstructor: [Function: toConstructor],
+        setOptions: [Function],
+        collection: [Function: collection],
+        '$where': [Function],
+        where: [Function],
+        equals: [Function: equals],
+        eq: [Function: eq],
+        or: [Function: or],
+        nor: [Function: nor],
+        and: [Function: and],
+        gt: [Function],
+        gte: [Function],
+        lt: [Function],
+        lte: [Function],
+        ne: [Function],
+        in: [Function],
+        nin: [Function],
+        all: [Function],
+        regex: [Function],
+        size: [Function],
+        maxDistance: [Function],
+        minDistance: [Function],
+        mod: [Function],
+        exists: [Function],
+        elemMatch: [Function],
+        within: [Function: within],
+        box: [Function],
+        polygon: [Function],
+        circle: [Function],
+        near: [Function: near],
+        intersects: [Function: intersects],
+        geometry: [Function: geometry],
+        select: [Function: select],
+        slice: [Function],
+        sort: [Function],
+        limit: [Function],
+        skip: [Function],
+        maxScan: [Function],
+        batchSize: [Function],
+        comment: [Function],
+        maxTime: [Function],
+        snapshot: [Function],
+        hint: [Function],
+        slaveOk: [Function],
+        read: [Function],
+        tailable: [Function],
+        merge: [Function],
+        find: [Function],
+        cursor: [Function: cursor],
+        findOne: [Function],
+        count: [Function],
+        distinct: [Function],
+        update: [Function: update],
+        updateMany: [Function: updateMany],
+        updateOne: [Function: updateOne],
+        replaceOne: [Function: replaceOne],
+        remove: [Function],
+        deleteOne: [Function],
+        deleteMany: [Function],
+        findOneAndUpdate: [Function],
+        findOneAndRemove: [Function],
+        _findAndModify: [Function],
+        _wrapCallback: [Function],
+        setTraceFunction: [Function],
+        exec: [Function: exec],
+        thunk: [Function],
+        then: [Function],
+        stream: [Function],
+        selected: [Function: selected],
+        selectedInclusively: [Function: selectedInclusively],
+        selectedExclusively: [Function: selectedExclusively],
+        _mergeUpdate: [Function],
+        _optionsForExec: [Function],
+        _fieldsForExec: [Function],
+        _updateForExec: [Function],
+        _ensurePath: [Function],
+        _validate: [Function] } },
+  '$__insertMany': [Function],
+  '$init': Promise { <pending>, catch: [Function] } }
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+{ [Function: model]
+  hooks: 
+   Kareem {
+     _pres: { save: [Array], remove: [Array] },
+     _posts: { init: [Array], save: [Array] } },
+  base: 
+   Mongoose {
+     connections: [ [Object] ],
+     models: { Bear: [Circular] },
+     modelSchemas: { Bear: [Object] },
+     options: { pluralization: true },
+     _pluralize: [Function: pluralize],
+     plugins: [ [Array], [Array], [Array], [Array] ] },
+  modelName: 'Bear',
+  model: [Function: model],
+  db: 
+   NativeConnection {
+     base: 
+      Mongoose {
+        connections: [Array],
+        models: [Object],
+        modelSchemas: [Object],
+        options: [Object],
+        _pluralize: [Function: pluralize],
+        plugins: [Array] },
+     collections: { bears: [Object] },
+     models: { Bear: [Circular] },
+     config: { autoIndex: true },
+     replica: false,
+     options: null,
+     otherDbs: [],
+     relatedDbs: {},
+     states: 
+      { '0': 'disconnected',
+        '1': 'connected',
+        '2': 'connecting',
+        '3': 'disconnecting',
+        '99': 'uninitialized',
+        disconnected: 0,
+        connected: 1,
+        connecting: 2,
+        disconnecting: 3,
+        uninitialized: 99 },
+     _readyState: 0,
+     _closeCalled: false,
+     _hasOpened: false,
+     _listening: false },
+  discriminators: undefined,
+  '$appliedMethods': true,
+  '$appliedHooks': true,
+  schema: 
+   Schema {
+     obj: { species: [Object], latinName: [Object], createdOn: [Object] },
+     paths: 
+      { species: [Object],
+        latinName: [Object],
+        createdOn: [Object],
+        _id: [Object],
+        __v: [Object] },
+     aliases: {},
+     subpaths: {},
+     virtuals: { id: [Object] },
+     singleNestedPaths: {},
+     nested: {},
+     inherits: {},
+     callQueue: [],
+     _indexes: [],
+     methods: {},
+     methodOptions: {},
+     statics: {},
+     tree: 
+      { species: [Object],
+        latinName: [Object],
+        createdOn: [Object],
+        _id: [Object],
+        __v: [Function: Number],
+        id: [Object] },
+     query: {},
+     childSchemas: [],
+     plugins: [ [Object], [Object], [Object], [Object], [Object] ],
+     s: { hooks: [Object] },
+     _userProvidedOptions: {},
+     options: 
+      { typeKey: 'type',
+        id: true,
+        noVirtualId: false,
+        _id: true,
+        noId: false,
+        validateBeforeSave: true,
+        read: null,
+        shardKey: null,
+        autoIndex: null,
+        minimize: true,
+        discriminatorKey: '__t',
+        versionKey: '__v',
+        capped: false,
+        bufferCommands: true,
+        strict: true,
+        pluralization: true },
+     '$globalPluginsApplied': true },
+  collection: 
+   NativeCollection {
+     collection: null,
+     opts: 
+      { bufferCommands: true,
+        capped: false,
+        '$wasForceClosed': undefined },
+     name: 'bears',
+     collectionName: 'bears',
+     conn: 
+      NativeConnection {
+        base: [Object],
+        collections: [Object],
+        models: [Object],
+        config: [Object],
+        replica: false,
+        options: null,
+        otherDbs: [],
+        relatedDbs: {},
+        states: [Object],
+        _readyState: 0,
+        _closeCalled: false,
+        _hasOpened: false,
+        _listening: false },
+     queue: [],
+     buffer: true,
+     emitter: 
+      EventEmitter {
+        domain: null,
+        _events: {},
+        _eventsCount: 0,
+        _maxListeners: undefined } },
+  Query: 
+   { [Function]
+     base: 
+      Query {
+        toConstructor: [Function: toConstructor],
+        setOptions: [Function],
+        collection: [Function: collection],
+        '$where': [Function],
+        where: [Function],
+        equals: [Function: equals],
+        eq: [Function: eq],
+        or: [Function: or],
+        nor: [Function: nor],
+        and: [Function: and],
+        gt: [Function],
+        gte: [Function],
+        lt: [Function],
+        lte: [Function],
+        ne: [Function],
+        in: [Function],
+        nin: [Function],
+        all: [Function],
+        regex: [Function],
+        size: [Function],
+        maxDistance: [Function],
+        minDistance: [Function],
+        mod: [Function],
+        exists: [Function],
+        elemMatch: [Function],
+        within: [Function: within],
+        box: [Function],
+        polygon: [Function],
+        circle: [Function],
+        near: [Function: near],
+        intersects: [Function: intersects],
+        geometry: [Function: geometry],
+        select: [Function: select],
+        slice: [Function],
+        sort: [Function],
+        limit: [Function],
+        skip: [Function],
+        maxScan: [Function],
+        batchSize: [Function],
+        comment: [Function],
+        maxTime: [Function],
+        snapshot: [Function],
+        hint: [Function],
+        slaveOk: [Function],
+        read: [Function],
+        tailable: [Function],
+        merge: [Function],
+        find: [Function],
+        cursor: [Function: cursor],
+        findOne: [Function],
+        count: [Function],
+        distinct: [Function],
+        update: [Function: update],
+        updateMany: [Function: updateMany],
+        updateOne: [Function: updateOne],
+        replaceOne: [Function: replaceOne],
+        remove: [Function],
+        deleteOne: [Function],
+        deleteMany: [Function],
+        findOneAndUpdate: [Function],
+        findOneAndRemove: [Function],
+        _findAndModify: [Function],
+        _wrapCallback: [Function],
+        setTraceFunction: [Function],
+        exec: [Function: exec],
+        thunk: [Function],
+        then: [Function],
+        stream: [Function],
+        selected: [Function: selected],
+        selectedInclusively: [Function: selectedInclusively],
+        selectedExclusively: [Function: selectedExclusively],
+        _mergeUpdate: [Function],
+        _optionsForExec: [Function],
+        _fieldsForExec: [Function],
+        _updateForExec: [Function],
+        _ensurePath: [Function],
+        _validate: [Function] } },
+  '$__insertMany': [Function],
+  '$init': Promise { <pending>, catch: [Function] } }
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+5b15d4b7c0af412d580fdeaa
+5b15d4b7c0af412d580fdeaa
+{ species: 'Bear4', latinName: 'Bear4' }
+5b15d4b7c0af412d580fdeaa
+5b15d4b7c0af412d580fdeaa
+{ species: 'Bear4', latinName: 'Bear4' }
+5b15d4b7c0af412d580fdeaa
+5b15d4b7c0af412d580fdeaa
+{ species: 'Bear4', latinName: 'Bear4' }
+5b15d4b7c0af412d580fdeaa
+5b15d4b7c0af412d580fdeaa
+{ species: 'Bear4', latinName: 'Bear4' }
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+24
+5b15d3a6c0af412d580fdea8
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+
+=== API running on http://localhost:5000 ===
+
+Successfully connected to MongoDB!
+5b15d3a6c0af412d580fdea8
+5b15d3a6c0af412d580fdea8
+{ species: 'Memphis Grizzly', latinName: 'Marc Gasol' }
+5b15d424c0af412d580fdea9
+5b15d424c0af412d580fdea9
+{ species: 'Memphis Grizzly', latinName: 'Marc Gasol' }
+24
