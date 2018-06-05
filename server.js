@@ -17,7 +17,7 @@ server.get('/', function(req, res) {
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1/', {}, err => {
+mongoose.connect('mongodb://127.0.0.1/bears', {}, err => {
   if(err) console.log(err);
   console.log(`Mongoose is connected to our DB.`); 
 });
