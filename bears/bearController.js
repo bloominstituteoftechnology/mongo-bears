@@ -50,9 +50,14 @@ router
 })
   .put((req, res) => {
     const { id } = req.params;
-    
-    res.status(200).json({ status: 'please implement PUT functionality' });
-    // findbyIdAndUpdate
-  });
+    const { species, latinName } = req.body;
+    Bear.findByIdAndUpdate(id, {$set:{species, latinName}})
+    .then(updatedBear => {
+      res.status(200).json(updatedBear);
+    })
+    .catch(err => {
+    res.status(404).json({ error: 'Bear was not  updated' });
+  })
+});
 
 module.exports = router;
