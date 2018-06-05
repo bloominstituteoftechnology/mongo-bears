@@ -34,7 +34,7 @@ router
   .get((req, res) => {
     // res.status(200).json({ route: '/api/bears/' + req.params.id });
     const {id} = req.params;
-    if(id.length !== 24){
+    if(id.length !== 24 || typeof id == String || typeof id === Number){
       res.status(400).json({error: "IDs need to be 24 characters long."})
     }
     Bear.findById(id)
@@ -55,7 +55,7 @@ router
     // res.status(200).json({ status: 'please implement DELETE functionality' });
     const {id} = req.params;
     console.log(id);
-    if (id.length !== 24){
+    if (id.length !== 24 || typeof id === String || typeof id === Number){
       res.status(400).send({error: "Your ID needs to be 24 characters long."})
       return;
     }
@@ -71,7 +71,7 @@ router
     const bear = {species, latinName};
     console.log(id);
     console.log(bear);
-    if(id.length !== 24){
+    if(id.length !== 24 || typeof id === String || typeof id === Number){
       res.status(400).json({error: "The ID entered is not 24 characters."})
     } else {
       Bear.findByIdAndUpdate(id, bear)
