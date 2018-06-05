@@ -21,13 +21,11 @@ const port = process.env.PORT || 5000;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  "mongodb://localhost/beardb",
-  {},
-  err => {
-    if (err) console.log("Database connection failure");
-    console.log("Successful connection to MongoDB.");
-  }
-);
+  "mongodb://localhost/dbBears", {}, error => {
+    if (error) {
+    console.log(error);
+    }
+  });
 
 server.listen(port, () => {
   console.log(`\n=== API running on http://localhost:${port} ===\n`);

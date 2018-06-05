@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
-const bearSchema = new mongoose.Schema({
+const BearSchema = new mongoose.Schema({
     species: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     latinName: {
         type: String,
@@ -11,11 +12,11 @@ const bearSchema = new mongoose.Schema({
     },
     createdOn: {
         type: Date,
-        required: true,
+        // required: true,
         default: Date.now()
     }
 });
 
-const Bear = mongoose.model("Bear", bearSchema);
+const bearModel = mongoose.model("Bear", BearSchema);
 
-module.exports = Bear;
+module.exports = bearModel;
