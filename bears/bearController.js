@@ -42,13 +42,13 @@ router
   .put((req, res) => {
     const {id} = req.params;
     const {species, latinName} = req.body;
-   Bear.findByIdAndUpdat(id,{
+   Bear.findByIdAndUpdate(id, {
      $set: {
-       species: body,
-       latinName: body
+       species: species,
+       latinName: latinName
      }
    }).then((result) => {
-     console.log(result)
+    res.status(200).json(result)
    })
   });
 
