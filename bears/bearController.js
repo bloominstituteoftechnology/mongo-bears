@@ -41,7 +41,7 @@ router
     const { id } = req.params;
     Bear.findByIdAndRemove(id)
       .then(byeBear => {
-          res.status(204).json(beyBear).end();
+          res.status(204).json(byeBear).end();
       })
       .catch(err => {
           res.status(404).json({ error: 'No bear by that id in DB to delete' });
@@ -55,7 +55,7 @@ router
       new: true,
     };
 
-    Bear.findByIdAndUpdate(id)
+    Bear.findByIdAndUpdate(id, update, options)
       .then(updateBear =>{
         res.status(200).json(updateBear);
       })
