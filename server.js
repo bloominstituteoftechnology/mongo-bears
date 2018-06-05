@@ -17,6 +17,8 @@ server.get('/', function(req, res) {
 
 server.use('/api/bears', bearController);// this is where we register our routes. EVERYthing on that bearControler will link up to the address of 'api/bears'
 
+const port = process.env.PORT || 5000;
+
 mongoose.Promise = global.Promise;// configure the mongoose promise to use Native JS Promises
 mongoose.connect('mongodb://localhost/dbBears', {}, err => {
   // declare where we're going to connect this is the equivilent of using 'use dbBears' int the mongo shell
@@ -24,7 +26,7 @@ mongoose.connect('mongodb://localhost/dbBears', {}, err => {
   console.log('Mongoose connected us to our DB');
 });
 
-const port = process.env.PORT || 5000;
+
 server.listen(port, () => {
   console.log(`\n=== API running on http://localhost:${port} ===\n`);
 });

@@ -1,5 +1,13 @@
-import { Mongoose } from "mongoose";
+// create a model for our bears.
+const mongoose = require('mongoose');
+// Schema
+//import { Mongoose } from "mongoose";
 
+// {
+//   species: 'Grizzley Bear',
+//   latinName: 'Urusas Americanas',
+//   createdOn: Date.now();
+// }
 
 const BearSchema = new mongoose.Schema({
     // declare a schema. Your documents will 'look like this'
@@ -19,7 +27,7 @@ const BearSchema = new mongoose.Schema({
 });
 
 
-const bearsModel = mongoose.model('Bear', BearsSchema); // this is where we declare this as a model.
+const bearsModel = mongoose.model('Bear', BearSchema); // this is where we declare this as a model.
 // by passing our BearSchema to this model we declare that it will be a collection in our DB
 
 module.exports = bearsModel;
