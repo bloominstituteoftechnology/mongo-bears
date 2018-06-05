@@ -6,10 +6,10 @@ const Bear = require('./bearSchema');
 router.get('/', (req, res) => {
   Bear.find()
     .then(bears => {
-      res.status(202).json({ route: '/api/bears/' + req.params });
+      res.status(200).json({ route: '/api/bears/' + req.params });
     })
     .catch(error => {
-      res.status(500).json({ error: 'No Bears at this Location' });
+      res.status(500).json({ error: 'The bear information could not be retrieved.' });
     })
 
   router.post('/', (req, res) => {
@@ -51,7 +51,7 @@ router.delete('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   const { id } = req.params;
 
-  Bear.findbyIdAndUpdate(id, req.body).then(bear => {
+  Bear.findbyIdAndUpdate(id, update, options).then(bear => {
     if (bear) {
       res.status(200).json(bear);
     } else {
