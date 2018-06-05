@@ -30,6 +30,11 @@ router
     const { id } = req.params;
     Bear.findById(id) // find a specific resource in a collection by ID
       .then(foundBear => {
+        console.log(foundBear);
+        if (foundBear === null) {
+          res.status(404).json({ error: 'No bear by that id in DB' });
+          return;
+        }
         res.status(200).json(foundBear);
       })
       .catch(err => {
@@ -37,11 +42,34 @@ router
       });
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
-    // findByIdAndRemove
+    const { id } = req.params;
+    Bear.findByIdAndRemove(id)
+      .then(removedBear => {
+        console.log(removedBear);
+        if (removedBear === null) {
+          // IF there is no bear by that id, then mongo won't throw an error, rather give us back a null object
+          // MAKE SURE you handle this null object!!!
+          res.status(404).json({ error: 'No bear by that Id in the DB' });
+          return;
+        }
+        res.json({ success: `Bear Removed`, resource: removedBear });
+      })
+      .catch(err => res.status(500).json({ error: err }));
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { id } = req.params;
+    const updates = ({ species, latinName } = req.body);
+    Bear.findByIdAndUpdate(id, updates, { new: true }) // new: true will give you the updated resource, not the previous one
+      .then(bearUpdated => {
+        if (bearUpdated === null) {
+          // IF there is no bear by that id, then mongo won't throw an error, rather give us back a null object
+          // MAKE SURE you handle this null object!!!
+          res.status(404).json({ error: 'No bear by that Id in the DB' });
+          return;
+        }
+        res.json({ success: 'Updated da bear', resource: bearUpdated });
+      })
+      .catch(err => res.status(500).json({ error: err }));
     // findByIdAndUpdate
   });
 
