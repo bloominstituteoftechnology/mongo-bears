@@ -1,24 +1,48 @@
 const router = require('express').Router();
 
+const Bear = require('./bearModel');
+
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+    Bear.find()
+      .then(bears => {
+        res.status(200).json(bears);
+      })
+      .catch(err => res.status(500).json({ error: 'Error fetching bears.' }))
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const { species, latinName } = req.body;
+    const newBear = new Bear({ species, latinName });
+    newBear.save()
+      .then(savedBear => {
+        console.log(savedBear);
+        res.status(201).json(savedBear);
+      })
+      .catch(err => {
+        res.status(422).json({ error: err });
+      })
   });
 
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    const { id } = req.params;
+    Bear.findById(id)
+      .then(foundBear => {
+        res.status(200).json(foundBear);
+      })
+      .catch(err => {
+        res.status(404).json({ error: 'No bear by that id in DB.' })
+      })
   })
   .delete((req, res) => {
     res.status(200).json({ status: 'please implement DELETE functionality' });
+    // findByIdAndRemove
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
+    // findByIdAndUpdate
   });
 
 module.exports = router;
