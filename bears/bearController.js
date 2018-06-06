@@ -50,6 +50,7 @@ router.route('/:id').delete((req, res) => {
 
 router.route('/:id').put((req, res) => {
   const { id } = req.params;
+  const { species, latinName } = req.bpdy;
 
   Bear.findbyIdAndUpdate(id, update, options).then(bear => {
     if (bear) {
