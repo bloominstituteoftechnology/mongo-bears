@@ -1,14 +1,14 @@
 const router = require('express').Router();
 
-const Bear = require('./bearSchema');
+const Bear = require('./bearModel');
 
 
 router.route('/').get((req, res) => {
   Bear.find()
-    .then(bears => {
-      res.status(200).json({ route: '/api/bears/' + req.params });
+    .then(bear => {
+      res.status(200).json(bear);
     })
-    .catch(error => {
+    .catch(err => {
       res.status(500).json({ error: 'The bear information could not be retrieved.' });
     })
 
@@ -17,8 +17,8 @@ router.route('/').get((req, res) => {
     const newBear = new Bear({ species, latinName });
     newBear
       .save()
-      .then(savedBear => {
-        res.status(201).json(savedBear);
+      .then(bear => {
+        res.status(201).json(bear);
       })
       .catch(error => {
         res.status(400).json({ status: "Please provide both species and latinName for the bear." });
@@ -32,7 +32,7 @@ router.route('/').get((req, res) => {
 router.route('/:id').get((req, res) => {
   const { id } = req.params;
   Bear.findByIdAndRemove(id)
-    .then(bears => {
+    .then(bear => {
       res.status(404).json({ status: '"The bear with the specified ID does not exist' });
     })
     .catch(err => res.status(500).json(err));
@@ -42,7 +42,7 @@ router.route('/:id').delete((req, res) => {
   const { id } = req.params;
 
   Bear.findByIdAndRemove(id)
-    .then(bears => {
+    .then(bear => {
       res.status(404).json({ status: 'The bear with the specified ID does not exist.' });
     })
     .catch(err => res.status(500).json(err));
@@ -50,7 +50,7 @@ router.route('/:id').delete((req, res) => {
 
 router.route('/:id').put((req, res) => {
   const { id } = req.params;
-  const { species, latinName } = req.bpdy;
+  const { species, latinName } = req.body;
 
   Bear.findbyIdAndUpdate(id, update, options).then(bear => {
     if (bear) {
