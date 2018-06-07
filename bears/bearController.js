@@ -32,7 +32,7 @@ router.route('/').get((req, res) => {
 router.route('/:id').get((req, res) => {
   const { id } = req.params;
   Bear.findByIdAndRemove(id)
-    .then(bear => {
+    .then(bears=> {
       res.status(404).json({ status: '"The bear with the specified ID does not exist' });
     })
     .catch(err => res.status(500).json(err));
@@ -42,7 +42,7 @@ router.route('/:id').delete((req, res) => {
   const { id } = req.params;
 
   Bear.findByIdAndRemove(id)
-    .then(bear => {
+    .then(bears => {
       res.status(404).json({ status: 'The bear with the specified ID does not exist.' });
     })
     .catch(err => res.status(500).json(err));
