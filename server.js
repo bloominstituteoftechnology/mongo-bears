@@ -6,13 +6,7 @@ const mongoose = require( 'mongoose' );
 const bearController = require( './bears/bearController' );
 
 const server = express();
-mongoose.connect( 'mongodb;//local/beardb' ).then( mongo =>
-{
 
-} ).catch( err =>
-{
-
-} )
 server.use( helmet() );
 server.use( cors() );
 server.use( express.json() );
@@ -25,6 +19,12 @@ server.get( '/', function ( req, res )
 server.use( '/api/bears', bearController );
 
 const port = process.env.PORT || 5000;
+mongoose.Promise = global.Promise;
+mongoose.connect( 'mongodb://localhost/dbbears', {}, err =>
+{
+  if ( err ) console.log( err );
+  console.log( 'Mongoose connected us to our DB' );
+} );
 server.listen( port, () =>
 {
   console.log( `\n=== API running on http://localhost:${ port } ===\n` );
