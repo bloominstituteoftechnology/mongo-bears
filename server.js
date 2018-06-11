@@ -1,14 +1,25 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
-const bearController = require('./bears/bearController');
+mongoose.connect('mongodb://localhost:27017/beardb')
+  .then(mongo => {
+    console.log('connected to database')
+  })
+  .catch(err => {
+    console.log('Error connecting to databse', err)
+  });
+
 
 const server = express();
+
 
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
+
+const bearController = require('./bears/bearController');
 
 server.get('/', function(req, res) {
   res.status(200).json({ api: 'running' });
