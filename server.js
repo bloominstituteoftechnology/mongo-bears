@@ -18,7 +18,7 @@ server.get('/', function(req, res) {
 server.use('/api/bears', bearController);
 
 const port = process.env.PORT || 5000;
-mongoose.connect('mongodb://localhost/bears', {}, () => {
+mongoose.connect('mongodb://localhost/dbBears', {}, () => {
   console.log('Mongoose connected us to our DB');
 });
 
