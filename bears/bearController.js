@@ -29,7 +29,9 @@ router
   });
 
 function get(req, res) {
-  res.status(200).json({ route: '/api/bears/' });
+  Bear.find().then(bears => {
+    res.status(200).json(bears);
+  });
 }
 
 function post(req, res) {
