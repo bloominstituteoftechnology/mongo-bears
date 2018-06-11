@@ -18,7 +18,7 @@ const BearSchema = new mongoose.Schema({
 });
 
 //this ties with Schema and assign to bearModel which will become collections in database
-const bearModel = mongoose.model('Bear', BearSchema);
+const bearsModel = mongoose.model('Bear', BearSchema);
 
 //export the schema form as bearModel
-module.exports = bearModel;
+module.exports = bearsModel;
