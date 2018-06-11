@@ -23,15 +23,19 @@ router
   })
   .put((req, res) => {
     res.status(200).json({ status: 'please implement PUT functionality' });
-  });
+  } );
+  
 function get( req, res )
 {
-  res.status( 201 ).json( { route: '/api/bears/' } );
-}
+  Bear.find().then( bears =>
+  {
+    res.status( 200 ).json( bears );
+  } );
+  }
 function post( req, res )
 {
   const bearData = req.body;
-  
+
   const bear = new Bear( bearData );
   bear
     .save()
