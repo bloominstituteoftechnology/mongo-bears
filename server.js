@@ -11,15 +11,15 @@ mongoose.connect('mongodb://localhost:27017/beardb')
     console.log('Error connecting to databse', err)
   });
 
-const bearController = require('./bears/bearController');
 
 const server = express();
-
 
 
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
+
+const bearController = require('./bears/bearController');
 
 server.get('/', function(req, res) {
   res.status(200).json({ api: 'running' });
