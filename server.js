@@ -3,14 +3,6 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongob://localhost:27017/beardb')
-  .then(mongo => {
-    console.log('connected to database')
-  })
-  .catch(err => {
-    console.log('Error connecting to database', err)
-  });
-  
 const bearController = require('./bears/bearController');
 
 const server = express();
@@ -26,6 +18,10 @@ server.get('/', function(req, res) {
 server.use('/api/bears', bearController);
 
 const port = process.env.PORT || 5000;
+mongoose.connect('mongodb://localhost/dbBears', {}, () => {
+  console.log('Mongoose connected to db');
+});
+
 server.listen(port, () => {
   console.log(`\n=== API running on http://localhost:${port} ===\n`);
 });
