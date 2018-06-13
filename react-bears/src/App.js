@@ -1,54 +1,46 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
-import bearController from  './bearModel/bearController.js' ;
-import bearModel from './bearModel/bearModel.js';
-import { WSAVERNOTSUPPORTED } from 'constants';
 
 class App extends Component
 {
   constructor()
   {
     super();
+    
     this.state = {
-      bearController: [],
-      bearModel: null
-    };
-  }
-  addToBearController = bear =>
-  {
-    const bearController = this.state.savedList;
-    const findbear = bearController.find( el => bear.id === el.id );
-    if ( findbear )
-    {
-      this.setState( { bearModel: `you've already saved that bear!` } );
-      setTimeout( () => this.setState( { bearModel: null } ), 2000 );
-    } else
-    {
-      bearController.push( bear );
+      bears: [{}]
     }
-    this.setState( { bearController } );
-  };
+  }
+  componentWillMount()
+  {
+    axios
+
+      .get( 'http://localhost:5000/api/bears' )
+      .then( respond =>
+      {
+        this.setState( { bears: respond.data } )
+      } )
+      
+    }
   render()
   {
-    const { bearModel } = this.state;
+  
     return (
-      <div>
-        {bearModel !== null ? (
-          <h3 className="bear-warning">{bearModel}</h3>
-        ) : null}
-        <bearController list={this.state.bearController} />
-        <Route exact path="/" react-bears={bearModel}/>
-        <Route 
-          path="/bearModel/:id"
-          render={props => (
-          <bear{...props} addTobearController={this.addToSavedList}/>
-          )}
-        />  
+      <div className="App">
+        {this.state.bears.map( bear =>
+        {
+          return (
+            <div>{bear.species}</div>
+          )
+        })}
       </div>
-    );
-  }
+    )
+  };
 }
+
+  
+
 
 export default App;
