@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 const bearController = require('./bears/bearController');
 
@@ -11,10 +12,16 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/', function(req, res) {
-  res.status(200).json({ api: 'running' });
+  res.json({ api: 'running' });
 });
 
 server.use('/api/bears', bearController);
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/dbBears', {}, error => {
+  if (error) console.log("Database connection failed");
+  else console.log("Successfully Connected to MongoDB");
+});
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => {

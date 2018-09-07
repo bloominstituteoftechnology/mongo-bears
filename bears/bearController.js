@@ -1,24 +1,59 @@
 const router = require('express').Router();
+const Bear = require('./bearModel');
 
 router
   .route('/')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' });
+    console.log(Bear);
+    Bear.find()
+      .then(bears => {
+        res.json({ bears });
+      })
+      .catch(error => res.status(500).json({ error: 'Error fetching bears' }));
   })
   .post((req, res) => {
-    res.status(201).json({ status: 'please implement POST functionality' });
+    const { species, latinName, createOn } = req.body;
+    const postBear = new Bear({ species, latinName, createOn });
+    postBear
+      .save()
+      .then(postedBear => {
+        res.status(201).json(postedBear);
+      })
+      .catch(error => {
+        res.status(422).json({ error: error });
+      });
   });
 
 router
   .route('/:id')
   .get((req, res) => {
-    res.status(200).json({ route: '/api/bears/' + req.params.id });
+    Bear
+      .findById(req.params.id)
+      .then(bear => {
+        if (bear) res.json({ bear });
+        else res.status(404).json({ error: 'No such bear found.' })
+      })
+      .catch(error => res.status(500).json({ error: 'Error fetching bear' }));
   })
   .delete((req, res) => {
-    res.status(200).json({ status: 'please implement DELETE functionality' });
+    Bear
+      .findByIdAndDelete(req.params.id)
+      .then(deletedBear => {
+        if (deletedBear) res.json({ deletedBear });
+        else res.status(404).json({ error: 'No such bear found' });
+      })
+      .catch(error => res.status(500).json({ error: 'Error deleting bear' }));
   })
   .put((req, res) => {
-    res.status(200).json({ status: 'please implement PUT functionality' });
+    const { species, latinName } = req.body;
+    const putBear = { species, latinName };
+    Bear
+      .findByIdAndUpdate(req.params.id, putBear, { new: true } )
+      .then(editedBear => {
+        if (editedBear) res.json({ editedBear });
+        else res.status(404).json({ error: 'No such bear found' });
+      })
+      .catch(error => res.status(500).json({ error: 'Error editing bear' }));
   });
 
 module.exports = router;
