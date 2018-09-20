@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 //     createOn: Date.now();
 // }
 
-// Creating bear schema.
+// Creating bear schema for the bears collection.
 const BearSchema = new mongoose.Schema({
     species: {
         type: String,
@@ -23,7 +23,7 @@ const BearSchema = new mongoose.Schema({
     }
 });
 
-// Generating bear model.
+// Using Mongoose to generate a bear model that can be used to perform CRUD operations on bear documents.
 const bearsModel = mongoose.model('Bear', BearSchema);
 
 module.exports = bearsModel;
