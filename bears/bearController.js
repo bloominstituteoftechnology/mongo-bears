@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const Bear = require('./bearModel');
 
+// Creating API endpoints.
 router
   .route('/')
   .get((req, res) => {

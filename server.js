@@ -1,7 +1,7 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
-const mongoose = require('mongoose');
 
 const bearController = require('./bears/bearController');
 
@@ -18,6 +18,7 @@ server.get('/', function(req, res) {
 server.use('/api/bears', bearController);
 
 mongoose.Promise = global.Promise;
+// Using Mongoose to connect API to the beardb database.
 mongoose.connect('mongodb://localhost/dbBears', {}, err => {
   if (err) console.log(err);
   console.log('Mongoose connected us to our DB.');
