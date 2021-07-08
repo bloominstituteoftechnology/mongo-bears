@@ -1,12 +1,42 @@
 # Mongo Bears
 
 ## Topics:
-
+  
 * Databases
+collection of data,organized,easy to get information out of it
 * MongoDB
+
 * ODMs
 * Mongoose
 * Performing CRUD operations.
+query: a way to store/retrieve data. asking questions about data. or executing commands to manage data.
+
+DBMS(DB Managment System):
+software that provides a way to store/retrieve data .
+
+client<>API<>DB server
+noSql(not only sql): a type of database
+key-value pair
+graph
+document<= mongoDB
+js
+const user ={
+  username:'admin',
+  password:'secert'
+}
+mongoDB Server
+databases(lambda)
+collectiosa(users, roles,products)
+documents({_id: 'hfjhajhfhf', username:'admin'})
+fields:_id, username
+why mongoDB
+popular
+mature
+js end to end
+dyamic schemas(shape of the data{[properties and data types]})
+cons
+dynamic schemas
+client<JSon>API(driver)<BSon>[DB Server]
 
 ## Description
 
